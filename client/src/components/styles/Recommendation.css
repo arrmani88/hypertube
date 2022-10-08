@@ -1,5 +1,68 @@
 .title {
 	color: white;
 	font-weight: bold;
-	
+	font-size: 20px;
+	padding: 16px;
+}
+
+.row {
+	flex-direction: row;
+	overflow: auto;
+	align-items: center;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none;/* Firefox */
+	scroll-behavior: smooth;
+}
+
+.row::-webkit-scrollbar {
+	display: none;
+}
+
+.arrowScroll {
+	height: 60px;
+	width: 60px;
+	color: black;
+	opacity: 0.7;
+}
+
+.arrowScroll:hover {
+	opacity: 1;
+}
+
+.arrowScrollBgr {
+	position: absolute;
+	background-color: white;
+	border-radius: 50%;
+	height: 60px;
+	width: 60px;
+	/* display: inline-block; */
+	margin: auto 20px auto 20px;
+	cursor: pointer;
+	opacity: 0.7;
+}
+
+.arrowScrollBgr:hover {
+	opacity: 1;
+}
+
+.thumbnail {
+	display: inline-block;
+	min-width: 200px;
+	height: auto;
+	padding: 10px;
+}
+
+.thumbnail:hover {
+	scale: 1.1;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
+}
+
+@media only screen and (max-width: 600px) {
+	.title {
+		font-size: 16px;
+	}
+	.thumbnail {
+		width: 140px;
+	}
 }
