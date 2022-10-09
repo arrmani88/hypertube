@@ -1,0 +1,29 @@
+.navbarContainer {
+	position: fixed;
+	/* border-radius: 5%; */
+	height: 150px;
+	width: 100%;
+	margin: 100px 100px 100px 100px;
+	align-items: center;
+	top: 0px;
+	background-color: aliceblue;
+	/* filter: blur(10px);
+	backdrop-filter: blur(1px); */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* color: #333; */
+/* background-color: rgba(255, 255, 255, 0.1); */
+/* -webkit-backdrop-filter: blur(4px);
+-o-backdrop-filter: blur(4px);
+-moz-backdrop-filter: blur(4px); */

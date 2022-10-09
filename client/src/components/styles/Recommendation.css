@@ -1,11 +1,16 @@
 .title {
 	color: white;
 	font-weight: bold;
-	font-size: 20px;
-	padding: 16px;
+	font-size: 30px;
+	padding-top: 16px;
+	margin-left: 60px;
 }
 
 .row {
+	padding-left: 50px;
+	padding-right: 50px;
+	display: flex;
+	width: 100%;
 	flex-direction: row;
 	overflow: auto;
 	align-items: center;
@@ -29,40 +34,55 @@
 	opacity: 1;
 }
 
-.arrowScrollBgr {
+.arrowScrollBkgr {
 	position: absolute;
 	background-color: white;
 	border-radius: 50%;
 	height: 60px;
 	width: 60px;
-	/* display: inline-block; */
 	margin: auto 20px auto 20px;
 	cursor: pointer;
 	opacity: 0.7;
 }
 
-.arrowScrollBgr:hover {
+.arrowScrollBkgr:hover {
 	opacity: 1;
 }
 
 .thumbnail {
 	display: inline-block;
-	min-width: 200px;
-	height: auto;
-	padding: 10px;
+	min-width: 180px;
+	/* height: auto; */
+	margin: 30px 10px 30px 10px;
+	scale: 1;
+	transition-duration: 300ms;
+	transition-timing-function: ease-in-out;
 }
 
 .thumbnail:hover {
-	scale: 1.1;
-	transition-duration: 500ms;
+	scale: 1.2;
+	transition-duration: 300ms;
 	transition-timing-function: ease-in-out;
 }
 
 @media only screen and (max-width: 600px) {
 	.title {
-		font-size: 16px;
+		font-size: 20px;
+		margin-left: 40px;
+	}
+	.row {
+		padding-left: 30px;
+		padding-right: 30px;
 	}
 	.thumbnail {
 		width: 140px;
+	}
+	.arrowScrollBkgr {
+		width: 40px;
+		height: 40px;
+	}
+	.arrowScroll {
+		width: 40px;
+		height: 40px;
 	}
 }
