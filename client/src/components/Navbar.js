@@ -1,10 +1,16 @@
 import React from 'react'
 import './styles/Navbar.css'
+import { BiMenuAltRight } from 'react-icons/bi'
 
 const Navbar = () => {
   return (
     <div className='navbarContainer'>
-
+      <h1 className='section'>About</h1>
+      <h1 className='section'>Trailer</h1>
+      <img onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className='logo' src='images/hypertube_logo.png' alt={'logo'} />
+      <h1 className='section'>Actors</h1>
+      <h1 className='section'>Settings</h1>
+      <BiMenuAltRight className='menuIcon'></BiMenuAltRight>
     </div>
   )
 }
@@ -22,3 +28,4 @@ const Navbar = () => {
 // }
 
 export default Navbar
+// hypertube/client/src/images/hypertube_logo.png

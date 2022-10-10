@@ -1,18 +1,67 @@
 .navbarContainer {
-	position: fixed;
-	/* border-radius: 5%; */
-	height: 150px;
-	width: 100%;
-	margin: 100px 100px 100px 100px;
+	background-color: rgba(11, 4, 4, 0.5);
 	align-items: center;
-	top: 0px;
-	background-color: aliceblue;
-	/* filter: blur(10px);
-	backdrop-filter: blur(1px); */
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	height: 70px;
+	width: calc(100% - 12px);
+	margin: 6px;
+	border-radius: 10px;
+	z-index: 100;
+	backdrop-filter: blur(6px);
+}
+
+.logo {
+	height: 35px;
+	padding: 0 15px 0 15px;
+	cursor: pointer;
+}
+
+.section {
+	color: white;
+	padding: 5px 15px 5px 15px;
+	cursor: pointer;
+}
+
+.menuIcon {
+	display: none;
+}
+
+@media only screen and (max-width: 650px) {
+	.navbarContainer {
+		height: 50px;
+	}
+	.logo {
+		height: 25px;
+	}
+	.section {
+		padding: 5px 10px 5px 10px;
+	}
 }
 
 
-
+@media only screen and (max-width: 500px) { /* smallest format: hide sections */
+	.navbarContainer {
+		justify-content: space-between;
+	}
+	.section {
+		display: none;
+	}
+	.logo {
+		padding-left: 25px;
+	}
+	.menuIcon {
+		color: white;
+		height: 30px;
+		width: 50px;
+		display: unset;
+		padding: 0px 20px 0px 0px;
+		cursor: pointer;
+	}
+}
 
 
 
@@ -24,6 +73,7 @@
 
 /* color: #333; */
 /* background-color: rgba(255, 255, 255, 0.1); */
-/* -webkit-backdrop-filter: blur(4px);
--o-backdrop-filter: blur(4px);
--moz-backdrop-filter: blur(4px); */
+	/*-webkit-backdrop-filter: blur(400px);
+	-o-backdrop-filter: blur(400px);
+	-moz-backdrop-filter: blur(400px); */
+	/* filter: blur(1px); */

@@ -17,9 +17,9 @@ const Main = () => {
     !movie ? <div /> :
     <div className="w-full h-[550px] text-white">
       <div className="w-full h-full">
-        <div className=" absolute w-full h-[550px] bg-gradient-to-r from-black" />
+        <div className=" absolute w-[80%] h-[550px] bg-gradient-to-r from-black" />
         <img className="w-full h-full object-cover" src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt={movie?.original_title}/>
-        <div className='absolute top-[13%] p-4 md:p-8'>
+        <div className='absolute top-[10%] p-4 md:p-8'>
 					<h1 className='text-3xl md:text-5xl font-bold'>{movie?.title}</h1>
           <div className="my-4">
             <button className="border bg-gray-300 text-black py-2 px-5">Play</button>
