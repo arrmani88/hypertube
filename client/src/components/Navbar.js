@@ -1,25 +1,26 @@
 import React from 'react'
 import './styles/Navbar.css'
-import { BiMenuAltRight } from 'react-icons/bi'
+import * as Drawer from './Drawer'
 
 const Navbar = () => {
-  return (
-    <div className='navbarContainer'>
+	return (
+		<div className='navbarContainer'>
 
-      <div className='middleSections'>
-        <div className='balanceDivAvatar' />
-        <h1 className='section'>About</h1>
-        <h1 className='section'>Trailer</h1>
-        <img onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className='logo' src='images/hypertube_logo.png' alt={'logo'} />
-        <h1 className='section'>Actors</h1>
-        <h1 className='section'>Settings</h1>
-        <div className='balanceDivAvatar' />
-      </div>
-      
-      <img className='avatarUser' src='images/arrmani88.jpeg' />
-      <BiMenuAltRight className='menuIcon'></BiMenuAltRight>
-    </div>
-  )
+			<div className='balanceEmptyDivAvatar' />
+			<div className='middleSections'>
+				<h1 className='section'>About</h1>
+				<div className='sectionSpaceEmptyDiv' />
+				<h1 className='section'>Trailer</h1>
+				<img onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className='logo' src='images/hypertube_logo.png' alt={'logo'} />
+				<h1 className='section'>Actors</h1>
+				<h1 className='section'>Settings</h1>
+			</div>
+
+			<img className='avatarUser' src='images/arrmani88.jpeg' alt='userImg' />
+			{/* <BiMenuAltRight className='menuIcon'></BiMenuAltRight> */}
+			<Drawer />
+		</div>
+	)
 }
 
 // const Navbar = () => {

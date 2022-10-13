@@ -1,0 +1,14 @@
+.menuIcon {
+	display: none;
+}
+
+@media only screen and (max-width: 550px) {
+	.menuIcon {
+		color: white;
+		height: 30px;
+		width: 50px;
+		display: unset;
+		padding: 0px 20px 0px 0px;
+		cursor: pointer;
+	}
+}

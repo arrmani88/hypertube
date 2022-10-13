@@ -1,17 +1,18 @@
 import React from 'react'
-import Main from '../components/Main'
-import Row from '../components/Recommendation'
-import requests from '../Requests'
+// import Main from '../components/Main'
+// import Row from '../components/Recommendation'
+// import requests from '../Requests'
 
 const Home = () => {
   return (
     <>
-		<Main />
+		<h1> Hello ........ </h1>
+		{/* <Main /> */}
 		{/* <Row title='Latest' fetchUrl={requests.requestLatest} /> */}
-		<Row title='Popular' fetchUrl={requests.requestPopular} />
-		<Row title='Top rated' fetchUrl={requests.requestTopRated} />
-		<Row title='Now playing' fetchUrl={requests.requestNowPlaying} />
-		<Row title='Upcoming' fetchUrl={requests.requestUpcoming} />
+		{/* <Row title='Popular' fetchUrl={requests.requestPopular} /> */}
+		{/* <Row title='Top rated' fetchUrl={requests.requestTopRated} /> */}
+		{/* <Row title='Now playing' fetchUrl={requests.requestNowPlaying} /> */}
+		{/* <Row title='Upcoming' fetchUrl={requests.requestUpcoming} /> */}
 	</>
   )
 }
