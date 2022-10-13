@@ -1,0 +1,2 @@
+name should takke full width in drawer
+change drawer background color
