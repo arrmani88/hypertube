@@ -1,8 +1,11 @@
 import React from 'react'
 import './styles/Navbar.css'
 import { BiMenuAltRight } from 'react-icons/bi'
+import { useDispatch } from 'react-redux'
+import { openSidebar } from '../redux/sidebar'
 
-const Navbar = () => {
+const NavbarUserLoggedIn = () => {
+	const dispatch = useDispatch()
 	return (
 		<div className='navbarContainer'>
 			<div className='balanceEmptyDivAvatar' />
@@ -15,25 +18,26 @@ const Navbar = () => {
 				<h1 className='sectionNavbar'>Settings</h1>
 			</div>
 			<img className='avatarUserNavbar' src='images/arrmani88.jpeg' alt='userImg' />
-			<BiMenuAltRight  className='menuIcon'></BiMenuAltRight>
+			<BiMenuAltRight onClick={() => dispatch(openSidebar())} className='menuIcon'></BiMenuAltRight>
 		</div>
 	)
 }
 
-// onClick={changeDrawerState}
+const NavbarUserUnlogged = () => {
+	return (
+		<div className='navbarUserUnlogged'>
+			<div className='navbarContainer'>
+				<img className='logo' src='images/hypertube_logo.png' alt={'logo'} />
+				<div className='buttonsContainer'>
+					<h1 className='loginText'>Login</h1>
+					<button className='registerButton'>
+						<h1 className='registerText'>Register</h1>
+					</button>
+				</div>
+			</div>
+		</div>
+	)
+}
 
-// const Navbar = () => {
-//   return (
-//     <div className="flex items-start justify-between p-4 z-10 w-full absolute">
-//         <h1 className='text-red-600 text-4xl font-bold cursor-pointer'>HYPERTUBE</h1>
-//         <div>
-//             <button className='text-white pr-4'>Sign in</button>
-//             <button className="bg-red-600 py-2 px-6 rounded cursor-pointer text-white">Sign up</button>
-//         </div>
-//     </div>
-//   )
-// }
-
-export default Navbar
-
+export { NavbarUserLoggedIn, NavbarUserUnlogged }
 

@@ -26,30 +26,48 @@
 	align-items: center;
 	justify-content: center;
 }
-
 .logo {
 	height: 35px;
 	padding: 0 12px 0 12px;
 	cursor: pointer;
 }
-
 .sectionNavbar {
 	color: white;
 	padding: 0 15px 0 15px;
 	cursor: pointer;
 }
-
 .avatarUserNavbar {
 	height: 43px;
 	border-radius: 50%;
 	margin: 0px 20px 0px 0px;
 	cursor: pointer;
 }
-
 .menuIcon {
 	display: none;
 }
-
+.registerButton {
+	background-color: red;
+	border-radius: 4px;
+	margin: 10px 30px 0 10px;
+}
+.registerText {
+	color: white;
+	margin: 10px 15px 10px 15px;
+	font-size: 20px;
+}
+.loginText {
+	color: white;
+	margin: 10px 15px 10px 15px;
+	font-size: 20px;
+	cursor: pointer;
+}
+.buttonsContainer{
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+/* --------------------- */
+/* --------------------- */
 @media only screen and (max-width: 700px) {
 	.navbarContainer {
 		height: 70px;
@@ -63,8 +81,15 @@
 	.avatarUserNavbar {
 		height: 38px;
 	}
+	.registerText{
+		font-size: 15px;
+	}
+	.loginText{
+		font-size: 15px;
+	}
 }
-
+/* --------------------- */
+/* --------------------- */
 @media only screen and (max-width: 550px) { /* smallest format: hide sections */
 	.navbarContainer {
 		justify-content: space-between;
@@ -90,3 +115,19 @@
 		cursor: pointer;
 	}
 }
+
+/* @media only screen and (max-width: 400px) {
+	.navbarUserUnlogged .navbarContainer {
+		display: flex;
+		flex-direction: column;
+		height: 100px;
+		width: 100vw;
+	}
+	.navbarUserUnlogged .logo {
+		margin-top: 20px;
+		left: 0;
+	}
+	.navbarUserUnlogged .buttonsContainer {
+		right: 0;
+	}
+} */
