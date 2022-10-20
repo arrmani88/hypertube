@@ -45,26 +45,16 @@
 .menuIcon {
 	display: none;
 }
-.registerButton {
+.loginButton {
 	background-color: red;
 	border-radius: 4px;
 	margin: 10px 30px 0 10px;
 }
-.registerText {
-	color: white;
-	margin: 10px 15px 10px 15px;
-	font-size: 20px;
-}
 .loginText {
 	color: white;
-	margin: 10px 15px 10px 15px;
+	margin: 10px 20px 10px 20px;
 	font-size: 20px;
 	cursor: pointer;
-}
-.buttonsContainer{
-	display: flex;
-	flex-direction: row;
-	align-items: baseline;
 }
 /* --------------------- */
 /* --------------------- */
@@ -116,8 +106,8 @@
 	}
 }
 
-/* @media only screen and (max-width: 400px) {
-	.navbarUserUnlogged .navbarContainer {
+@media only screen and (max-width: 400px) {
+	/* .navbarUserUnlogged .navbarContainer {
 		display: flex;
 		flex-direction: column;
 		height: 100px;
@@ -129,5 +119,8 @@
 	}
 	.navbarUserUnlogged .buttonsContainer {
 		right: 0;
+	} */
+	.buttonsContainer {
+		display: none;
 	}
-} */
+}

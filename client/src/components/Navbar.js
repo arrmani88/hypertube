@@ -28,12 +28,9 @@ const NavbarUserUnlogged = () => {
 		<div className='navbarUserUnlogged'>
 			<div className='navbarContainer'>
 				<img className='logo' src='images/hypertube_logo.png' alt={'logo'} />
-				<div className='buttonsContainer'>
+				<button className='loginButton'>
 					<h1 className='loginText'>Login</h1>
-					<button className='registerButton'>
-						<h1 className='registerText'>Register</h1>
-					</button>
-				</div>
+				</button>
 			</div>
 		</div>
 	)
