@@ -48,9 +48,17 @@
 .cardText2 {
 	font-size: 18px;
 	margin-top: 10px;
+	margin-bottom: 15px;
 	color: white;
 	font-weight: 200;
 	text-align: center;
+}
+.containerInvalidEmail {
+	height: 25px;
+}
+.invalidEmail {
+	color: red;
+	font-size: 16px;
 }
 .cardButton {
 	display: flex;
@@ -58,7 +66,7 @@
 	align-items: center;
 	background-color: red;
 	padding: 10px 20px 10px 20px;
-	margin-top: 15px;
+	margin-top: 0px;
 	margin-bottom: 20px;
 	border-radius: 5px;
 }
@@ -76,7 +84,31 @@
 	width: 100%;
 	height: 60px;
 	border-radius: 5px;
-	margin-top: 30px;
+	margin-top: 15px;
+	padding: 0 15px 0 15px;
+}
+.emailFieldError {
+	border: 2px solid red;
+}
+.socialsContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 10px;
+	/* align-items: center; */
+}
+.socialMediaIcon {
+	cursor: pointer;
+	height: 50px;
+	width: 50px;
+	margin: 10px 10px 10px 10px;
+	color: white;
+}
+.icon42 {
+	cursor: pointer;
+	height: 50px;
+	width: 50px;
+	margin: 10px 10px 10px 10px;
 }
 /* ------------------------------------------------ */
 /* ------------------------------------------------ */
@@ -108,5 +140,12 @@
 	}
 	.cardText1 {
 		font-size: 18px;
+	}
+}
+/* ------------------------------------------------ */
+/* ------------------------------------------------ */
+@media only screen and (max-width: 400px) {
+	.hideOnMobileVersion {
+		display: none;
 	}
 }
