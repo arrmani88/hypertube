@@ -1,0 +1,30 @@
+// import React from 'react'
+// import Select from 'react-select'
+
+// const style = {
+// 	control: styles => ({
+// 		 ...styles,
+// 		 backgroundColor: 'rgba(0,0,0,0)',
+// 		 height: '50px',
+// 		 border: '0',
+// 		 borderBottom: '0',
+
+// 	}),
+// 	option: (provided) => ({
+// 		...provided,
+// 	})
+// }
+
+// function LanguagesDropDown() {
+// 	const options = [
+// 		{ value: 'English 🇬🇧', label: '🇬🇧' },
+// 		{ value: 'Spanish', label: 'Spanish' },
+// 		{ value: 'German', label: 'German' }
+// 	]
+
+// 	return (
+// 		<Select styles={style} options={options} />
+// 	)
+// }
+
+// export default LanguagesDropDown

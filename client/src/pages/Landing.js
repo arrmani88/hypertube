@@ -21,6 +21,7 @@ const Landing = () => {
 		<div className='container'>
 			<img className='backgroundImage' src='images/movies.jpeg' alt='bgr_img' />
 			<div className='gradient' />
+			<div className='emptyBox'/>
 			<div className='card'>
 				<h1 className='cardTitle'>See what's next!</h1>
 				<h1 className='cardText1'>Watch limitless anytime, anywhere...</h1>

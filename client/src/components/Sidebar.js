@@ -22,7 +22,7 @@ const SideBar = () => {
 	const sidebarState = useSelector((state) => state.sidebar.value)
 
 	const SidebarRef = useRef(null)
-	useEffect(() => {
+	useEffect((dispatch) => { // added
 		const SideBarClick = (e) => {
 			if (SidebarRef.current && !SidebarRef.current.contains(e.target))
 				dispatch(closeSidebar())

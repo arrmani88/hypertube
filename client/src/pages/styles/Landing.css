@@ -1,5 +1,6 @@
 .container {
 	display: flex;
+	flex-direction: column;
 	min-height: 100vh;
 	min-width: 100vw;
 }
@@ -35,7 +36,6 @@
 	font-size: 50px;
 	font-weight: 600;
 	text-align: center;
-	/* margin-top: 0px; */
 }
 .cardText1 {
 	color: white;
@@ -95,7 +95,6 @@
 	flex-direction: row;
 	justify-content: center;
 	margin-top: 10px;
-	/* align-items: center; */
 }
 .socialMediaIcon {
 	cursor: pointer;
@@ -147,5 +146,8 @@
 @media only screen and (max-width: 400px) {
 	.hideOnMobileVersion {
 		display: none;
+	}
+	.emptyBox{
+		padding: 25px;
 	}
 }

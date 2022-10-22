@@ -3,6 +3,7 @@ import './styles/Navbar.css'
 import { BiMenuAltRight } from 'react-icons/bi'
 import { useDispatch } from 'react-redux'
 import { openSidebar } from '../redux/sidebar'
+import LanguagesDropDown from './LanguagesDropDown.js'
 
 const NavbarUserLoggedIn = () => {
 	const dispatch = useDispatch()
@@ -28,13 +29,15 @@ const NavbarUserUnlogged = () => {
 		<div className='navbarUserUnlogged'>
 			<div className='navbarContainer'>
 				<img className='logo' src='images/hypertube_logo.png' alt={'logo'} />
-				<button className='loginButton'>
-					<h1 className='loginText'>Login</h1>
-				</button>
+				<div className='languagesAndLogin'>
+					<LanguagesDropDown />
+					<button className='loginButton'>
+						<h1 className='loginText'>Login</h1>
+					</button>
+				</div>
 			</div>
 		</div>
 	)
 }
 
 export { NavbarUserLoggedIn, NavbarUserUnlogged }
-
