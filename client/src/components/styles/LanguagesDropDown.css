@@ -1,0 +1,17 @@
+.languagesDropDown {
+    display: flex;
+    justify-content: center;
+}
+.flag {
+    width: 50px;
+    cursor: pointer;
+}
+.dropdownMenu {
+    position: absolute;
+    background-color: white;
+    border-radius: 8px;
+    width: 70px;
+    height: 150px;
+    margin: 10px;
+    top: 50px;
+}
