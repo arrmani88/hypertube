@@ -27,7 +27,6 @@ const Landing = () => {
 				<h1 className='cardText1'>Watch limitless anytime, anywhere...</h1>
 				<h1 className='cardText2 hideOnMobileVersion'>Ready to watch? Enter your email to create or restart your membership.</h1>
 				<div>
-				{/* `emailField (${isEmailValid === false && 'emailFielError'})` */}
 					<input className={`emailField ${isEmailValid === false && 'emailFieldError'}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder='Enter your Email' type='text' />
 					<div className='containerInvalidEmail'>
 						{isEmailValid === false

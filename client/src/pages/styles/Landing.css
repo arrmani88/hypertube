@@ -86,6 +86,7 @@
 	border-radius: 5px;
 	margin-top: 15px;
 	padding: 0 15px 0 15px;
+	outline: none;
 }
 .emailFieldError {
 	border: 2px solid red;

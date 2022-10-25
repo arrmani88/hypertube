@@ -117,8 +117,10 @@
 }
 /* ------------------------------------------------ */
 /* ------------------------------------------------ */
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 375px) {
 	.logo {
 		padding-left: 15px;
+		width: 50vw;
+		height: auto;
 	}
 }
