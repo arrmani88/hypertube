@@ -1,12 +1,14 @@
 import React from 'react'
-import './styles/Landing.css'
 import { BsFacebook, BsPlayFill } from 'react-icons/bs'
 import { NavbarUserUnlogged } from '../components/Navbar'
 import Divider from '../components/Divider'
 import { ImGoogle3 } from 'react-icons/im'
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import styles from './styles/Landing.css'
 
 const Landing = () => {
+	const { t } = useTranslation()
 	const emailRef = useRef(null)
 	const [isEmailValid, setIsEmailValid] = useState(true)
 
@@ -16,39 +18,39 @@ const Landing = () => {
 		))
 	}
 	return (
-	<>
-		<NavbarUserUnlogged />
-		<div className='container'>
-			<img className='backgroundImage' src='images/movies.jpeg' alt='bgr_img' />
-			<div className='gradient' />
-			<div className='emptyBox'/>
-			<div className='card'>
-				<h1 className='cardTitle'>See what's next!</h1>
-				<h1 className='cardText1'>Watch limitless anytime, anywhere...</h1>
-				<h1 className='cardText2 hideOnMobileVersion'>Ready to watch? Enter your email to create or restart your membership.</h1>
-				<div>
-					<input className={`emailField ${isEmailValid === false && 'emailFieldError'}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder='Enter your Email' type='text' />
-					<div className='containerInvalidEmail'>
-						{isEmailValid === false
-							? <h1 className='invalidEmail'>Invalid email address</h1>
-							: <h1 className='invalidEmail'> </h1>
-						}
-					</div>
-					<button className='cardButton' onClick={ click }>
-						<h1 className='buttonText'>START WATCHING FOR FREE</h1>
-						<BsPlayFill className='cardPlayIcon' />
-					</button>
-					<Divider><h1>Or</h1></Divider>
-					<h1 className='cardText2'>Continue with:</h1>
-					<div className='socialsContainer'>
-						<BsFacebook className='socialMediaIcon' />
-						<ImGoogle3 className='socialMediaIcon' />
-						<img src='images/42_icon.png' className='icon42' alt='42_icon' />
+		<>
+			<NavbarUserUnlogged />
+			<div className={styles.container}>
+				<img className={styles.backgroundImage} src='images/movies.jpeg' alt='bgr_img' />
+				<div className={styles.gradient} />
+				<div className={styles.emptyBox} />
+				<div className={styles.card}>
+					<h1 className={styles.cardTitle}>{t("see_whats_next")}</h1>
+					<h1 className={styles.cardText1}>{t("watch_limitless")}</h1>
+					<h1 className={styles.cardText2 `hideOnMobileVersion`}>{t("ready_to_watch")}</h1>
+					<div>
+						<input className={`${styles.emailField} ${(isEmailValid === false && 'emailFieldError')}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder={t("enter_your_email")} type='text' />
+						<div className={styles.containerInvalidEmail}>
+							{isEmailValid === false
+								? <h1 className={styles.invalidEmail}>{t("invalid_email")}</h1>
+								: <h1 className={styles.invalidEmail}> </h1>
+							}
+						</div>
+						<button className={styles.cardButton} onClick={click}>
+							<h1 className={styles.buttonText}>{t('start_watching_free')}</h1>
+							<BsPlayFill className={styles.cardPlayIcon} />
+						</button>
+						<Divider><h1>{t('or')}</h1></Divider>
+						<h1 className={styles.cardText2}>{t('continue_with')}</h1>
+						<div className={styles.socialsContainer}>
+							<BsFacebook className={styles.socialMediaIcon} />
+							<ImGoogle3 className={styles.socialMediaIcon} />
+							<img src='images/42_icon.png' className={styles.icon42} alt='42_icon' />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</>
+		</>
 	)
 }
 

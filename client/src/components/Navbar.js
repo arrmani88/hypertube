@@ -4,9 +4,11 @@ import { BiMenuAltRight } from 'react-icons/bi'
 import { useDispatch } from 'react-redux'
 import { openSidebar } from '../redux/sidebar'
 import LanguagesDropdown from './LanguagesDropdown.js'
+import { useTranslation } from 'react-i18next'
 
 const NavbarUserLoggedIn = () => {
 	const dispatch = useDispatch()
+
 	return (
 		<div className='navbarContainer'>
 			<div className='balanceEmptyDivAvatar' />
@@ -25,6 +27,8 @@ const NavbarUserLoggedIn = () => {
 }
 
 const NavbarUserUnlogged = () => {
+	const { t } = useTranslation()
+
 	return (
 		<div className='navbarUserUnlogged'>
 			<div className='navbarContainer'>
@@ -32,7 +36,7 @@ const NavbarUserUnlogged = () => {
 				<div className='languagesAndLogin'>
 					<LanguagesDropdown />
 					<button className='loginButton'>
-						<h1 className='loginText'>Login</h1>
+						<h1 className='loginText'>{t('login')}</h1>
 					</button>
 				</div>
 			</div>

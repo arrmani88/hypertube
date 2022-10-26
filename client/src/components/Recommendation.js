@@ -7,7 +7,6 @@ import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 
 const Row = ({title, fetchUrl}) => {
 	const [movies, setMovies] = useState([])
-	// const windowDimensions = useWindowDimensions()
 
 	function scroll (size) {
 		var slider = document.getElementById(`slider${title}`)
