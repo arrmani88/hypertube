@@ -42,9 +42,9 @@
 .cardChildren {
 	width: min(90%, 450px);
 }
-.register_form p {
+.label {
 	color: white;
-	font-size: 15px;
+	font-size: 20px;
 }
 .register_form label {
 	width: 100%;
@@ -57,11 +57,21 @@
 	outline: none;
 }
 .register_form h1 {
-	color: white;
+	white-space: pre-wrap;
+	color: red;
+	font-size: 14px;
 }
 .submitButton {
-	margin: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background: red;
+	color: white;
 	cursor: pointer;
-	background: white;
-	/* color: white; */
+	margin: 10px;
+	font-size: 30px;
+	width: 100%;
+	height: 60px;
+	border-radius: 5px;
 }
