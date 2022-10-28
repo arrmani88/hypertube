@@ -1,4 +1,4 @@
-import { US, ES, DE } from 'country-flag-icons/react/3x2'
+import { US, DE } from 'country-flag-icons/react/3x2'
 import React from 'react'
 import './styles/LanguagesDropdown.css'
 import { useState, useRef, useEffect } from 'react'

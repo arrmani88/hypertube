@@ -56,3 +56,12 @@
 	padding: 0 15px 0 15px;
 	outline: none;
 }
+.register_form h1 {
+	color: white;
+}
+.submitButton {
+	margin: 20px;
+	cursor: pointer;
+	background: white;
+	/* color: white; */
+}
