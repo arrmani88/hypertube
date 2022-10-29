@@ -7,5 +7,13 @@
     "invalid_email": "Ungültige Email",
     "start_watching_free": "SEHEN SIE KOSTENLOS AN",
     "or": "Oder",
-    "continue_with": "Weiter mit:"
+    "continue_with": "Weiter mit:",
+
+    "first_name": "Vorname",
+    "last_name": "Nachname",
+    "e_mail": "E-mail",
+    "birthday": "Geburtstag",
+    "gender": "Geschlecht",
+    "new_password": "Neues passwort",
+    "confirm_password": "Passwort bestätigen"
 }

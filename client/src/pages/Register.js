@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import regex from '../constants/regex'
 import { BsPlayFill } from 'react-icons/bs'
+import { useTranslation } from 'react-i18next'
 
 const passwordLengthMessage = 'Password should be between 6 and 20 characters'
 const userSchema = yup.object({
@@ -18,6 +19,7 @@ const userSchema = yup.object({
 }).required()
 
 const Register = () => {
+	const { t } = useTranslation()
 	const { register, handleSubmit, formState: { errors } } = useForm({
 		resolver: yupResolver(userSchema)
 	})
@@ -34,37 +36,37 @@ const Register = () => {
 				<div className={styles.cardChildren}>
 					<form onSubmit={handleSubmit(submitForm)} className={styles.register_form} >
 						<label>
-							<p className={styles.label}>First name</p>
+							<p className={styles.label}>{t('first_name')}</p>
 							<input {...register('firstName')} placeholder='Your first name' />
 							<h1>{errors.firstName?.message || ' '} </h1>
 						</label>
 						<label>
-							<p className={styles.label}>Last name</p>
+							<p className={styles.label}>{t('last_name')}</p>
 							<input {...register('lastName')} placeholder='Your last name' />
 							<h1>{errors.lastName?.message ? errors.lastName?.message : ' '} </h1>
 						</label>
 						<label>
-							<p className={styles.label}>E-mail</p>
+							<p className={styles.label}>{t('e_mail')}-mail</p>
 							<input {...register('email')} placeholder='Your E-mail' />
 							<h1>{errors.email?.message || ' '}</h1>
 						</label>
 						<label>
-							<p className={styles.label}>Birthday ------------</p>
+							<p className={styles.label}>{t('birthday')}</p>
 							<input {...register('birthday')} placeholder='Your birthday' />
 							<h1>{errors.birthday?.message || ' '}</h1>
 						</label>
 						<label>
-							<p className={styles.label}>Gender -------------</p>
+							<p className={styles.label}>{t('gender')}</p>
 							<input {...register('gender')} placeholder='Your gender' />
 							<h1>{errors.gender?.message || ' '}</h1>
 						</label>
 						<label>
-							<p className={styles.label}>New password</p>
+							<p className={styles.label}>{t('new_password')}</p>
 							<input {...register('password')} placeholder='Your New password' />
 							<h1>{errors.password?.message || ' '}</h1>
 						</label>
 						<label>
-							<p className={styles.label}>Confirm password</p>
+							<p className={styles.label}>{t('confirm_password')}</p>
 							<input {...register('confirmPassword')} placeholder='Re-type your password' />
 							<h1>{errors.confirmPassword?.message || ' '}</h1>
 						</label>
