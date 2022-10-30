@@ -8,6 +8,7 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
 import DeTranslation from './locales/de_translation.json'
 import EnTranslation from './locales/en_translation.json'
+import Login from "./pages/Login";
 
 i18n
 	.use(initReactI18next)
@@ -31,7 +32,8 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Landing />} />
 				<Route path='/home' element={<Home />} />
-				<Route path='/register' element={<Register /> }/>
+				<Route path='/login' element={<Login />} />
+				<Route path='/register' element={<Register />} />
 			</Routes>
 		</>
 	);

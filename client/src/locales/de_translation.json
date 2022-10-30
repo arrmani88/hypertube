@@ -16,5 +16,9 @@
     "gender": "Geschlecht",
     "new_password": "Neues passwort",
     "confirm_password": "Passwort bestätigen",
-    "register": "Registrieren"
+    "register": "Registrieren",
+    "your": "Ihre ",
+    "required_field": "Pflichtfeld",
+    "retype_password": "Passwort wiederholen"
+
 }
