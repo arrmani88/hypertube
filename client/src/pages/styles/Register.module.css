@@ -75,3 +75,19 @@
 	height: 60px;
 	border-radius: 5px;
 }
+.avatarsContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.avatar {
+	max-height: 80px;
+	margin: 0 8px 0 8px;
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%); /* safari 6.0 ->> 9.0 */
+	cursor: pointer;
+}
+.selectedAvatar, .avatar:hover {
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+}

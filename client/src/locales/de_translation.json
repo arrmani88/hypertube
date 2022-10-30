@@ -15,5 +15,6 @@
     "birthday": "Geburtstag",
     "gender": "Geschlecht",
     "new_password": "Neues passwort",
-    "confirm_password": "Passwort bestätigen"
+    "confirm_password": "Passwort bestätigen",
+    "register": "Registrieren"
 }
