@@ -61,11 +61,13 @@ const Register = () => {
 							<h1>{errors.birthday?.message || ' '}</h1>
 						</label>
 						<label>
-							<div className={styles.avatarsContainer} >
+							<div className={styles.gender}>
 								<p className={styles.label}>{t('gender')}</p>
-								<input {...register('gender')} type='hidden' />
-								<img onClick={() => chooseGender('female')} className={styles.avatar + ' ' + (gender === 'female' && styles.selectedAvatar)} src='images/woman-avatar.svg' alt='man-avatar' />
-								<img onClick={() => chooseGender('male')} className={styles.avatar + ' ' + (gender === 'male' && styles.selectedAvatar)} src='images/man-avatar.svg' alt='man-avatar' />
+								<div className={styles.avatarsContainer} >
+									<input {...register('gender')} type='hidden' />
+									<img onClick={() => chooseGender('female')} className={styles.avatar + ' ' + (gender === 'female' && styles.selectedAvatar)} src='images/woman-avatar.svg' alt='man-avatar' />
+									<img onClick={() => chooseGender('male')} className={styles.avatar + ' ' + (gender === 'male' && styles.selectedAvatar)} src='images/man-avatar.svg' alt='man-avatar' />
+							</div>
 							</div>
 							<h1>{(gender === '' && errors.gender?.message) || ' '}</h1>
 						</label>

@@ -26,7 +26,7 @@ const NavbarUserLoggedIn = () => {
 	)
 }
 
-const NavbarUserUnlogged = () => {
+const NavbarUserUnlogged = (props) => {
 	const { t } = useTranslation()
 
 	return (
@@ -35,9 +35,11 @@ const NavbarUserUnlogged = () => {
 				<img className='logo' src='images/hypertube_logo.png' alt={'logo'} />
 				<div className='languagesAndLogin'>
 					<LanguagesDropdown />
-					<button className='loginButton'>
+					{props.loginButtonHidden === true
+						? <div />
+						: <button className='loginButton'>
 						<h1 className='loginText'>{t('login')}</h1>
-					</button>
+					</button>}
 				</div>
 			</div>
 		</div>

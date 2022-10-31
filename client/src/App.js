@@ -9,6 +9,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import DeTranslation from './locales/de_translation.json'
 import EnTranslation from './locales/en_translation.json'
 import Login from "./pages/Login";
+import AccountVerified from "./pages/AccountVerified";
 
 i18n
 	.use(initReactI18next)
@@ -34,6 +35,7 @@ function App() {
 				<Route path='/home' element={<Home />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
+				<Route path='/account_verified' element={<AccountVerified />} />
 			</Routes>
 		</>
 	);
