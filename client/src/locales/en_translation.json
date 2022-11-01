@@ -21,5 +21,6 @@
     "retype_password": "Re-type your password",   
     "password": "Password",
     "account_verified": "Account verified",
-    "your_account_has_been_verified" : "Your account has been successfully verified, you can begin your adventure now!"
+    "your_account_has_been_verified" : "Your account has been successfully verified, you can begin your adventure now!",
+    "username": "Username"
 }

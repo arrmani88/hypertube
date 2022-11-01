@@ -3,7 +3,16 @@ const app = express()
 const port = 3001
 const http = require("http");
 const server = http.createServer(app);
+const cors = require('cors')
 
+const corsOptions = {
+    origin: [
+        process.env.HOSTNAME,
+        'http://localhost:3000'
+    ],
+    optionsSuccessStatus: 200
+}
+const corsMiddleware = cors(corsOptions)
 const register = require('./routes/register')
 const login = require('./routes/login')
 const completeProfile = require('./routes/complete_profile')
@@ -24,6 +33,8 @@ const getVisitors = require('./routes/get_visitors')
 const getFeedUsers = require('./routes/get_feed_users')
 
 app.use(express.json())
+app.options('*', corsMiddleware)
+app.use(corsMiddleware)
 app.use('/register', register)
 app.use('/login', login)
 app.use('/complete_profile', completeProfile)

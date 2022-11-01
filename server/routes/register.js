@@ -10,6 +10,7 @@ const dbController = require("../models/db_controller")
 const fieldIsNullMessage = "One of the fields 'firstname', 'lastname', 'username', 'email' or 'password' is empty or wasn't sent"
 
 const validateRegistrationInput = async (req, res, next) => {
+	
 	console.log(process.env.EMAIL_ADDR)
 	console.log(process.env.EMAIL_PASS)
 	try {
@@ -84,10 +85,10 @@ router.post('/', async (req, res) => {
 								from: process.env.EMAIL_ADDR,
 								to: 'pirotil826@falkyz.com',
 								subject: 'Matcha account confirmation',
-								html: `http://localhost:3000/confirm_email/${emailConfirmationToken}`
+								html: `${process.env.HOSTNAME}/confirm_email/${emailConfirmationToken}`
 							},
 							(err, info) => {
-								console.log(`http://localhost:3000/confirm_email/${emailConfirmationToken}`)
+								console.log(`${process.env.HOSTNAME}/confirm_email/${emailConfirmationToken}`)
 								if (err) res.status(400).json({ error: err.stack })
 								else res.json("Account created successfully, we sent you a mail to confirm your email address, please check your inbox")
 							}

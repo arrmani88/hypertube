@@ -4,19 +4,27 @@ import styles from './styles/Register.module.css'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import regex from '../constants/regex'
+import { kFirstNameRegex, kUsernameRegex } from '../constants/regex'
 import { BsPlayFill } from 'react-icons/bs'
 import { useTranslation } from 'react-i18next'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import axios from 'axios'
+
+const usernameMessageLength = 'Username should be 3 to 20 characters'
+const usernameContentMessage = "Username can only contain letters, numbers, '.' and '_'"
+const passwordLengthMessage = 'Password should be between 6 and 20 characters'
 
 const Register = () => {
 	const [gender, setGender] = useState('')
+	const [searchParams] = useSearchParams()
+	const [initialEmailValue, setInitialEmailValue] = useState(searchParams.get('email'))
 	const { t } = useTranslation()
-	const passwordLengthMessage = 'Password should be between 6 and 20 characters'
 	const userSchema = yup.object({
-		firstName: 		yup.string().required(t('required_field')).matches(regex.kFirstName, 'Invalid first name'),
-		lastName: 		yup.string().required(t('required_field')).matches(regex.kFirstName, 'Invalid last name'),
-		birthday: 		yup.string().required(t('required_field')),
+		firstName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid first name'),
+		lastName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid last name'),
 		email: 			yup.string().required(t('required_field')).email('Invalid email address'),
+		username: 		yup.string().required(t('required_field')).min(3, usernameMessageLength).max(20, usernameMessageLength).matches(kUsernameRegex, usernameContentMessage),
+		birthday: 		yup.string().required(t('required_field')),
 		gender:			yup.string().required(t('required_field')),
 		password: 		yup.string().required(t('required_field')).min(6, passwordLengthMessage).max(20, passwordLengthMessage),
 		confirmPassword: yup.string().required(t('required_field')).oneOf([yup.ref('password')], "Passwords should match")
@@ -30,8 +38,22 @@ const Register = () => {
 	}
 	const submitForm = (registrationData) => {
 		console.log(registrationData)
+		for (var k in registrationData) {
+			k = k.toLowerCase()
+			console.log(k)
+		}
+		console.log(registrationData)
+		// try {
+		// 	axios.post(
+		// 		process.env.REACT_APP_SERVERHOSTNAME + '/register',
+		// 		registrationData,
+		// 	)
+		// } catch (err) {
+		// 	console.log(err)
+		// }
 	}
-
+	const editEmail = (e) => setInitialEmailValue(e.target.value)
+	
 	return (<>
 		<NavbarUserUnlogged />
 		<div className={styles.register}>
@@ -51,8 +73,13 @@ const Register = () => {
 							<h1>{errors.lastName?.message ? errors.lastName?.message : ' '} </h1>
 						</label>
 						<label>
+							<p className={styles.label}>{t('username')}</p>
+							<input {...register('username')} placeholder={t('your') + t('username')} />
+							<h1>{errors.username?.message ? errors.username?.message : ' '} </h1>
+						</label>
+						<label>
 							<p className={styles.label}>{t('e_mail')}</p>
-							<input {...register('email')} placeholder={t('your') + t('e_mail')} />
+							<input {...register('email')} value={initialEmailValue} onChange={editEmail} placeholder={t('your') + t('e_mail')} />
 							<h1>{errors.email?.message || ' '}</h1>
 						</label>
 						<label>

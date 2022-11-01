@@ -21,6 +21,7 @@
 	"retype_password": "Passwort wiederholen",
 	"password": "Passwort",
 	"account_verified": "Konto verifiziert!",
-	"your_account_has_been_verified": "Ihr Konto wurde erfolgreich verifiziert, Sie können jetzt Ihre Abenteuer beginnen!"
+	"your_account_has_been_verified": "Ihr Konto wurde erfolgreich verifiziert, Sie können jetzt Ihre Abenteuer beginnen!",
+    "username": "Benutzername"
 
 }

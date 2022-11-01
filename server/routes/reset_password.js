@@ -29,10 +29,10 @@ router.get('/', (req, res) => {
 			from: process.env.EMAIL_ADDR,
 			to: 'pirotil826@falkyz.com',
 			subject: "Matcha password reset",
-			html: `http://localhost:3000/reset_password/${resetPasswordToken}`
+			html: `${process.env.HOSTNAME}/reset_password/${resetPasswordToken}`
 		},
 		(err, info) => {
-			console.log(`http://localhost:3000/reset_password/${resetPasswordToken}`)
+			console.log(`${process.env.HOSTNAME}/reset_password/${resetPasswordToken}`)
 			if (err) res.status(400).json({ error: err.stack })
 			else res.json(" An email was sent to your mailbox to reset your password, please check your inbox")
 		}

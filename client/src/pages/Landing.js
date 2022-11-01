@@ -6,17 +6,27 @@ import { ImGoogle3 } from 'react-icons/im'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './styles/Landing.module.css'
+import { useNavigate } from 'react-router-dom'
+import { kEmailRegex } from '../constants/regex'
 
 const Landing = () => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const emailRef = useRef(null)
-	const [isEmailValid, setIsEmailValid] = useState(true)
+	const [isEmailValid, setIsEmailValid] = useState(null)
 
-	const click = () => {
-		setIsEmailValid(Boolean(String(emailRef.current.value).toLowerCase()
-			.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-		))
+	const redirect = (e) => {
+		e.preventDefault()
+		const isEmailMatched = Boolean(String(emailRef.current.value).toLowerCase().match(kEmailRegex) !== null)
+		setIsEmailValid(isEmailMatched)
+		if (isEmailMatched === true) {
+			navigate({
+				pathname: '/register',
+				search: 'email=' + emailRef.current.value
+			})
+		}
 	}
+
 	return (
 		<>
 			<NavbarUserUnlogged />
@@ -29,14 +39,14 @@ const Landing = () => {
 					<h1 className={styles.cardText1}>{t("watch_limitless")}</h1>
 					<h1 className={`${styles.cardText2} hideOnMobileVersion`}>{t("ready_to_watch")}</h1>
 					<div>
-						<input className={`${styles.emailField} ${(isEmailValid === false && 'emailFieldError')}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder={t("enter_your_email")} type='text' />
+						<input className={`${styles.emailField} ${(isEmailValid === false && 'emailFieldError')}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder={t("enter_your_email")} />
 						<div className={styles.containerInvalidEmail}>
 							{isEmailValid === false
 								? <h1 className={styles.invalidEmail}>{t("invalid_email")}</h1>
 								: <h1 className={styles.invalidEmail}> </h1>
 							}
 						</div>
-						<button className={styles.cardButton} onClick={click}>
+						<button className={styles.cardButton} onClick={redirect}>
 							<h1 className={styles.buttonText}>{t('start_watching_free')}</h1>
 							<BsPlayFill className={styles.cardPlayIcon} />
 						</button>
