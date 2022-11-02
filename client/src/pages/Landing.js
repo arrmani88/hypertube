@@ -19,12 +19,11 @@ const Landing = () => {
 		e.preventDefault()
 		const isEmailMatched = Boolean(String(emailRef.current.value).toLowerCase().match(kEmailRegex) !== null)
 		setIsEmailValid(isEmailMatched)
-		if (isEmailMatched === true) {
+		if (isEmailMatched === true)
 			navigate({
 				pathname: '/register',
 				search: 'email=' + emailRef.current.value
 			})
-		}
 	}
 
 	return (

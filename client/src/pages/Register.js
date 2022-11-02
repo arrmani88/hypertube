@@ -9,15 +9,17 @@ import { BsPlayFill } from 'react-icons/bs'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
+import ReactLoading from 'react-loading'
 
 const usernameMessageLength = 'Username should be 3 to 20 characters'
 const usernameContentMessage = "Username can only contain letters, numbers, '.' and '_'"
 const passwordLengthMessage = 'Password should be between 6 and 20 characters'
 
 const Register = () => {
+	const navigate = useNavigate()
 	const [gender, setGender] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
 	const [searchParams] = useSearchParams()
-	const [initialEmailValue, setInitialEmailValue] = useState(searchParams.get('email'))
 	const { t } = useTranslation()
 	const userSchema = yup.object({
 		firstName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid first name'),
@@ -36,23 +38,20 @@ const Register = () => {
 		setGender(userGender)
 		setValue('gender', userGender)
 	}
-	const submitForm = (registrationData) => {
+	const submitForm = async (registrationData) => {
 		console.log(registrationData)
-		for (var k in registrationData) {
-			k = k.toLowerCase()
-			console.log(k)
+		try {
+			setIsLoading(true)
+			const rsp = await axios.post(
+				process.env.REACT_APP_SERVERHOSTNAME + '/register',
+				registrationData,
+			)
+			navigate({ pathname: '/verify_your_account' })
+		} catch (err) {
+			console.log(err)
 		}
-		console.log(registrationData)
-		// try {
-		// 	axios.post(
-		// 		process.env.REACT_APP_SERVERHOSTNAME + '/register',
-		// 		registrationData,
-		// 	)
-		// } catch (err) {
-		// 	console.log(err)
-		// }
+		setIsLoading(false)
 	}
-	const editEmail = (e) => setInitialEmailValue(e.target.value)
 	
 	return (<>
 		<NavbarUserUnlogged />
@@ -79,7 +78,7 @@ const Register = () => {
 						</label>
 						<label>
 							<p className={styles.label}>{t('e_mail')}</p>
-							<input {...register('email')} value={initialEmailValue} onChange={editEmail} placeholder={t('your') + t('e_mail')} />
+							<input {...register('email')} defaultValue={searchParams.get('email') || ''}  placeholder={t('your') + t('e_mail')} />
 							<h1>{errors.email?.message || ' '}</h1>
 						</label>
 						<label>
@@ -94,7 +93,7 @@ const Register = () => {
 									<input {...register('gender')} type='hidden' />
 									<img onClick={() => chooseGender('female')} className={styles.avatar + ' ' + (gender === 'female' && styles.selectedAvatar)} src='images/woman-avatar.svg' alt='man-avatar' />
 									<img onClick={() => chooseGender('male')} className={styles.avatar + ' ' + (gender === 'male' && styles.selectedAvatar)} src='images/man-avatar.svg' alt='man-avatar' />
-							</div>
+								</div>
 							</div>
 							<h1>{(gender === '' && errors.gender?.message) || ' '}</h1>
 						</label>
@@ -110,7 +109,10 @@ const Register = () => {
 						</label>
 						<button type='submit' className={styles.submitButton}>
 							<p>{t('register')}</p>
-							<BsPlayFill className={`text-[40px]`} />
+							{isLoading === true
+								? <ReactLoading type='spin' className='p-2' />
+								: <BsPlayFill className={`text-[40px]`} />
+							}
 						</button>
 					</form>
 				</div>

@@ -22,6 +22,8 @@
 	"password": "Passwort",
 	"account_verified": "Konto verifiziert!",
 	"your_account_has_been_verified": "Ihr Konto wurde erfolgreich verifiziert, Sie können jetzt Ihre Abenteuer beginnen!",
-    "username": "Benutzername"
-
+    "username": "Benutzername",
+    "please_confrim_your_account": "Bitte, bestätigen Sie Ihr Konto...",
+    "check_your_inbox_to_confirm": "Wir haben Ihnen Eine Email zur Bestätigung Ihres Konto geschickt, überprüfen Sie Ihren Posteingang",
+	"resend_confirmation_email": "Bestätigungsmail erneut senden"
 }

@@ -22,5 +22,8 @@
     "password": "Password",
     "account_verified": "Account verified",
     "your_account_has_been_verified" : "Your account has been successfully verified, you can begin your adventure now!",
-    "username": "Username"
+    "username": "Username",
+    "please_confrim_your_account": "Please confirm your account...",
+    "check_your_inbox_to_confirm": "We sent you an Email to confirm your account, please check your inbox",
+	"resend_confirmation_email": "Re-send confirmation Email"
 }

@@ -29,4 +29,3 @@ const Divider = ({children}) => {
 }
 
 export default Divider
-
