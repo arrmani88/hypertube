@@ -25,5 +25,6 @@
     "username": "Benutzername",
     "please_confrim_your_account": "Bitte, bestätigen Sie Ihr Konto...",
     "check_your_inbox_to_confirm": "Wir haben Ihnen Eine Email zur Bestätigung Ihres Konto geschickt, überprüfen Sie Ihren Posteingang",
-	"resend_confirmation_email": "Bestätigungsmail erneut senden"
+	"resend_confirmation_email": "Bestätigungsmail erneut senden",
+    "login_and_start_watching": "Melden Sie sich mit Ihrem Konto an, und Fangen Sie an, kostenlos anzusehen..."
 }

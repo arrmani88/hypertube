@@ -110,7 +110,7 @@ const Register = () => {
 						<button type='submit' className={styles.submitButton}>
 							<p>{t('register')}</p>
 							{isLoading === true
-								? <ReactLoading type='spin' className='p-2' />
+								? <ReactLoading type='spin' className='p-3' />
 								: <BsPlayFill className={`text-[40px]`} />
 							}
 						</button>

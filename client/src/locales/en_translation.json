@@ -25,5 +25,6 @@
     "username": "Username",
     "please_confrim_your_account": "Please confirm your account...",
     "check_your_inbox_to_confirm": "We sent you an Email to confirm your account, please check your inbox",
-	"resend_confirmation_email": "Re-send confirmation Email"
+	"resend_confirmation_email": "Re-send confirmation Email",
+    "login_and_start_watching": "Log in using your account, and start watching for free..."
 }

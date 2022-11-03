@@ -20,10 +20,14 @@ const button = {
 	color: 'white',
 	cursor: 'pointer',
 	margin: '10px',
-	padding: '5px 5px 5px 5px ',
+	padding: '10px 5px 10px 5px ',
 	fontSize: '30px',
 	width: '95%',
 	borderRadius: '5px',
+}
+
+const cardContent  = {
+	width: 'min(90%, 500px)'
 }
 
 const VerfifyYourAccount = () => {
@@ -35,7 +39,7 @@ const VerfifyYourAccount = () => {
 			<img className={styles.backgroundImg} src='images/dark2.jpg' alt='background_img' />
 			<div style={gradient} />
 			<div className={styles.card} >
-				<div className={styles.cardContent} >
+				<div style={cardContent} >
 					<h1 className={styles.cardTitle}>{t('please_confrim_your_account')}</h1>
 					<h1 className={styles.cardDescription}>{t('check_your_inbox_to_confirm')}</h1>
 					<div className='mt-[20px]' />
