@@ -6,7 +6,7 @@ import styles from './styles/AccountVerified.module.css'
 
 const gradient = {
 	position: 'absolute',
-	background: 'radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 100%)',
+	background: 'radial-gradient(circle, rgba(0,0,0,0) 15%, rgba(0,0,0,1) 100%)',
 	height: '100vh',
 	width: '100vw'
 }

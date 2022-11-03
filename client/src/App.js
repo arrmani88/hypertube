@@ -11,7 +11,7 @@ import EnTranslation from './locales/en_translation.json'
 import Login from "./pages/Login";
 import AccountVerified from "./pages/AccountVerified";
 import VerfifyYourAccount from "./pages/VerifyYourAccount";
-import CompleteProfile from "./pages/CompleteProfile";
+import UploadImage from "./pages/UploadImage";
 
 i18n
 	.use(initReactI18next)
@@ -39,7 +39,7 @@ function App() {
 				<Route path='/register' element={<Register />} />
 				<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
 				<Route path='/account_verified' element={<AccountVerified />} />
-				<Route path='/complete_profile' element={<CompleteProfile />} />
+				<Route path='/upload_image' element={<UploadImage />} />
 			</Routes>
 		</>
 	);

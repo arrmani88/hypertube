@@ -1,0 +1,98 @@
+.title {
+	color: white;
+	font-size: 50px;
+	font-weight: 600;
+	text-align: center;
+	padding-bottom: 20px;
+}
+.label {
+	color: white;
+	font-size: 20px;
+}
+.changeImageContainer {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+.userAvatarImg{
+	height: 200px;
+	border-radius: 50%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+.uploadIconContainer {
+	display: flex;
+	position: absolute;
+	align-items: flex-end;
+	justify-content: flex-end;
+	height: 200px;
+	width: 200px;
+}
+.uploadIconBackground {
+	display: flex;
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+	background: red;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	right: 10px;
+	cursor: pointer;
+}
+.uploadIcon {
+	color: white;
+}
+.submitButton {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background: red;
+	color: white;
+	cursor: pointer;
+	margin: 10px;
+	margin-top: 30px;
+	font-size: 30px;
+	width: 95%;
+	height: 60px;
+	border-radius: 5px;
+}
+
+@media only screen and (max-width: 435px) {
+	.submitButton {
+		font-size: 20px;
+	}
+	.title {
+		font-size: 40px;
+	}
+	.label {
+		font-size: 17px;
+	}
+}
+
+@media only screen and (max-width: 355px) {
+	.title {
+		font-size: 30px;
+	}
+	.label {
+		/* font-size: 17px; */
+	}
+}
+
+@media only screen and (max-width: 355px) {
+	.userAvatarImg {
+		height: 63vw;
+		width: 63vw;
+	}
+	.uploadIconContainer {
+		height: 63vw;
+		width: 63vw;
+	}
+	.uploadIconBackground {
+		right: 1vw;
+		height: 14vw;
+		width: 14vw;
+	}
+}
