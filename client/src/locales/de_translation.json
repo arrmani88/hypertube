@@ -29,5 +29,7 @@
     "login_and_start_watching": "Melden Sie sich mit Ihrem Konto an, und Fangen Sie an, kostenlos anzusehen...",
     "one_last_step": "Ein letzter Schritt!",
 	"add_profile_image": "Bitte, laden Sie ein Profilbild hoch",
-	"upload_image": "Bild hochladen"
+	"start_watching": "Ansehen anfangen!",
+    "go_back_home": "Züruck zur Startseite",
+    "no_page_exists": "Keine Seite mit dem angegebenen Link existiert"
 }

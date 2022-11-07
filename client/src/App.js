@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
 import SideBar from "./components/Sidebar";
@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import AccountVerified from "./pages/AccountVerified";
 import VerfifyYourAccount from "./pages/VerifyYourAccount";
 import UploadImage from "./pages/UploadImage";
+import NoPageFound from "./pages/NoPageFound";
 
 i18n
 	.use(initReactI18next)
@@ -32,15 +33,19 @@ function App() {
 	return (
 		<>
 			<SideBar />
-			<Routes>
-				<Route path='/' element={<Landing />} />
-				<Route path='/home' element={<Home />} />
-				<Route path='/login' element={<Login />} />
-				<Route path='/register' element={<Register />} />
-				<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
-				<Route path='/account_verified' element={<AccountVerified />} />
-				<Route path='/upload_image' element={<UploadImage />} />
-			</Routes>
+			<BrowserRouter>
+				<Routes>
+					<Route path='/' element={<Landing />} />
+					<Route path='/home' element={<Home />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/register' element={<Register />} />
+					<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
+					<Route path='/confirm_email/:token' element={<AccountVerified />} />
+					<Route path='/upload_image' element={<UploadImage />} />
+	
+					<Route path='*' element={<NoPageFound />} />
+				</Routes>
+			</BrowserRouter>
 		</>
 	);
 }

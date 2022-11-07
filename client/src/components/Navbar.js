@@ -6,6 +6,7 @@ import { openSidebar } from '../redux/sidebar'
 import LanguagesDropdown from './LanguagesDropdown.js'
 import { useTranslation } from 'react-i18next'
 
+
 const NavbarUserLoggedIn = () => {
 	const dispatch = useDispatch()
 

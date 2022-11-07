@@ -32,6 +32,7 @@ const cardContent  = {
 
 const VerfifyYourAccount = () => {
 	const { t } = useTranslation()
+	localStorage.setItem("token", "hsjkdhkdhjksdhjkdsdh")
 
 	return (<>
 		<NavbarUserUnlogged loginButtinHidden={true} />

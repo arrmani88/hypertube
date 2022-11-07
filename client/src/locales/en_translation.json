@@ -29,5 +29,7 @@
     "login_and_start_watching": "Log in using your account, and start watching for free...",
     "one_last_step": "One last step!",
 	"add_profile_image": "Please upload a profile image",
-	"upload_image": "Upload image"
+	"start_watching": "Start watching!",
+    "go_back_home": "Go back to home",
+    "no_page_exists": "No page with the given link exists"
 }
