@@ -52,9 +52,9 @@ Authorization: {{token}}
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
-Content-Disposition: form-data; name="image"; filename="1.jpg"
+Content-Disposition: form-data; name="image"; filename="anas.jpeg"
 
-< ~/Desktop/1.jpg
+< /Users/anel-bou/http_files/anas.jpeg
 --boundary--
 # image should be either '.jpg', '.jpeg', or '.png', and less than 1024*1024 bytes (1MB)
 # -------------------------------------------------------------------------

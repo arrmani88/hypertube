@@ -8,7 +8,7 @@ import Drawer from '@mui/material/Drawer';
 import './styles/SideBar.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSidebar } from '../redux/sidebar';
-
+import arrmani88 from '../images/arrmani88.jpeg'
 
 const Sections = [
 	{ icon: <AiOutlineInfoCircle className='sidebarIcon' />, title: "About" },
@@ -41,7 +41,7 @@ const SideBar = () => {
 				<div>
 					<div className='sidebarHeader'>
 						<div className='sidebarHeaderGradient' />
-						<img className='avatarUserSidebar' src='images/arrmani88.jpeg' alt='userImg' />
+						<img className='avatarUserSidebar' src={arrmani88} alt='userImg' />
 						<h1 className='userFullName'>Anas EL BOUDALI</h1>
 						<MdChevronRight onClick={() => dispatch(closeSidebar())} className='mdChevronRight' />
 					</div>

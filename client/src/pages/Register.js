@@ -10,6 +10,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 import ReactLoading from 'react-loading'
 import CardThemeBackground from '../components/CardThemeBackground'
+import IMGdark from '../images/dark.jpeg'
+import IMGmanAvatar from '../images/man-avatar.svg'
+import IMGwomanAvatar from '../images/woman-avatar.svg'
 
 const usernameMessageLength = 'Username should be 3 to 20 characters'
 const usernameContentMessage = "Username can only contain letters, numbers, '.' and '_'"
@@ -43,7 +46,7 @@ const Register = () => {
 		try {
 			setIsLoading(true)
 			const rsp = await axios.post(
-				process.env.REACT_APP_SERVERHOSTNAME + '/register',
+				process.env.REACT_APP_SERVER_HOSTNAME + '/register',
 				registrationData,
 			)
 			console.log(rsp)
@@ -55,7 +58,7 @@ const Register = () => {
 	}
 
 	return (<>
-		<CardThemeBackground imgLink={'images/dark.jpeg'}>
+		<CardThemeBackground imgLink={IMGdark}>
 			<form onSubmit={handleSubmit(submitForm)} className={styles.register_form} >
 				<label>
 					<p className={styles.label}>{t('first_name')}</p>
@@ -87,8 +90,8 @@ const Register = () => {
 						<p className={styles.label}>{t('gender')}</p>
 						<div className={styles.avatarsContainer} >
 							<input {...register('gender')} type='hidden' />
-							<img onClick={() => chooseGender('female')} className={styles.avatar + ' ' + (gender === 'female' && styles.selectedAvatar)} src='images/woman-avatar.svg' alt='man-avatar' />
-							<img onClick={() => chooseGender('male')} className={styles.avatar + ' ' + (gender === 'male' && styles.selectedAvatar)} src='images/man-avatar.svg' alt='man-avatar' />
+							<img onClick={() => chooseGender('female')} className={styles.avatar + ' ' + (gender === 'female' && styles.selectedAvatar)} src={IMGwomanAvatar} alt='man-avatar' />
+							<img onClick={() => chooseGender('male')} className={styles.avatar + ' ' + (gender === 'male' && styles.selectedAvatar)} src={IMGmanAvatar} alt='man-avatar' />
 						</div>
 					</div>
 					<h1>{(gender === '' && errors.gender?.message) || ' '}</h1>

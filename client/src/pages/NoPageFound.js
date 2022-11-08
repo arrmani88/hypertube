@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import CardThemeBackground from '../components/CardThemeBackground'
 import styles from './styles/Landing.module.css'
 import { BsPlayFill } from 'react-icons/bs'
-
+import IMGinterstellar from '../images/interstellar.jpeg'
 
 const NoPageFound = () => {
 	const { t } = useTranslation()
@@ -13,7 +13,7 @@ const NoPageFound = () => {
 	const redirect = () => navigate({ pathname: '/home' })
 
 	return (<>
-		<CardThemeBackground imgLink={'images/interstellar.jpeg'} loginButtonHidden={true}>
+		<CardThemeBackground imgLink={IMGinterstellar} loginButtonHidden={true}>
 			<h1 className={styles.cardTitle} >Oops!</h1>
 			<h1 className={styles.cardText1}>{t('no_page_exists')}</h1>
 			<div className='py-5' />

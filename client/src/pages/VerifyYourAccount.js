@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { BsPlayFill } from 'react-icons/bs'
 import { NavbarUserUnlogged } from '../components/Navbar'
 import styles from './styles/AccountVerified.module.css'
+import IMGdark2 from '../images/dark2.jpg'
 
 const gradient = {
 	position: 'absolute',
@@ -37,7 +38,7 @@ const VerfifyYourAccount = () => {
 	return (<>
 		<NavbarUserUnlogged loginButtinHidden={true} />
 		<div className={styles.page}>
-			<img className={styles.backgroundImg} src='images/dark2.jpg' alt='background_img' />
+			<img className={styles.backgroundImg} src={IMGdark2} alt='background_img' />
 			<div style={gradient} />
 			<div className={styles.card} >
 				<div style={cardContent} >

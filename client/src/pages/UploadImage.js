@@ -7,6 +7,8 @@ import ReactLoading from 'react-loading'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import IMGvikings from '../images/vikings.jpg'
+import IMGarrmani88 from '../images/arrmani88.jpeg'
 
 const UploadImage = () => {
 	const { t } = useTranslation()
@@ -22,7 +24,7 @@ const UploadImage = () => {
 				formData.delete('image') // case if the user uploaded a picture, then uploaded a second one: delete the first one from formData
 				formData.append('image', file)
 				await axios.post(
-					process.env.REACT_APP_SERVERHOSTNAME + '/upload_profile_image',
+					process.env.REACT_APP_SERVER_HOSTNAME + '/upload_profile_image',
 					formData,
 					{headers: {
 						'Content-Type': file.type,
@@ -42,11 +44,11 @@ const UploadImage = () => {
 	}
 	
 	return (<>
-		<CardThemeBackground imgLink='images/vikings.jpg' >
+		<CardThemeBackground imgLink={IMGvikings} >
 			<h1 className={styles.title}>{t('one_last_step')}</h1>
 			<h1 className={styles.label} >{t('add_profile_image')}</h1>
 			<div className={styles.changeImageContainer}>
-				<img className={styles.userAvatarImg} src='images/arrmani88.jpeg' alt='userImg' />
+				<img className={styles.userAvatarImg} src={IMGarrmani88} alt='userImg' />
 				<label className={styles.uploadIconContainer} onChange={chooseImage} htmlFor='imgUpload' >
 					<input hidden id='imgUpload' type='file' />
 					<div className={styles.uploadIconBackground} >

@@ -8,6 +8,8 @@ import styles from './styles/Landing.module.css'
 import { useNavigate } from 'react-router-dom'
 import { kEmailRegex } from '../constants/regex'
 import CardThemeBackground from '../components/CardThemeBackground'
+import IMGmovies from '../images/movies.jpeg'
+import IMG42icon from '../images/42_icon.png'
 
 const Landing = () => {
 	const { t } = useTranslation()
@@ -27,7 +29,7 @@ const Landing = () => {
 	}
 
 	return (<>
-		<CardThemeBackground imgLink={'images/movies.jpeg'}>
+		<CardThemeBackground imgLink={IMGmovies}>
 			<h1 className={styles.cardTitle}>{t("see_whats_next")}</h1>
 			<h1 className={styles.cardText1}>{t("watch_limitless")}</h1>
 			<h1 className={`${styles.cardText2} hideOnMobileVersion`}>{t("ready_to_watch")}</h1>
@@ -48,7 +50,7 @@ const Landing = () => {
 				<div className={styles.socialsContainer} >
 					<BsFacebook className={styles.socialMediaIcon} />
 					<ImGoogle3 className={styles.socialMediaIcon} />
-					<img src='images/42_icon.png' className={styles.icon42} alt='42_icon' />
+					<img src={IMG42icon} className={styles.icon42} alt='42_icon' />
 				</div>
 			</div>
 		</CardThemeBackground>

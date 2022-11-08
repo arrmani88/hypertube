@@ -13,6 +13,7 @@ import AccountVerified from "./pages/AccountVerified";
 import VerfifyYourAccount from "./pages/VerifyYourAccount";
 import UploadImage from "./pages/UploadImage";
 import NoPageFound from "./pages/NoPageFound";
+import Loading from './components/Loading'
 
 i18n
 	.use(initReactI18next)
@@ -42,6 +43,7 @@ function App() {
 					<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
 					<Route path='/confirm_email/:token' element={<AccountVerified />} />
 					<Route path='/upload_image' element={<UploadImage />} />
+					<Route path='/loading' element={<Loading />} />
 	
 					<Route path='*' element={<NoPageFound />} />
 				</Routes>

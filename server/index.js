@@ -7,7 +7,7 @@ const cors = require('cors')
 
 const corsOptions = {
     origin: [
-        process.env.HOSTNAME,
+        process.env.SERVER_HOSTNAME,
         'http://localhost:3000'
     ],
     optionsSuccessStatus: 200

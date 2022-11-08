@@ -1,0 +1,78 @@
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+}
+.content {
+	display: flex;
+	position: relative;
+	align-items: center;
+	// width: 60vw;
+}
+.logo {
+	width: 60vw;
+	height: auto;
+}
+.wrapper {
+	position: absolute;
+	left: 50px;
+}
+.blurLayer {
+	left: 8vw;
+	width: 20vw;
+	height: 25vh;
+	// backdrop-filter: blur(0.8vw);
+	background: red;
+	// -webkit-mask: linear-gradient(to right, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 75%);
+}
+.blurLayer::before {
+	position: absolute;
+	background: green;
+	width: 20vw;
+	height: 25vh;	
+	content: "";
+}
+
+// backdrop-filter: blur(0.8vw);
+// -webkit-mask: linear-gradient(to right, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 75%);
+// -webkit-transform: scaleX(-1);
+
+
+// -webkit-box-reflect: right 50px
+
+
+
+
+
+
+
+
+
+
+// .blurLayerContainer {
+// 	position: absolute;
+// 	display: flex;
+// 	flex-direction: row;
+// 	align-items: center;
+// 	width: 100%;
+// 	height: 100%;
+// }
+
+// .blurLayer {
+// 	overflow: visible;
+// 	min-width: 9.5%;
+// 	height: 200%;
+// 	@for $i from 0 through 14 { // loop men 0 tal 11
+// 		&:nth-child(#{$i + 1}) { // doz 3la ga3 childs li m matchyine f (#{$i + 1}); (+1) 7it loop khas tbda men 1
+// 			backdrop-filter: blur(0px);
+// 			animation: blur-text 0.9s #{$i/15}s infinite linear alternate; // may bda tal (#{$i/5})+s bach kola layer itlança m3atel 3la li9bel meno 
+// 		}
+// 	}
+// }
+// @keyframes blur-text {
+// 	0%, 40% {backdrop-filter: blur(0px);}
+// 	100% {backdrop-filter: blur(10px);}
+// }
+

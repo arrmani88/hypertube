@@ -82,13 +82,13 @@ router.post('/', async (req, res) => {
 						)
 						let sentEmail = transporter.sendMail(
 							{
-								from: process.env.EMAIL_ADDR,
-								to: 'pirotil826@falkyz.com',
+								from: 'noreply@matcha.com',
+								to: process.env.EMAIL_ADDR,
 								subject: 'Matcha account confirmation',
-								html: `${process.env.HOSTNAME}/confirm_email/${emailConfirmationToken}`
+								html: `${process.env.SERVER_HOSTNAME}/confirm_email/${emailConfirmationToken}`
 							},
 							(err, info) => {
-								console.log(`${process.env.HOSTNAME}/confirm_email/${emailConfirmationToken}`)
+								console.log(`${process.env.SERVER_HOSTNAME}/confirm_email/${emailConfirmationToken}`)
 								if (err) res.status(400).json({ error: err.stack })
 								else res.json("Account created successfully, we sent you a mail to confirm your email address, please check your inbox")
 							}

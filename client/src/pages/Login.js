@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { ImGoogle3 } from 'react-icons/im'
 import { useNavigate } from 'react-router-dom'
 import CardThemeBackground from '../components/CardThemeBackground'
+import IMGnationalTreasure from '../images/national-treasure.jpg'
+import IMG42icon from '../images/42_icon.png'
 
 const Login = () => {
 	const { t } = useTranslation()
@@ -16,7 +18,7 @@ const Login = () => {
 	}
 
 	return (<>
-		<CardThemeBackground imgLink={'images/national-treasure.jpg'} loginButtonHidden={true} >
+		<CardThemeBackground imgLink={IMGnationalTreasure} loginButtonHidden={true} >
 			<p className={styles.cardTitle} >{t('login_and_start_watching')}</p>
 			<form className={styles.loginForm} >
 				<label >
@@ -39,7 +41,7 @@ const Login = () => {
 			<div className={styles.socialsContainer} >
 				<BsFacebook className={styles.socialMediaIcon} />
 				<ImGoogle3 className={styles.socialMediaIcon} />
-				<img src='images/42_icon.png' className={styles.icon42} alt='42_icon' />
+				<img src={IMG42icon} className={styles.icon42} alt='42_icon' />
 			</div>
 		</CardThemeBackground>
 	</>)
