@@ -4,6 +4,7 @@ import { BsPlayFill } from 'react-icons/bs'
 import { NavbarUserUnlogged } from '../components/Navbar'
 import styles from './styles/AccountVerified.module.css'
 import IMGdark2 from '../images/dark2.jpg'
+import Divider from '../components/Divider'
 
 const gradient = {
 	position: 'absolute',
@@ -11,24 +12,27 @@ const gradient = {
 	height: '100vh',
 	width: '100vw'
 }
-
 const button = {
 	display: 'flex',
 	flexDirection: 'row',
 	alignItems: 'center',
 	justifyContent: 'center',
-	background: 'red',
+	background: '#474747',
 	color: 'white',
 	cursor: 'pointer',
 	margin: '10px',
-	padding: '10px 5px 10px 5px ',
-	fontSize: '30px',
-	width: '95%',
+	padding: '5px 10px 5px 10px',
 	borderRadius: '5px',
 }
-
-const cardContent  = {
-	width: 'min(90%, 500px)'
+const cardContent = {
+	display: 'flex',
+	flexDirection: 'column',
+	width: 'min(80vw, 500px)',
+	alignItems: 'center',
+	padding: '10px'
+}
+const textButton = {
+	fontSize: '18px'
 }
 
 const VerfifyYourAccount = () => {
@@ -44,11 +48,14 @@ const VerfifyYourAccount = () => {
 				<div style={cardContent} >
 					<h1 className={styles.cardTitle}>{t('please_confrim_your_account')}</h1>
 					<h1 className={styles.cardDescription}>{t('check_your_inbox_to_confirm')}</h1>
-					<div className='mt-[20px]' />
-						<button style={button} >
-							<h1 className={styles.textButton} >{t('resend_confirmation_email')}</h1>
-							<BsPlayFill className={`text-[40px]`} />
-						</button>
+					<div className='w-[100%]' >
+						<Divider> {t('or')} </Divider>
+					</div>
+					<h1 className={styles.cardDescription} >{t('no_mail_received')}</h1>
+					<button style={button} >
+						<h1 style={textButton} >{t('resend_confirmation_email')}</h1>
+						<BsPlayFill className={`text-[40px]`} />
+					</button>
 				</div>
 			</div>
 		</div>

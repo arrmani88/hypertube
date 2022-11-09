@@ -31,5 +31,6 @@
 	"add_profile_image": "Please upload a profile image",
 	"start_watching": "Start watching!",
     "go_back_home": "Go back to home",
-    "no_page_exists": "No page with the given link exists"
+    "no_page_exists": "No page with the given link exists",
+    "no_mail_received": "No confirmation Email received?"
 }

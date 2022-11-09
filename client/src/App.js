@@ -13,7 +13,8 @@ import AccountVerified from "./pages/AccountVerified";
 import VerfifyYourAccount from "./pages/VerifyYourAccount";
 import UploadImage from "./pages/UploadImage";
 import NoPageFound from "./pages/NoPageFound";
-import Loading from './components/Loading'
+import Loading from './components/Loading';
+import Hypertube from "./pages/Hypertube";
 
 i18n
 	.use(initReactI18next)
@@ -36,15 +37,16 @@ function App() {
 			<SideBar />
 			<BrowserRouter>
 				<Routes>
-					<Route path='/' element={<Landing />} />
-					<Route path='/home' element={<Home />} />
+					<Route path='/' element={<Hypertube />} />
+					{/* <Route path='/' element={<Landing />} /> */}
+					{/* <Route path='/home' element={<Home />} /> */}
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 					<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
 					<Route path='/confirm_email/:token' element={<AccountVerified />} />
 					<Route path='/upload_image' element={<UploadImage />} />
 					<Route path='/loading' element={<Loading />} />
-	
+
 					<Route path='*' element={<NoPageFound />} />
 				</Routes>
 			</BrowserRouter>

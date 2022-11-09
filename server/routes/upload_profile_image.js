@@ -15,8 +15,8 @@ const storage = multer.diskStorage({
 		cb(null, 'images')
 	},
 	filename: (req, file, cb) => {
-		newImageName = Date.now() + "_" +
-			crypto.createHash('md5').update(file.originalname).digest('hex') +
+		newImageName = Date.now() + "_" + 
+			crypto.createHash('md5').update(file.originalname).digest('hex') + 
 			path.extname(file.originalname)
 		cb(null, newImageName)
 	},
@@ -29,7 +29,7 @@ const upload = util.promisify(
 		fileFilter: (req, file, cb) => {
 			if (path.extname(file.originalname) != '.jpg' && path.extname(file.originalname) != '.png' && path.extname(file.originalname) != '.jpeg') {
 				return cb("Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file")
-			} else {
+			} else { 
 				cb(null, true)
 			}
 		}
@@ -44,6 +44,7 @@ router.post('/', validateToken, async (req, res) => {
 			"SELECT * FROM images WHERE uid = ? AND isProfileImage = 1",
 			[req.user.id]
 		)
+		console.log('length=' + result.length)
 		await upload(req, res)
 		if (result.length == 0) { // if no profile image was added add one
 			await queryPromise(

@@ -4,75 +4,37 @@
 	align-items: center;
 	width: 100vw;
 	height: 100vh;
+	overflow: hidden;
 }
 .content {
 	display: flex;
 	position: relative;
 	align-items: center;
-	// width: 60vw;
+	justify-content: center;
+	height: 30vh;
 }
 .logo {
 	width: 60vw;
 	height: auto;
 }
-.wrapper {
+.blurLayer1 {
 	position: absolute;
-	left: 50px;
-}
-.blurLayer {
-	left: 8vw;
-	width: 20vw;
+	width: 50vw;
 	height: 25vh;
-	// backdrop-filter: blur(0.8vw);
-	background: red;
-	// -webkit-mask: linear-gradient(to right, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 75%);
+	backdrop-filter: blur(1vw);
+	-webkit-mask: repeating-linear-gradient(
+		to right,
+		rgba(0,0,0,0),
+		rgba(0,0,0,1) 25%,
+		rgba(0,0,0,1) 50%,
+		rgba(0,0,0,1) 75%,
+		rgba(0,0,0,0) 100%
+	);
+	animation: blur-animation 1.2s infinite linear
 }
-.blurLayer::before {
-	position: absolute;
-	background: green;
-	width: 20vw;
-	height: 25vh;	
-	content: "";
+
+@keyframes blur-animation {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(78%); }
+
 }
-
-// backdrop-filter: blur(0.8vw);
-// -webkit-mask: linear-gradient(to right, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 75%);
-// -webkit-transform: scaleX(-1);
-
-
-// -webkit-box-reflect: right 50px
-
-
-
-
-
-
-
-
-
-
-// .blurLayerContainer {
-// 	position: absolute;
-// 	display: flex;
-// 	flex-direction: row;
-// 	align-items: center;
-// 	width: 100%;
-// 	height: 100%;
-// }
-
-// .blurLayer {
-// 	overflow: visible;
-// 	min-width: 9.5%;
-// 	height: 200%;
-// 	@for $i from 0 through 14 { // loop men 0 tal 11
-// 		&:nth-child(#{$i + 1}) { // doz 3la ga3 childs li m matchyine f (#{$i + 1}); (+1) 7it loop khas tbda men 1
-// 			backdrop-filter: blur(0px);
-// 			animation: blur-text 0.9s #{$i/15}s infinite linear alternate; // may bda tal (#{$i/5})+s bach kola layer itlança m3atel 3la li9bel meno 
-// 		}
-// 	}
-// }
-// @keyframes blur-text {
-// 	0%, 40% {backdrop-filter: blur(0px);}
-// 	100% {backdrop-filter: blur(10px);}
-// }
-

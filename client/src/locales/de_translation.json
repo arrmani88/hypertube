@@ -31,5 +31,6 @@
 	"add_profile_image": "Bitte, laden Sie ein Profilbild hoch",
 	"start_watching": "Ansehen anfangen!",
     "go_back_home": "Züruck zur Startseite",
-    "no_page_exists": "Keine Seite mit dem angegebenen Link existiert"
+    "no_page_exists": "Keine Seite mit dem angegebenen Link existiert",
+    "no_mail_received": "Kein Bestätigungsmail empfangen?"
 }
