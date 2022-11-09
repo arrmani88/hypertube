@@ -19,7 +19,7 @@ const Hypertube = () => {
 				user.status === 200 ? setPageState('home') : setPageState('landing')
 			} catch (err) {
 				if (err.response.status / 100 === 4) setPageState('landing')  // err.rsp.status / 100 -> means 400 or 401 or 403
-				console.log(err)
+				// console.log(err)
 			}
 		}
 		isUserLoggedIn()
