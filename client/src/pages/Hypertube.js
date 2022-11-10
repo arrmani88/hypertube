@@ -14,12 +14,12 @@ const Hypertube = () => {
 				if (!accessToken) return setPageState('landing') // if no accessToken is stored, display the landing page
 				const user = await axios.get(  // get the user or status=401 (401 means the accessToken isnt valid)
 					`${process.env.REACT_APP_SERVER_HOSTNAME}/get_me`,
-					{headers: { Authorization: accessToken }}
+					{ headers: { Authorization: accessToken } }
 				)
 				user.status === 200 ? setPageState('home') : setPageState('landing')
 			} catch (err) {
+				console.log(err)
 				if (err.response.status / 100 === 4) setPageState('landing')  // err.rsp.status / 100 -> means 400 or 401 or 403
-				// console.log(err)
 			}
 		}
 		isUserLoggedIn()
