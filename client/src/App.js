@@ -15,6 +15,7 @@ import UploadImage from "./pages/UploadImage";
 import NoPageFound from "./pages/NoPageFound";
 import Loading from './components/Loading';
 import Hypertube from "./pages/Hypertube";
+import { useDispatch, useSelector } from "react-redux";
 
 i18n
 	.use(initReactI18next)
@@ -32,14 +33,14 @@ i18n
 	});
 
 function App() {
+	const isLoading = useSelector((state) => state.loading.value)
+	
 	return (
-		<>
+		<Loading isLoading={isLoading}>
 			<SideBar />
 			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<Hypertube />} />
-					{/* <Route path='/' element={<Landing />} /> */}
-					{/* <Route path='/home' element={<Home />} /> */}
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 					<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
@@ -50,7 +51,7 @@ function App() {
 					<Route path='*' element={<NoPageFound />} />
 				</Routes>
 			</BrowserRouter>
-		</>
+		</Loading>
 	);
 }
 

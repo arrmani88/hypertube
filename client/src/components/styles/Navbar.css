@@ -9,7 +9,7 @@
 	height: 70px;
 	width: 100%;
 	background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7875744047619048) 49%, rgba(0,0,0,0.4626444327731093) 83%, rgba(255,255,255,0) 100%);
-	z-index: 100;
+	z-index: 10;
 	backdrop-filter: blur(6px);
 }
 

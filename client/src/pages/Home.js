@@ -6,7 +6,7 @@ import { NavbarUserLoggedIn } from '../components/Navbar'
 
 const Home = () => {
   return (
-    <>
+    <div className='absolute h-full w-full flex-col' >
 		<NavbarUserLoggedIn />
 		<Main />
 		{/* <Row title='Latest' fetchUrl={requests.requestLatest} /> */}
@@ -14,7 +14,7 @@ const Home = () => {
 		<Row title='Top rated' fetchUrl={requests.requestTopRated} />
 		<Row title='Now playing' fetchUrl={requests.requestNowPlaying} />
 		<Row title='Upcoming' fetchUrl={requests.requestUpcoming} />
-	</>
+	</div>
   )
 }
 

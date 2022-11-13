@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
 import sidebarReducer from './sidebar'
+import loadingReducer from './loading'
 
 export default configureStore({
 	reducer: {
-		sidebar: sidebarReducer
+		sidebar: sidebarReducer,
+		loading: loadingReducer
 	}
 })

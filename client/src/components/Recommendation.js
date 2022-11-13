@@ -19,7 +19,7 @@ const Row = ({title, fetchUrl}) => {
 	
 	return (
 		movies === [] ? <div /> : 
-		<div>
+		<div className='w-screen'>
 			<h2 className='title'>{title}</h2>
 			<div className='row' id={`slider${title}`}>
 				{movies.map((movie) => (
