@@ -1,6 +1,4 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Landing from "./pages/Landing";
 import SideBar from "./components/Sidebar";
 import Register from "./pages/Register";
 import i18n from "i18next";
@@ -15,7 +13,9 @@ import UploadImage from "./pages/UploadImage";
 import NoPageFound from "./pages/NoPageFound";
 import Loading from './components/Loading';
 import Hypertube from "./pages/Hypertube";
-import { useDispatch, useSelector } from "react-redux";
+import SendResetPasswordEmail from "./pages/SendResetPasswordEmail";
+import { useSelector } from "react-redux";
+import ResetPassword from "./pages/ResetPassword";
 
 i18n
 	.use(initReactI18next)
@@ -47,6 +47,8 @@ function App() {
 					<Route path='/confirm_email/:token' element={<AccountVerified />} />
 					<Route path='/upload_image' element={<UploadImage />} />
 					<Route path='/loading' element={<Loading />} />
+					<Route path='/send_reset_password_email' element={<SendResetPasswordEmail />} />
+					<Route path="reset_password/:token" element={<ResetPassword />} />
 
 					<Route path='*' element={<NoPageFound />} />
 				</Routes>

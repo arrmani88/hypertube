@@ -51,6 +51,7 @@ const Register = () => {
 			)
 			console.log(rsp)
 			navigate({ pathname: '/verify_your_account' })
+
 		} catch (err) {
 			console.log(err)
 		}

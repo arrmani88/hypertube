@@ -5,3 +5,5 @@ internationalization: 30:00 : https://www.youtube.com/watch?v=w04LXKlusCQ&ab_cha
 delete this if useless /goinfre/anel-bou/projects/hypertube/client/src/functions/getWindowDimensions.js
 
 t2akd mn pages/Hypertube.js wach dik useEffect ghat t3ayet gha merra whda wla ghatb9a khedama m3a page
+
+khass tkon nefs regex dial validation dial (username passwd ... etc) mabin backend w front

@@ -32,5 +32,12 @@
 	"start_watching": "Ansehen anfangen!",
     "go_back_home": "Züruck zur Startseite",
     "no_page_exists": "Keine Seite mit dem angegebenen Link existiert",
-    "no_mail_received": "Kein Bestätigungsmail empfangen?"
+    "no_mail_received": "Kein Bestätigungsmail empfangen?",
+	"reset_your_password": "Ihr Passwort zurücksetzen",
+	"enter_email_or_username": "Geben Sie Ihr Email oder Benutzername ein",
+	"reset_password": "Passwort zurücksetzen",
+    "password_reset_successfully": "Passwort erfolgreich zurügesetzt",
+    "go_to_home": "Zur Startseite",
+	"an_email_sent_to_reset_password": "Ein Email wurde geschickt zur Zurücksetzung Ihr Passwort",
+	"check_inbox_to_reset_password": "Bitte uberprüfen Sie Ihren Posteingang um Ihr Passwort zu zurücksetzen"
 }

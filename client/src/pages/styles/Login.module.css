@@ -73,7 +73,14 @@
 	align-self: flex-start;
 	white-space: pre-wrap
 }
-
+.passwordforgotten {
+	font-size: 18px;
+	color: white;
+	cursor: pointer;
+	font-weight: 200;
+	text-align: center;
+	text-decoration: underline;
+}
 @media only screen and (max-width: 300px) {
 	.loginText {
 		font-size: 25px;

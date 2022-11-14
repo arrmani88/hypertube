@@ -10,7 +10,7 @@ const NoPageFound = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 
-	const redirect = () => navigate({ pathname: '/home' })
+	const redirect = () => navigate({ pathname: '/' })
 
 	return (<>
 		<CardThemeBackground imgLink={IMGinterstellar} loginButtonHidden={true}>
