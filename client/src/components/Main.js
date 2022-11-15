@@ -8,9 +8,13 @@ const Main = () => {
 	const movie = movies[Math.floor(Math.random() * movies.length)];
 
 	useEffect(() => {
-		axios.get(requests.requestPopular).then((response) => {
-			setMovies(response.data.results);
-		});
+		const getData = async () => {
+			// await new Promise(resolve => setTimeout(resolve, 3000))
+			await axios.get(requests.requestPopular).then((response) => {
+				setMovies(response.data.results);
+			});
+		}
+		getData()
 	}, []);
 
 	return (

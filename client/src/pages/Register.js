@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './styles/Register.module.css'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
@@ -13,6 +13,8 @@ import CardThemeBackground from '../components/CardThemeBackground'
 import IMGdark from '../images/dark.jpeg'
 import IMGmanAvatar from '../images/man-avatar.svg'
 import IMGwomanAvatar from '../images/woman-avatar.svg'
+import { useDispatch } from 'react-redux'
+import { hideLoading, showLoading } from '../redux/loading'
 
 const usernameMessageLength = 'Username should be 3 to 20 characters'
 const usernameContentMessage = "Username can only contain letters, numbers, '.' and '_'"
@@ -21,9 +23,10 @@ const passwordLengthMessage = 'Password should be between 6 and 20 characters'
 const Register = () => {
 	const navigate = useNavigate()
 	const [gender, setGender] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
+	const [isButtonLoading, setIsButtonLoading] = useState(false)
 	const [searchParams] = useSearchParams()
 	const { t } = useTranslation()
+	const dispatch = useDispatch()
 	const userSchema = yup.object({
 		firstName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid first name'),
 		lastName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid last name'),
@@ -34,31 +37,26 @@ const Register = () => {
 		password: 		yup.string().required(t('required_field')).min(6, passwordLengthMessage).max(20, passwordLengthMessage),
 		confirmPassword: yup.string().required(t('required_field')).oneOf([yup.ref('password')], "Passwords should match")
 	}).required()
-	const { register, handleSubmit, formState: { errors }, setValue } = useForm({
-		resolver: yupResolver(userSchema)
-	})
+	const { register, handleSubmit, formState: { errors }, setValue } = useForm({ resolver: yupResolver(userSchema) })
 	const chooseGender = (userGender) => {
 		setGender(userGender)
 		setValue('gender', userGender)
 	}
 	const submitForm = async (registrationData) => {
-		console.log(registrationData)
 		try {
-			setIsLoading(true)
-			const rsp = await axios.post(
-				process.env.REACT_APP_SERVER_HOSTNAME + '/register',
-				registrationData,
-			)
-			console.log(rsp)
+			setIsButtonLoading(true)
+			await axios.post(process.env.REACT_APP_SERVER_HOSTNAME + '/register',registrationData)
+			dispatch(showLoading())
 			navigate({ pathname: '/verify_your_account' })
-
 		} catch (err) {
 			console.log(err)
 		}
-		setIsLoading(false)
+		setIsButtonLoading(false)
 	}
 
-	return (<>
+	useEffect(() => { dispatch(hideLoading())}, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+	return (
 		<CardThemeBackground imgLink={IMGdark}>
 			<form onSubmit={handleSubmit(submitForm)} className={styles.register_form} >
 				<label>
@@ -107,16 +105,16 @@ const Register = () => {
 					<input {...register('confirmPassword')} placeholder={t('retype_password')} />
 					<h1>{errors.confirmPassword?.message || ' '}</h1>
 				</label>
-				<button type='submit' className={styles.submitButton}>
+				<button type='submit' className={styles.submitButton} >
 					<p>{t('register')}</p>
-					{isLoading === true
+					{isButtonLoading === true
 						? <ReactLoading type='spin' className='p-3' />
 						: <BsPlayFill className={`text-[40px]`} />
 					}
 				</button>
 			</form>
 		</CardThemeBackground>
-	</>)
+	)
 }
 
 export default Register

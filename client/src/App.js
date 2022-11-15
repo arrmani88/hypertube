@@ -14,8 +14,10 @@ import NoPageFound from "./pages/NoPageFound";
 import Loading from './components/Loading';
 import Hypertube from "./pages/Hypertube";
 import SendResetPasswordEmail from "./pages/SendResetPasswordEmail";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ResetPassword from "./pages/ResetPassword";
+import { showLoading } from "./redux/loading";
+import { useEffect } from "react";
 
 i18n
 	.use(initReactI18next)

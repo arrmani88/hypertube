@@ -66,7 +66,6 @@ const Login = () => {
 						{ headers: { Authorization: storedAccessToken } }
 					)
 					user.status === 200 ? navigate('/') : dispatch(hideLoading())
-					console.log('########################')
 				}
 			} catch (err) {
 				console.log(err)

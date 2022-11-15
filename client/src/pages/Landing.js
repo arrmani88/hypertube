@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BsFacebook, BsPlayFill } from 'react-icons/bs'
 import Divider from '../components/Divider'
 import { ImGoogle3 } from 'react-icons/im'
@@ -10,8 +10,11 @@ import { kEmailRegex } from '../constants/regex'
 import CardThemeBackground from '../components/CardThemeBackground'
 import IMGmovies from '../images/movies.jpeg'
 import IMG42icon from '../images/42_icon.png'
+import { useDispatch } from 'react-redux'
+import { hideLoading, showLoading } from '../redux/loading'
 
 const Landing = () => {
+	const dispatch = useDispatch()
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const emailRef = useRef(null)
@@ -21,12 +24,16 @@ const Landing = () => {
 		e.preventDefault()
 		const isEmailMatched = Boolean(String(emailRef.current.value).toLowerCase().match(kEmailRegex) !== null)
 		setIsEmailValid(isEmailMatched)
-		if (isEmailMatched === true)
+		if (isEmailMatched === true) {
+			dispatch(showLoading())
 			navigate({
 				pathname: '/register',
 				search: 'email=' + emailRef.current.value
-		})
+			})
+		}
 	}
+	
+	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (<>
 		<CardThemeBackground imgLink={IMGmovies}>

@@ -45,7 +45,7 @@ const ResetPassword = () => {
 	
 	const GoToHome = () => navigate('/')
 	
-	useEffect(() => { dispatch(hideLoading()) })
+	useEffect(() => dispatch(hideLoading()))
 
 	return (
 		pageState === 'showForm'
