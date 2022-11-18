@@ -14,6 +14,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch } from 'react-redux'
 import { hideLoading } from '../redux/loading'
+import { logIn } from '../redux/userCredentials'
 
 
 const Login = () => {
@@ -31,19 +32,18 @@ const Login = () => {
 
 	const submitForm = async (loginData) => {
 		try {
-			console.log(loginData)
 			const rsp = await axios.post(`${process.env.REACT_APP_SERVER_HOSTNAME}/login`, loginData)
-			console.log(rsp)
+			console.log(rsp.data)
 			if (rsp.status === 200) {
-				setErrorMessage(' ') // clear error msg string
-				localStorage.setItem('accessToken', rsp.data.accessToken)
+				setErrorMessage(' ') // clear error msg
+				dispatch(logIn(rsp.data))
+				localStorage.setItem('userCredentials', JSON.stringify(rsp.data))
 				navigate('/')
 			}
 		} catch (err) {
 			console.log(err)
 			if (err.response.status === 422 || err.response.status === 404) setErrorMessage(err.response.data.error.details)
 			else if (err.response.status === 403) setErrorMessage(err.response.data)
-			// else console.log(err)
 		}
 	}
 
@@ -54,16 +54,16 @@ const Login = () => {
 			console.log(err)
 		}
 	}
-	
+
 	useEffect(() => {
 		const checkAlreadyLogged = async () => {
 			try {
-				const storedAccessToken = localStorage.getItem('accessToken')
-				if (!storedAccessToken) navigate('/login') // if no token was stored, continue to the page
-				else { // else if a token is stored,
+				const userCredentials = JSON.parse(localStorage.getItem('userCredentials'))
+				if (!userCredentials) navigate('/login') // if no user was stored, continue to the page
+				else { // else if a user is stored,
 					const user = await axios.get(  // check if the token is valid (get either the user or status=4XX)
 						`${process.env.REACT_APP_SERVER_HOSTNAME}/get_me`,
-						{ headers: { Authorization: storedAccessToken } }
+						{ headers: { Authorization: userCredentials.accessToken } }
 					)
 					user.status === 200 ? navigate('/') : dispatch(hideLoading())
 				}
@@ -97,7 +97,9 @@ const Login = () => {
 				</button>
 				<h1 className={styles.errorMessage} >{errorMessage}</h1>
 			</form>
-			<h1 onClick={redirectToResetPassword} className={styles.passwordforgotten} >I forgot my password</h1>
+			<div className={styles.textCenter} >
+				<h1 onClick={redirectToResetPassword} className={styles.passwordforgotten} >I forgot my password</h1>
+			</div>
 			<Divider><h1>{t('or')}</h1></Divider>
 			<h1 className={styles.continueWith}>{t('continue_with')}</h1>
 			<div className={styles.socialsContainer} >

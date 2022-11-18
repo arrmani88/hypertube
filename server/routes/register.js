@@ -63,8 +63,7 @@ router.post("/", async (req, res) => {
       "INSERT INTO users(firstName, lastName, username, email, password) VALUES(?,?,?,?,?);",
       [firstName, lastName, username, email, hashedPassword],
       (error) => {
-        if (error) 
-          return res.status(400).json(error)
+        if (error) return res.status(400).json(error)
       }
     );
     dbController.query(

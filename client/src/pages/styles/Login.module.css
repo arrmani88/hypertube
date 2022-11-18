@@ -1,3 +1,4 @@
+
 .cardTitle {
 	color: white;
 	font-size: 35px;
@@ -80,7 +81,15 @@
 	font-weight: 200;
 	text-align: center;
 	text-decoration: underline;
+	width: fit-content;
 }
+.textCenter {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 @media only screen and (max-width: 300px) {
 	.loginText {
 		font-size: 25px;
