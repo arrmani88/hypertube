@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Loading from '../components/Loading'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { showLoading, hideLoading } from '../redux/loading'
+import { showLoading, hideLoading } from '../redux/loadingSlice'
 
 const AccountVerified = () => {
 	const { t } = useTranslation()

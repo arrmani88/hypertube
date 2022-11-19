@@ -11,7 +11,7 @@ import CardThemeBackground from '../components/CardThemeBackground'
 import IMGmovies from '../images/movies.jpeg'
 import IMG42icon from '../images/42_icon.png'
 import { useDispatch } from 'react-redux'
-import { hideLoading, showLoading } from '../redux/loading'
+import { hideLoading, showLoading } from '../redux/loadingSlice'
 
 const Landing = () => {
 	const dispatch = useDispatch()

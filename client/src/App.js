@@ -16,8 +16,10 @@ import Hypertube from "./pages/Hypertube";
 import SendResetPasswordEmail from "./pages/SendResetPasswordEmail";
 import { useDispatch, useSelector } from "react-redux";
 import ResetPassword from "./pages/ResetPassword";
-import { showLoading } from "./redux/loading";
+import { showLoading } from "./redux/loadingSlice";
 import { useEffect } from "react";
+import getUserIfLoggedIn from "./functions/getUserIfLoggedIn";
+import { logIn, selectUser } from "./redux/userSlice";
 
 i18n
 	.use(initReactI18next)
@@ -36,7 +38,21 @@ i18n
 
 function App() {
 	const isLoading = useSelector((state) => state.loading.value)
-	
+	const user = useSelector(selectUser)
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		const checkIfUserLoggedIn = async () => {
+			try {
+				const result = await getUserIfLoggedIn()
+				dispatch(logIn(result))
+			} catch (error) {
+				console.log(error)
+			}
+		}
+		checkIfUserLoggedIn()
+	}, [])
+
 	return (
 		<Loading isLoading={isLoading}>
 			<SideBar />
@@ -60,3 +76,4 @@ function App() {
 }
 
 export default App;
+

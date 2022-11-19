@@ -6,7 +6,7 @@ import IMGdark2 from '../images/dark2.jpg'
 // import { BsPlayFill } from 'react-icons/bs'
 // import Divider from '../components/Divider'
 import { useDispatch } from 'react-redux'
-import { hideLoading } from '../redux/loading'
+import { hideLoading } from '../redux/loadingSlice'
 
 const gradient = {
 	position: 'absolute',

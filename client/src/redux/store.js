@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
-import sidebarReducer from './sidebar'
-import loadingReducer from './loading'
+import sidebarReducer from './sidebarSlice'
+import loadingReducer from './loadingSlice'
+import userReducer from './userSlice'
 
 export default configureStore({
 	reducer: {
 		sidebar: sidebarReducer,
-		loading: loadingReducer
+		loading: loadingReducer,
+		user: userReducer,
 	}
 })

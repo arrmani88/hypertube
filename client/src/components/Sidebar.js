@@ -7,7 +7,7 @@ import { RiSettingsLine } from 'react-icons/ri'
 import Drawer from '@mui/material/Drawer';
 import './styles/SideBar.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSidebar } from '../redux/sidebar';
+import { closeSidebar } from '../redux/sidebarSlice';
 import arrmani88 from '../images/arrmani88.jpeg'
 
 const Sections = [

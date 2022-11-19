@@ -14,7 +14,7 @@ import IMGdark from '../images/dark.jpeg'
 import IMGmanAvatar from '../images/man-avatar.svg'
 import IMGwomanAvatar from '../images/woman-avatar.svg'
 import { useDispatch } from 'react-redux'
-import { hideLoading, showLoading } from '../redux/loading'
+import { hideLoading, showLoading } from '../redux/loadingSlice'
 
 const usernameMessageLength = 'Username should be 3 to 20 characters'
 const usernameContentMessage = "Username can only contain letters, numbers, '.' and '_'"

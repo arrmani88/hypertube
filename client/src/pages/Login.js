@@ -12,16 +12,16 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useDispatch } from 'react-redux'
-import { hideLoading } from '../redux/loading'
-import { logIn } from '../redux/userCredentials'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { hideLoading } from '../redux/loadingSlice'
+import { logIn, selectUser } from '../redux/userSlice'
 
 const Login = () => {
 	const [errorMessage, setErrorMessage] = useState(' ')
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+	const user = useSelector(selectUser)
 	const loginSchema = yup.object({
 		login: yup.string().required(t('required_field')),
 		password: yup.string().required(t('required_field')).min(6, 'Invalid password').max(20, 'Invalid password'),
@@ -37,7 +37,7 @@ const Login = () => {
 			if (rsp.status === 200) {
 				setErrorMessage(' ') // clear error msg
 				dispatch(logIn(rsp.data))
-				localStorage.setItem('userCredentials', JSON.stringify(rsp.data))
+				localStorage.setItem('accessToken', rsp.data.accessToken)
 				navigate('/')
 			}
 		} catch (err) {
@@ -55,27 +55,11 @@ const Login = () => {
 		}
 	}
 
-	useEffect(() => {
-		const checkAlreadyLogged = async () => {
-			try {
-				const userCredentials = JSON.parse(localStorage.getItem('userCredentials'))
-				if (!userCredentials) navigate('/login') // if no user was stored, continue to the page
-				else { // else if a user is stored,
-					const user = await axios.get(  // check if the token is valid (get either the user or status=4XX)
-						`${process.env.REACT_APP_SERVER_HOSTNAME}/get_me`,
-						{ headers: { Authorization: userCredentials.accessToken } }
-					)
-					user.status === 200 ? navigate('/') : dispatch(hideLoading())
-				}
-			} catch (err) {
-				console.log(err)
-				if (err.response && err.response.status / 100 === 4) dispatch(hideLoading()) // err.rsp.status / 100 -> means 400 or 401 or 403
-			}
-		}
-		checkAlreadyLogged()
-	}, [])
 
-	useEffect(() => { dispatch(hideLoading()) })
+	useEffect(() => {
+		console.log(user)
+		user ? navigate('/') : dispatch(hideLoading())
+	}, [user])
 
 	return (
 		<CardThemeBackground imgLink={IMGnationalTreasure} loginButtonHidden={true} >

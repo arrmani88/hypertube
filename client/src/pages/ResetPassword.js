@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { hideLoading } from '../redux/loading'
+import { hideLoading } from '../redux/loadingSlice'
 
 const passwordLengthMessage = 'Password should be between 6 and 20 characters'
 const ResetPassword = () => {

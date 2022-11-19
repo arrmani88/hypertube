@@ -4,7 +4,7 @@ import Row from '../components/Recommendation'
 import requests from '../Requests'
 import { NavbarUserLoggedIn } from '../components/Navbar'
 import { useDispatch } from 'react-redux'
-import { hideLoading } from '../redux/loading'
+import { hideLoading } from '../redux/loadingSlice'
 
 const Home = () => {
 	const dispatch = useDispatch()

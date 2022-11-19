@@ -3,7 +3,7 @@ import styles from './styles/Loading.module.scss'
 import blackHypertubeLogo from '../images/black_hypertube_logo.png'
 
 const Loading = (props) => {
-	console.log('------ LOADING ... ------')
+	// console.log('------ LOADING ... ------')
 	return (
 		<>
 			{props.isLoading === true
