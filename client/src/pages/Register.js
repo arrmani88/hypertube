@@ -13,8 +13,9 @@ import CardThemeBackground from '../components/CardThemeBackground'
 import IMGdark from '../images/dark.jpeg'
 import IMGmanAvatar from '../images/man-avatar.svg'
 import IMGwomanAvatar from '../images/woman-avatar.svg'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading, showLoading } from '../redux/loadingSlice'
+import { selectUser } from '../redux/userSlice'
 
 const usernameMessageLength = 'Username should be 3 to 20 characters'
 const usernameContentMessage = "Username can only contain letters, numbers, '.' and '_'"
@@ -27,6 +28,7 @@ const Register = () => {
 	const [searchParams] = useSearchParams()
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
+	const user = useSelector(selectUser)
 	const userSchema = yup.object({
 		firstName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid first name'),
 		lastName: 		yup.string().required(t('required_field')).matches(kFirstNameRegex, 'Invalid last name'),
@@ -54,7 +56,14 @@ const Register = () => {
 		setIsButtonLoading(false)
 	}
 
-	useEffect(() => { dispatch(hideLoading())}, []) // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		if (user.userData) { // if the state isn't currently loading (will be true or false after loading)
+			if (!user.userData.id) // user object is empty (no usr is logged)
+				dispatch(hideLoading())
+			else if (user.userData.id) // user object contains data (user is logged)
+				navigate('/')
+		}
+	}, [user])
 
 	return (
 		<CardThemeBackground imgLink={IMGdark}>

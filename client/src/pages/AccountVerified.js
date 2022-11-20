@@ -19,7 +19,6 @@ const AccountVerified = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				await new Promise(resolve => setTimeout(resolve, 3000))
 				const rsp = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/confirm_email/${token}`)
 				if (rsp.status !== 200) navigate('/not_found')
 				localStorage.setItem('accessToken', `${rsp.data.access_token}`)
@@ -30,7 +29,6 @@ const AccountVerified = () => {
 			}
 		}
 		fetchData()
-		
 	}, [])
 
 	const onClick = () => {

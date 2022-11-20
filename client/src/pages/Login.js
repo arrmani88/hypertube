@@ -55,10 +55,13 @@ const Login = () => {
 		}
 	}
 
-
 	useEffect(() => {
-		console.log(user)
-		user ? navigate('/') : dispatch(hideLoading())
+		if (user.userData) { // if the state isn't currently loading (will be true or false after loading)
+			if (!user.userData.id) // user object is empty (no usr is logged)
+				dispatch(hideLoading())
+			else if (user.userData.id) // user object contains data (user is logged)
+				navigate('/')
+		}
 	}, [user])
 
 	return (
@@ -96,3 +99,4 @@ const Login = () => {
 }
 
 export default Login
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njg4NjE1ODl9.o_XDsSsnRmDPwUlG9_EFU6T7MeLZTqXMcbt3qcUpGUg

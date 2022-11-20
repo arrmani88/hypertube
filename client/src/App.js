@@ -55,22 +55,24 @@ function App() {
 
 	return (
 		<Loading isLoading={isLoading}>
-			<SideBar />
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<Hypertube />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
-					<Route path='/confirm_email/:token' element={<AccountVerified />} />
-					<Route path='/upload_image' element={<UploadImage />} />
-					<Route path='/loading' element={<Loading />} />
-					<Route path='/send_reset_password_email' element={<SendResetPasswordEmail />} />
-					<Route path="reset_password/:token" element={<ResetPassword />} />
+			{user.userData && <>
+				<SideBar />
+				<BrowserRouter>
+					<Routes>
+						<Route path='/' element={<Hypertube />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/register' element={<Register />} />
+						<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
+						<Route path='/confirm_email/:token' element={<AccountVerified />} />
+						<Route path='/upload_image' element={<UploadImage />} />
+						<Route path='/loading' element={<Loading />} />
+						<Route path='/send_reset_password_email' element={<SendResetPasswordEmail />} />
+						<Route path="reset_password/:token" element={<ResetPassword />} />
 
-					<Route path='*' element={<NoPageFound />} />
-				</Routes>
-			</BrowserRouter>
+						<Route path='*' element={<NoPageFound />} />
+					</Routes>
+				</BrowserRouter>
+			</>}
 		</Loading>
 	);
 }
