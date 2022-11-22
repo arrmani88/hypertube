@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import CardThemeBackground from '../components/CardThemeBackground'
 import styles from './styles/Landing.module.css'
 import { BsPlayFill } from 'react-icons/bs'
 import IMGinterstellar from '../images/interstellar.jpeg'
+import { useDispatch } from 'react-redux'
+import { hideLoading } from '../redux/loadingSlice'
 
 const NoPageFound = () => {
 	const { t } = useTranslation()
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	const redirect = () => navigate({ pathname: '/' })
+
+	useEffect(() => {
+		dispatch(hideLoading())
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (<>
 		<CardThemeBackground imgLink={IMGinterstellar} loginButtonHidden={true}>

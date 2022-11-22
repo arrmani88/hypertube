@@ -14,7 +14,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
-import { logIn, selectUser } from '../redux/userSlice'
+import { setUserLoggedIn, selectUser } from '../redux/userSlice'
 
 const Login = () => {
 	const [errorMessage, setErrorMessage] = useState(' ')
@@ -36,7 +36,7 @@ const Login = () => {
 			console.log(rsp.data)
 			if (rsp.status === 200) {
 				setErrorMessage(' ') // clear error msg
-				dispatch(logIn(rsp.data))
+				dispatch(setUserLoggedIn(rsp.data))
 				localStorage.setItem('accessToken', rsp.data.accessToken)
 				navigate('/')
 			}
@@ -49,19 +49,20 @@ const Login = () => {
 
 	const redirectToResetPassword = async () => {
 		try {
-			navigate('/send_reset_password_email')
+			navigate('/send-reset-password-email')
 		} catch (err) {
 			console.log(err)
 		}
 	}
 
 	useEffect(() => {
-		if (user.userData) { // if the state isn't currently loading (will be true or false after loading)
-			if (!user.userData.id) // user object is empty (no usr is logged)
+		if (user.isLoggedIn) { // if the state isn't currently loading (will be true or false after loading)
+			if (user.isLoggedIn === false) // no user is logged in
 				dispatch(hideLoading())
-			else if (user.userData.id) // user object contains data (user is logged)
+			else if (user.isLoggedIn === true) // user is logged in
 				navigate('/')
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user])
 
 	return (

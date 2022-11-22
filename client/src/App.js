@@ -16,10 +16,10 @@ import Hypertube from "./pages/Hypertube";
 import SendResetPasswordEmail from "./pages/SendResetPasswordEmail";
 import { useDispatch, useSelector } from "react-redux";
 import ResetPassword from "./pages/ResetPassword";
-import { showLoading } from "./redux/loadingSlice";
 import { useEffect } from "react";
 import getUserIfLoggedIn from "./functions/getUserIfLoggedIn";
-import { logIn, selectUser } from "./redux/userSlice";
+import { setUserLoggedIn, selectUser, setUserLoggedOut } from "./redux/userSlice";
+import PrivateRoute from "./components/PrivateRoute";
 
 i18n
 	.use(initReactI18next)
@@ -45,34 +45,40 @@ function App() {
 		const checkIfUserLoggedIn = async () => {
 			try {
 				const result = await getUserIfLoggedIn()
-				dispatch(logIn(result))
+				JSON.stringify(result) === JSON.stringify({})
+					? dispatch(setUserLoggedOut())
+					: dispatch(setUserLoggedIn(result))
 			} catch (error) {
 				console.log(error)
 			}
 		}
 		checkIfUserLoggedIn()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
 		<Loading isLoading={isLoading}>
-			{user.userData && <>
-				<SideBar />
-				<BrowserRouter>
-					<Routes>
-						<Route path='/' element={<Hypertube />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/register' element={<Register />} />
-						<Route path='/verify_your_account' element={<VerfifyYourAccount />} />
-						<Route path='/confirm_email/:token' element={<AccountVerified />} />
-						<Route path='/upload_image' element={<UploadImage />} />
-						<Route path='/loading' element={<Loading />} />
-						<Route path='/send_reset_password_email' element={<SendResetPasswordEmail />} />
-						<Route path="reset_password/:token" element={<ResetPassword />} />
+			{user.isLoggedIn !== null // if the user state isn't Loading 
+				&& <>
+					<SideBar />
+					<BrowserRouter>
+						<Routes>
+							<Route path='/' element={<Hypertube />} />
+							<Route path='/login' element={<Login />} />
+							<Route path='/register' element={<Register />} />
+							<Route path='/verify-your-account' element={<VerfifyYourAccount />} />
+							<Route path='/confirm-email/:token' element={<AccountVerified />} />
+							<Route path='/loading' element={<Loading />} />
+							<Route path='/send-reset-password-email' element={<SendResetPasswordEmail />} />
+							<Route path="reset-password/:token" element={<ResetPassword />} />
 
-						<Route path='*' element={<NoPageFound />} />
-					</Routes>
-				</BrowserRouter>
-			</>}
+							<Route path='/upload-image' element={<PrivateRoute child={<UploadImage />} />} />
+
+							<Route path='*' element={<NoPageFound />} />
+						</Routes>
+					</BrowserRouter>
+				</>
+			}
 		</Loading>
 	);
 }

@@ -18,7 +18,8 @@ router.post('/', validateToken, async (req, res) => {
             req.body.images
         )
         for (var index = 0; index < req.body.images.length; index++)
-            fs.unlinkSync(`./images/${req.body.images[index]}`)
+            if (fs.existsSync(`./images/${req.body.images[index]}`))
+                fs.unlinkSync(`./images/${req.body.images[index]}`)
         res.send('Images deleted successfully')
     } catch (err) {
         console.log(err)

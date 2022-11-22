@@ -16,10 +16,13 @@
 }
 .userAvatarImg{
 	height: 200px;
+	aspect-ratio: 1/1;
+	object-fit:cover;
 	border-radius: 50%;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	cursor: pointer;
+	z-index: 3;
 }
 .uploadIconContainer {
 	display: flex;
@@ -40,6 +43,7 @@
 	height: 40px;
 	right: 10px;
 	cursor: pointer;
+	z-index: 5;
 }
 .uploadIcon {
 	color: white;

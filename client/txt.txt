@@ -1,9 +1,4 @@
 name should takke full width in drawer
 change drawer background color
-https://codesandbox.io/s/modest-browser-5vgdgv?file=/src/redux/counter.js
-internationalization: 30:00 : https://www.youtube.com/watch?v=w04LXKlusCQ&ab_channel=Classsed
-delete this if useless /goinfre/anel-bou/projects/hypertube/client/src/functions/getWindowDimensions.js
-
-t2akd mn pages/Hypertube.js wach dik useEffect ghat t3ayet gha merra whda wla ghatb9a khedama m3a page
 
 khass tkon nefs regex dial validation dial (username passwd ... etc) mabin backend w front

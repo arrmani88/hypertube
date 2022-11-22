@@ -10,7 +10,8 @@ const getUserIfLoggedIn = async () => {
 		)
 		return user.status === 200 ? user.data : {}
 	} catch (error) {
-		if (error.response.data.error.message === 'invalid token')
+		if (error.response.data.error.message === 'invalid token'
+				|| error.response.data.error.message === 'jwt malformed')
 			return {}
 		else
 			throw error

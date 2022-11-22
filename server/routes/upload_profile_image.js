@@ -44,7 +44,6 @@ router.post('/', validateToken, async (req, res) => {
 			"SELECT * FROM images WHERE uid = ? AND isProfileImage = 1",
 			[req.user.id]
 		)
-		console.log('length=' + result.length)
 		await upload(req, res)
 		if (result.length == 0) { // if no profile image was added add one
 			await queryPromise(
@@ -60,7 +59,7 @@ router.post('/', validateToken, async (req, res) => {
 				)
 			}
 		}
-		res.send("Profile image upladed successfully")
+		res.json({ status: "Profile image upladed successfully", newImageName})
 	} catch (err) {
 		console.log(err)
 		res.status(400).json({ error: err })

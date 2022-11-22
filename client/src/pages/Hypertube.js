@@ -6,7 +6,7 @@ import Landing from './Landing'
 
 const Hypertube = () => {
 	const user = useSelector(selectUser)
-	return (user ?  <Home /> : <Landing />)
+	return (user.isLoggedIn === true ?  <Home /> : <Landing />)
 }
 
 export default Hypertube

@@ -5,9 +5,8 @@ import styles from './styles/AccountVerified.module.css'
 import CardThemeBackground from '../components/CardThemeBackground'
 import IMGaladdin from '../images/aladdin.jpeg'
 import { useNavigate, useParams } from 'react-router-dom'
-import Loading from '../components/Loading'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { showLoading, hideLoading } from '../redux/loadingSlice'
 
 const AccountVerified = () => {
@@ -20,15 +19,16 @@ const AccountVerified = () => {
 		const fetchData = async () => {
 			try {
 				const rsp = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/confirm_email/${token}`)
-				if (rsp.status !== 200) navigate('/not_found')
+				if (rsp.status !== 200) navigate('/not-found')
 				localStorage.setItem('accessToken', `${rsp.data.access_token}`)
 				dispatch(hideLoading())
 			} catch (err) {
 				console.log(err)
-				err.response.status === 400 && navigate('/not_found')
+				err.response.status === 400 && navigate('/not-found')
 			}
 		}
 		fetchData()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const onClick = () => {

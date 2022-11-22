@@ -57,12 +57,14 @@ const Register = () => {
 	}
 
 	useEffect(() => {
-		if (user.userData) { // if the state isn't currently loading (will be true or false after loading)
-			if (!user.userData.id) // user object is empty (no usr is logged)
+		console.log('--------------')
+		if (user.isLoggedIn) { // if the state isn't currently loading (will be true or false after loading)
+			if (user.isLoggedIn === false) // user isn't logged in
 				dispatch(hideLoading())
-			else if (user.userData.id) // user object contains data (user is logged)
+			else if (user.isLoggedIn === true) // user is logged in
 				navigate('/')
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user])
 
 	return (

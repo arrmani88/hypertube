@@ -28,7 +28,6 @@ const ResetPassword = () => {
 	const { register, handleSubmit, watch, formState: {errors} } = useForm({ resolver: yupResolver(passwordSchema) })
 	const resetPassword = async () => {
 		try {
-			console.log(watch('password'))
 			setIsButtonLoading(true)
 			const rsp = await axios.post(
 				`${process.env.REACT_APP_SERVER_HOSTNAME}/reset_password/${token}`,
@@ -45,7 +44,10 @@ const ResetPassword = () => {
 	
 	const GoToHome = () => navigate('/')
 	
-	useEffect(() => dispatch(hideLoading()))
+	useEffect(() => {
+		dispatch(hideLoading())
+		  // eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		pageState === 'showForm'

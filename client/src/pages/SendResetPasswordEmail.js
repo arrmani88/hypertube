@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import CardThemeBackground from '../components/CardThemeBackground'
 import IMGgot from '../images/got.jpg'
@@ -6,6 +6,8 @@ import styles from './styles/SendResetPasswordEmail.module.css'
 import axios from 'axios'
 import ReactLoading from 'react-loading'
 import { BsPlayFill } from 'react-icons/bs'
+import { useDispatch } from 'react-redux'
+import { hideLoading } from '../redux/loadingSlice'
 
 const SendResetPasswordEmail = () => {
 	const { t } = useTranslation()
@@ -13,6 +15,7 @@ const SendResetPasswordEmail = () => {
 	const [isButtonLoading, setIsButtonLoading] = useState(false)
 	const [errorMessage, setErrorMessage] = useState(' ')
 	const [input, setInput] = useState('')
+	const dispatch = useDispatch()
 
 	const sendResetPasswordEmail = async (e) => {
 		try {
@@ -32,6 +35,11 @@ const SendResetPasswordEmail = () => {
 			console.log(err)
 		}
 	}
+
+	useEffect(() => {
+		dispatch(hideLoading())
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		pageState === 'showForm'
