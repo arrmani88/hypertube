@@ -57,8 +57,7 @@ const Register = () => {
 	}
 
 	useEffect(() => {
-		console.log('--------------')
-		if (user.isLoggedIn) { // if the state isn't currently loading (will be true or false after loading)
+		if (user.isLoggedIn !== null) { // if the state isn't currently loading (will be true or false after loading)
 			if (user.isLoggedIn === false) // user isn't logged in
 				dispatch(hideLoading())
 			else if (user.isLoggedIn === true) // user is logged in
@@ -68,7 +67,7 @@ const Register = () => {
 	}, [user])
 
 	return (
-		<CardThemeBackground imgLink={IMGdark}>
+		<CardThemeBackground imgLink={IMGdark} loginButtonShown={true} >
 			<form onSubmit={handleSubmit(submitForm)} className={styles.register_form} >
 				<label>
 					<p className={styles.label}>{t('first_name')}</p>

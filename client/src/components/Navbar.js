@@ -7,6 +7,8 @@ import LanguagesDropdown from './LanguagesDropdown.js'
 import { useTranslation } from 'react-i18next'
 import hypertubeLogo from '../images/hypertube_logo.png'
 import IMGarrmani88 from '../images/arrmani88.jpeg'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { setUserLoggedOut } from '../redux/userSlice'
 
 const NavbarUserLoggedIn = () => {
 	const dispatch = useDispatch()
@@ -30,6 +32,13 @@ const NavbarUserLoggedIn = () => {
 
 const NavbarUserUnlogged = (props) => {
 	const { t } = useTranslation()
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
+
+	const logOut = () => {
+		dispatch(setUserLoggedOut())
+		localStorage.removeItem('accessToken')
+	}
 
 	return (
 		<div className='navbarUserUnlogged'>
@@ -37,11 +46,21 @@ const NavbarUserUnlogged = (props) => {
 				<img className='logo' src={hypertubeLogo} alt={'logo'} />
 				<div className='languagesAndLogin'>
 					<LanguagesDropdown />
-					{props.loginButtonHidden === true
-						? <div />
-						: <button className='loginButton'>
-						<h1 className='loginText'>{t('login')}</h1>
-					</button>}
+					{props.loginButtonShown === true
+						&& <button onClick={() => { navigate('/login') }} className='loginButton'>
+							<h1 className='loginText'>{t('login')}</h1>
+						</button>
+					}
+					{props.registerButtonShown === true
+						&& <button onClick={() => { navigate('/register') }} className='loginButton'>
+							<h1 className='loginText'>{t('register')}</h1>
+						</button>
+					}
+					{props.logOutButtonShown === true
+						&& <button onClick={logOut} className='loginButton'>
+							<h1 className='loginText'>{t('register')}</h1>
+						</button>
+					}
 				</div>
 			</div>
 		</div>

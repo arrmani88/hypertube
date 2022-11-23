@@ -21,7 +21,7 @@ const NoPageFound = () => {
 	}, [])
 
 	return (<>
-		<CardThemeBackground imgLink={IMGinterstellar} loginButtonHidden={true}>
+		<CardThemeBackground imgLink={IMGinterstellar} >
 			<h1 className={styles.cardTitle} >Oops!</h1>
 			<h1 className={styles.cardText1}>{t('no_page_exists')}</h1>
 			<div className='py-5' />

@@ -44,7 +44,7 @@ const VerfifyYourAccount = () => {
 	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (<>
-		<NavbarUserUnlogged loginButtonHidden={true} />
+		<NavbarUserUnlogged />
 		<div className={styles.page}>
 			<img className={styles.backgroundImg} src={IMGdark2} alt='background_img' />
 			<div style={gradient} />

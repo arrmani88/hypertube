@@ -37,7 +37,7 @@ const AccountVerified = () => {
 	}
 
 	return (
-		<CardThemeBackground imgLink={IMGaladdin} loginButtonHidden={true} >
+		<CardThemeBackground imgLink={IMGaladdin} >
 			<h1 className={styles.cardTitle}>{t('account_verified')}</h1>
 			<h1 className={styles.cardDescription}>{t('your_account_has_been_verified')}</h1>
 			<div className='mt-[20px]' />

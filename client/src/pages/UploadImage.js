@@ -19,9 +19,7 @@ const UploadImage = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	// const image = user.userData.image
-	// const avatarImage = process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
-	// 	+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
+	const [validationMessage, setValidationMessage] = useState(' ')
 	const [avatarImage, setAvatarImage] = useState(
 		process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
 		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
@@ -45,8 +43,11 @@ const UploadImage = () => {
 				setAvatarImage(process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
 					+ ((updatedUserData.images[0]?.image) || 'blank-profile-image.png'))
 				dispatch(updateUserData(updatedUserData))
-			} catch (err) {
-				console.log(err)
+			} catch (error) {
+				if (error.response?.data?.error === "Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file") {
+					
+				}
+				console.log(error)
 			} finally {
 				setIsLoading(false)
 			}
@@ -56,13 +57,17 @@ const UploadImage = () => {
 		navigate({ pathname: '/home' })
 	}
 
+	const displayEmptyAvatar = () => {
+		setAvatarImage(process.env.REACT_APP_SERVER_HOSTNAME + '/images/blank-profile-image.png')
+	}
+
 	useEffect(() => {
 		dispatch(hideLoading())
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
-		<CardThemeBackground imgLink={IMGvikings} >
+		<CardThemeBackground imgLink={IMGvikings}  >
 			<h1 className={styles.title}>{t('one_last_step')}</h1>
 			<h1 className={styles.label} >{t('add_profile_image')}</h1>
 			<div className={styles.changeImageContainer}>
@@ -75,7 +80,7 @@ const UploadImage = () => {
 						<input hidden id='imgUpload' type='file' />
 					</label>
 				</div>
-				<img className={styles.userAvatarImg} src={avatarImage} alt='userImg' onClick={() => { }} />
+				<img className={styles.userAvatarImg} src={avatarImage} alt='userImg' onError={displayEmptyAvatar} />
 			</div>
 
 			<button className={styles.submitButton} onClick={navigateToHome} >

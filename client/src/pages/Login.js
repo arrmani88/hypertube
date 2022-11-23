@@ -56,7 +56,7 @@ const Login = () => {
 	}
 
 	useEffect(() => {
-		if (user.isLoggedIn) { // if the state isn't currently loading (will be true or false after loading)
+		if (user.isLoggedIn !== null) { // if the state isn't currently loading (will be true or false after loading)
 			if (user.isLoggedIn === false) // no user is logged in
 				dispatch(hideLoading())
 			else if (user.isLoggedIn === true) // user is logged in
@@ -66,7 +66,7 @@ const Login = () => {
 	}, [user])
 
 	return (
-		<CardThemeBackground imgLink={IMGnationalTreasure} loginButtonHidden={true} >
+		<CardThemeBackground imgLink={IMGnationalTreasure} registerButtonShown={true} >
 			<p className={styles.cardTitle} >{t('login_and_start_watching')}</p>
 			<form onSubmit={handleSubmit(submitForm)} className={styles.loginForm} >
 				<label >
