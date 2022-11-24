@@ -59,11 +59,16 @@
 	color: white;
 	cursor: pointer;
 	margin: 10px;
-	margin-top: 30px;
 	font-size: 30px;
 	width: 95%;
 	height: 60px;
 	border-radius: 5px;
+}
+.errorMessage {
+	color: red;
+	font-size: 18px;
+	align-self: flex-start;
+	white-space: pre-wrap
 }
 
 @media only screen and (max-width: 435px) {

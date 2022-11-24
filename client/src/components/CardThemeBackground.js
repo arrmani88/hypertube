@@ -1,10 +1,19 @@
 import React from 'react'
-import { NavbarUserUnlogged } from './Navbar'
+import { NavbarUserLoggedIn, NavbarUserUnlogged } from './Navbar'
 import styles from './styles/CardThemeBackground.module.css'
 
-const CardThemeBackground = ({children, imgLink, loginButtonShown, registerButtonShown, logOutButtonShown}) => {
+const CardThemeBackground = ({
+		children,
+		imgLink,
+		loginButtonShown,
+		registerButtonShown
+	}) => {
+
 	return (<>
-		<NavbarUserUnlogged loginButtonShown={loginButtonShown} registerButtonShown={registerButtonShown} logOutButtonShown={logOutButtonShown} />
+		{loginButtonShown === true || registerButtonShown === true // means the user isn't logged cuz he needs to 
+			? <NavbarUserUnlogged loginButtonShown={loginButtonShown} registerButtonShown={registerButtonShown} />
+			: <NavbarUserLoggedIn />
+		}
 		<div className={styles.page} >
 			<img className={styles.backgroundImg} src={imgLink} alt='background_img' />
 			<div className={styles.gradient} />
@@ -14,7 +23,6 @@ const CardThemeBackground = ({children, imgLink, loginButtonShown, registerButto
 				</div>
 			</div>
 		</div>
-
 	</>)
 }
 

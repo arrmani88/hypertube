@@ -8,7 +8,7 @@ import Drawer from '@mui/material/Drawer';
 import './styles/SideBar.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSidebar } from '../redux/sidebarSlice';
-import arrmani88 from '../images/arrmani88.jpeg'
+import { selectUser } from '../redux/userSlice'
 
 const Sections = [
 	{ icon: <AiOutlineInfoCircle className='sidebarIcon' />, title: "About" },
@@ -20,9 +20,12 @@ const Sections = [
 const SideBar = () => {
 	const dispatch = useDispatch()
 	const sidebarState = useSelector((state) => state.sidebar.value)
-
 	const SidebarRef = useRef(null)
-	useEffect((dispatch) => { // added
+	const user = useSelector(selectUser)
+	let userImage = process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
+		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
+
+	useEffect(() => { // added
 		const SideBarClick = (e) => {
 			if (SidebarRef.current && !SidebarRef.current.contains(e.target))
 				dispatch(closeSidebar())
@@ -32,17 +35,13 @@ const SideBar = () => {
 	}, [sidebarState])
 
 	return (
-		<Drawer
-			anchor='right'
-			open={sidebarState}
-			variant='temporary'
-		>
+		<Drawer anchor='right' open={sidebarState} variant='temporary' >
 			<div ref={SidebarRef} style={{ height: '100%' }}>
 				<div>
 					<div className='sidebarHeader'>
 						<div className='sidebarHeaderGradient' />
-						<img className='avatarUserSidebar' src={arrmani88} alt='userImg' />
-						<h1 className='userFullName'>Anas EL BOUDALI</h1>
+						<img className='avatarUserSidebar' src={userImage} alt='userImg' />
+						<h1 className='userFullName'>{user.userData.firstName + ' ' + user.userData.lastName}</h1>
 						<MdChevronRight onClick={() => dispatch(closeSidebar())} className='mdChevronRight' />
 					</div>
 				</div>	

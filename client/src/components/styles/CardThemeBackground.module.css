@@ -32,4 +32,9 @@
 }
 .cardContent {
 	width: min(90%, 450px);
+	/* added: */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }

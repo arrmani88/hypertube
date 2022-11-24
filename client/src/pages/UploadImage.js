@@ -19,7 +19,7 @@ const UploadImage = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	const [validationMessage, setValidationMessage] = useState(' ')
+	const [errorMessage, setErrorMessage] = useState(' ')
 	const [avatarImage, setAvatarImage] = useState(
 		process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
 		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
@@ -28,6 +28,7 @@ const UploadImage = () => {
 	const chooseImage = async e => {
 		if (e.target.files[0]) {
 			try {
+				setErrorMessage(' ')
 				setIsLoading(true)
 				const file = e.target.files[0]
 				formData.delete('image') // case if the user uploaded a picture, then uploaded a second one: delete the first one from formData
@@ -45,7 +46,7 @@ const UploadImage = () => {
 				dispatch(updateUserData(updatedUserData))
 			} catch (error) {
 				if (error.response?.data?.error === "Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file") {
-					
+					console.log(setErrorMessage(error.response?.data?.error))
 				}
 				console.log(error)
 			} finally {
@@ -82,7 +83,7 @@ const UploadImage = () => {
 				</div>
 				<img className={styles.userAvatarImg} src={avatarImage} alt='userImg' onError={displayEmptyAvatar} />
 			</div>
-
+			<h1 className={styles.errorMessage} >{errorMessage}</h1>
 			<button className={styles.submitButton} onClick={navigateToHome} >
 				<p>{t('start_watching')}</p>
 				<BsPlayFill className={`text-[40px]`} />

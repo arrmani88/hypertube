@@ -2,3 +2,27 @@ name should takke full width in drawer
 change drawer background color
 
 khass tkon nefs regex dial validation dial (username passwd ... etc) mabin backend w front
+
+routes to do:
+	1. search for profile by username
+	2. consult profile (email hidden)
+	3. edit profile
+
+• The user must be able to register and connect via Omniauth.
+• Disconnect with 1 click
+• A film research field.
+
+/*******************************************/
+III.2.2 Thumbnails
+	• If a research has been done, the results will show as thumbnails sorted by names.
+	• If no research was done, you will show the most popular medias from your external
+		sources, sorted as per the criteria of your choice (downloads, peers, seeders, etc...)
+	• In addition to the name of the video, a thumbnail must be composed, if available,
+		of its production year, its IMDb note and a cover image.
+	• You will differentiate the videos watched from unwatched, as you prefer.
+	• The list will be paginated, at the end of each page. The following one must be
+		automatically charged asynchronically. That means there cannot be a link from
+		each page.
+	• The page will be sortable and filtered according to criteria such as name, genre,
+		the IMDb grade, the gap of production year etc...
+

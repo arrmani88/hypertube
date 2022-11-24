@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import getUserIfLoggedIn from "./functions/getUserIfLoggedIn";
 import { setUserLoggedIn, selectUser, setUserLoggedOut } from "./redux/userSlice";
 import PrivateRoute from "./components/PrivateRoute";
+import User from "./pages/User";
 
 i18n
 	.use(initReactI18next)
@@ -73,6 +74,7 @@ function App() {
 							<Route path="reset-password/:token" element={<ResetPassword />} />
 
 							<Route path='/upload-image' element={<PrivateRoute child={<UploadImage />} />} />
+							<Route path="/user" element={<PrivateRoute child={ <User/> } />} />
 
 							<Route path='*' element={<NoPageFound />} />
 						</Routes>
