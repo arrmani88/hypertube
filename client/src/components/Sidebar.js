@@ -22,8 +22,11 @@ const SideBar = () => {
 	const sidebarState = useSelector((state) => state.sidebar.value)
 	const SidebarRef = useRef(null)
 	const user = useSelector(selectUser)
-	let userImage = process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
-		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
+	let userImage = process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (
+		user.userData.images?.length > 0  && user.userData.images[0]?.image
+			? user.userData.images[0]?.image 
+			: 'blank-profile-image.png'
+	)
 
 	useEffect(() => { // added
 		const SideBarClick = (e) => {

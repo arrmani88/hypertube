@@ -2,6 +2,7 @@ name should takke full width in drawer
 change drawer background color
 
 khass tkon nefs regex dial validation dial (username passwd ... etc) mabin backend w front
+capitalize first & last name first letters
 
 routes to do:
 	1. search for profile by username

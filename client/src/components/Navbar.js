@@ -12,8 +12,12 @@ import { selectUser, setUserLoggedOut } from '../redux/userSlice'
 const NavbarUserLoggedIn = () => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	let avatarImg = process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
-		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
+	let avatarImg = process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (
+		user.userData.images?.length > 0  && user.userData.images[0]?.image
+			? user.userData.images[0]?.image 
+			: 'blank-profile-image.png'
+	)
+	
 	return (
 		<div className='navbarContainer'>
 			<div className='balanceEmptyDivAvatar' />

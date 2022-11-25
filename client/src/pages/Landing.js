@@ -36,7 +36,7 @@ const Landing = () => {
 	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (<>
-		<CardThemeBackground imgLink={IMGmovies}>
+		<CardThemeBackground imgLink={IMGmovies} loginButtonShown={true}>
 			<h1 className={styles.cardTitle}>{t("see_whats_next")}</h1>
 			<h1 className={styles.cardText1}>{t("watch_limitless")}</h1>
 			<h1 className={`${styles.cardText2} hideOnMobileVersion`}>{t("ready_to_watch")}</h1>

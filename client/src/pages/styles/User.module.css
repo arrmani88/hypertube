@@ -1,5 +1,7 @@
+.avatarContainer{
+	max-width: 250px;
+}
 .userAvatarImg{
-	height: 200px;
 	aspect-ratio: 1/1;
 	object-fit:cover;
 	border-radius: 50%;
@@ -7,4 +9,47 @@
 	margin-bottom: 5px;
 	cursor: pointer;
 	z-index: 3;
+}
+.firstLastName {
+	color: white;
+	font-size: 50px;
+	font-weight: 600;
+	text-align: center;
+}
+.username{
+	font-size: 25px;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	color: white;
+	font-weight: 200;
+	text-align: center;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.icon {
+	color: white;
+	width: 40px;
+	font-size: 30px;
+	text-align: center;
+}
+.userData{
+	color: white;
+	font-size: 20px;
+}
+.editButton {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background: red;
+	color: white;
+	cursor: pointer;
+	margin: 10px;
+	font-size: 30px;
+	width: 95%;
+	height: 60px;
+	border-radius: 5px;
 }
