@@ -55,9 +55,9 @@ Authorization: {{token}}
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
-Content-Disposition: form-data; name="image"; filename="anas.jpeg"
+Content-Disposition: form-data; name="image"; filename="ana-zwin.jpeg"
 
-< /Users/anel-bou/http_files/anas.jpeg
+< /Users/anel-bou/http_files/ana-zwin.jpeg
 --boundary--
 # image should be either '.jpg', '.jpeg', or '.png', and less than 1024*1024 bytes (1MB)
 # -------------------------------------------------------------------------
@@ -211,9 +211,10 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "id": 2
+    "idOrUsername": 2
 }
 
+# idOrUsername should contain either the username of the visited profile or his id
 # -------------------------------------------------------------------------
 ### ------------------------------ GET LIKERS ------------------------------
 GET {{hostname}}/get_likers

@@ -27,6 +27,7 @@ const upload = util.promisify(
 		storage: storage,
 		limits: { fieldSize: 1 * 1024 * 1024 },
 		fileFilter: (req, file, cb) => {
+			console.log(file.mimetype)
 			// if (path.extname(file.originalname) != '.jpg' && path.extname(file.originalname) != '.png' && path.extname(file.originalname) != '.jpeg') {
 			if (file.mimetype != 'image/jpg' && file.mimetype != 'image/jpeg' && file.mimetype != 'image/png'){
 				return cb("Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file")

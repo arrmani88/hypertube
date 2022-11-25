@@ -7,30 +7,35 @@ const queryPromise = util.promisify(dbController.query.bind(dbController))
 
 router.get('/', validateToken, async (req, res) => {
     try {
-        const { id } = req.body
-        const result = await queryPromise(
-            "SELECT * FROM users WHERE id = ?",
-            id
+        const { idOrUsername } = req.body
+        const visitedprofile = await queryPromise(
+            "SELECT * FROM users WHERE id = ? OR username = ?",
+            [idOrUsername, idOrUsername]
         )
-        if (result.length) {
+        if (visitedprofile.length) {
+            const visitedProfileImages = await queryPromise(
+                "SELECT * FROM images WHERE uid = ?",
+                visitedprofile[0].id
+            )
             res.json({
-                id: result[0].id,
-                firstName: result[0].firstName,
-                lastName : result[0].lastName,
-                username : result[0].username,
-                email : result[0].email,
-                birthday : result[0].birthday,
-                city : result[0].city,
-                gender : result[0].gender,
-                sexualPreferences: result[0].sexualPreferences,
-                biography: result[0].biography,
-                longitude: result[0].longitude,
-                latitude: result[0].latitude,
+                id: visitedprofile[0].id,
+                firstName: visitedprofile[0].firstName,
+                lastName : visitedprofile[0].lastName,
+                username : visitedprofile[0].username,
+                email : visitedprofile[0].email,
+                images: visitedProfileImages,
+                birthday : visitedprofile[0].birthday,
+                city : visitedprofile[0].city,
+                gender : visitedprofile[0].gender,
+                sexualPreferences: visitedprofile[0].sexualPreferences,
+                biography: visitedprofile[0].biography,
+                longitude: visitedprofile[0].longitude,
+                latitude: visitedprofile[0].latitude,
             })
-            if (id != req.user.id) {
+            if (idOrUsername != req.user.id && idOrUsername != req.user.username) {
                 await queryPromise(
                     "INSERT INTO visitedProfiles(visited, uid) VALUES(?, ?)",
-                    [id, req.user.id]
+                    [visitedprofile[0].id, req.user.id]
                 )
             }
         } else {
