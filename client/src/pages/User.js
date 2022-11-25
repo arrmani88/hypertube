@@ -6,11 +6,17 @@ import { hideLoading } from '../redux/loadingSlice'
 import { selectUser } from '../redux/userSlice'
 import styles from './styles/User.module.css'
 import { FaBirthdayCake, FaGenderless } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
+import { BiEditAlt } from 'react-icons/bi'
+import { useParams } from 'react-router-dom'
 
 const User = () => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	const usergender = user.userData.gender === 'M' ? 'Male' : 'Female'
+	const { t } = useTranslation()
+	const { parameterUsername } = useParams()
+	console.log(parameterUsername)
+	const usergender = user.userData.gender === 'M' ? 'male' : 'female'
 	let avatarImage = process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
 		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
 
@@ -19,7 +25,7 @@ const User = () => {
 	}, [])
 
 	return (
-		<CardThemeBackground imgLink={IMGvikings2} >
+		<CardThemeBackground imgLink={IMGvikings2} loginButtonShown={true}>
 			<div className={styles.avatarContainer} >
 				<img className={styles.userAvatarImg} src={avatarImage} alt='userImg' />
 			</div>
@@ -37,12 +43,13 @@ const User = () => {
 				<div className='mt-[20px]' />
 				<div className={styles.row} >
 					<FaGenderless className={styles.icon} />
-					<h1 className={styles.userData}>{usergender}</h1>
+					<h1 className={styles.userData}>{t(usergender)}</h1>
 				</div>
 			</div>
+			<div className='mt-[20px]' />
 			<button className={styles.editButton} onClick={() => {}} >
-				<p>{t('start_watching')}</p>
-				<BsPlayFill className={`text-[40px]`} />
+				<p>{t('edit')}</p>
+				<BiEditAlt className={`text-[40px]`} />
 			</button>
 		</CardThemeBackground>
 	)

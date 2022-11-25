@@ -74,7 +74,7 @@ function App() {
 							<Route path="reset-password/:token" element={<ResetPassword />} />
 
 							<Route path='/upload-image' element={<PrivateRoute child={<UploadImage />} />} />
-							<Route path="/user" element={<PrivateRoute child={ <User/> } />} />
+							<Route path="/user/:parameterUsername" element={<PrivateRoute child={ <User/> } />} />
 
 							<Route path='*' element={<NoPageFound />} />
 						</Routes>

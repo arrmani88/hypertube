@@ -39,5 +39,8 @@
     "password_reset_successfully": "Passwort erfolgreich zurügesetzt",
     "go_to_home": "Zur Startseite",
 	"an_email_sent_to_reset_password": "Ein Email wurde geschickt zur Zurücksetzung Ihr Passwort",
-	"check_inbox_to_reset_password": "Bitte uberprüfen Sie Ihren Posteingang um Ihr Passwort zu zurücksetzen"
+	"check_inbox_to_reset_password": "Bitte uberprüfen Sie Ihren Posteingang um Ihr Passwort zu zurücksetzen",
+    "male": "Männlich",
+    "female": "Weiblich",
+    "edit": "Bearbeiten"
 }
