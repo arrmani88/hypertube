@@ -3,12 +3,14 @@ import Main from '../components/Main'
 import Row from '../components/Recommendation'
 import requests from '../Requests'
 import { NavbarUserLoggedIn } from '../components/Navbar'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
+import { selectUser } from '../redux/userSlice'
 
 const Home = () => {
 	const dispatch = useDispatch()
-	// 
+	const user = useSelector(selectUser)
+	console.log(user)
 	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (

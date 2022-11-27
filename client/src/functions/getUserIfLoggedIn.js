@@ -8,7 +8,7 @@ const getUserIfLoggedIn = async () => {
 			`${process.env.REACT_APP_SERVER_HOSTNAME}/get_me`,
 			{ headers: { Authorization: storedAccessToken } }
 		)
-		return user.status === 200 ? user.data : {}
+		return user.status === 200 ? {userData: user.data, accessToken: storedAccessToken} : {}
 	} catch (error) {
 		if (error.response.data.error.message === 'invalid token'
 				|| error.response.data.error.message === 'jwt malformed')

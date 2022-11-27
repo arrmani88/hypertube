@@ -6,14 +6,17 @@ import CardThemeBackground from '../components/CardThemeBackground'
 import IMGaladdin from '../images/aladdin.jpeg'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { showLoading, hideLoading } from '../redux/loadingSlice'
+import { selectUser, setUserLoggedIn } from '../redux/userSlice'
+import getUserIfLoggedIn from '../functions/getUserIfLoggedIn'
 
 const AccountVerified = () => {
 	const { t } = useTranslation()
 	const { token } = useParams()
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+	const user = useSelector(selectUser)
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -21,6 +24,8 @@ const AccountVerified = () => {
 				const rsp = await axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/confirm_email/${token}`)
 				if (rsp.status !== 200) navigate('/not-found')
 				localStorage.setItem('accessToken', `${rsp.data.access_token}`)
+				const result = await getUserIfLoggedIn()
+				dispatch(setUserLoggedIn(result))
 				dispatch(hideLoading())
 			} catch (err) {
 				console.log(err)

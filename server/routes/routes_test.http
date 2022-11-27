@@ -1,5 +1,7 @@
 @hostname = http://localhost:3001
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2NTU0NzAyNjB9.jwbDc_qdpzlc14n7er7XU1VH8zuByKtBZ-nDNxWnCPo
+# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2NTU0NzAyNjB9.jwbDc_qdpzlc14n7er7XU1VH8zuByKtBZ-nDNxWnCPo
+# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njk1NDY4NDd9.UM-8QQkVACPAsIPea8HEMyJxILkrOoaz9fY-8OV8cyQ
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njk1NDY4NDd9.UM-8QQkVACPAsIPea8HEMyJxILkrOoaz9fY-8OV8cyQ
 ### ------------------------------- REGISTER -------------------------------
 POST {{hostname}}/register
 Content-Type: application/json
@@ -16,7 +18,8 @@ Content-Type: application/json
 # password: between 6 and 20 characters
 # -------------------------------------------------------------------------
 ### -------------------------- confirm PROFILE ---------------------------
-GET {{hostname}}/confirm_email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njg3ODAwMzZ9.D99HJt1jGdPhgWaYFlQDZrPMLFpZ8aJwZsrYMtl8YkE
+# GET {{hostname}}/confirm_email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njg3ODAwMzZ9.D99HJt1jGdPhgWaYFlQDZrPMLFpZ8aJwZsrYMtl8YkE
+GET {{hostname}}/confirm_email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njk1NDY4Mjh9.MZ3_XD1p8ka0-LoZjyk6dAcOwzSqT7LlEGac9sZCiU4
 # -------------------------------------------------------------------------
 ### -------------------------- COMPLETE PROFILE ---------------------------
 POST {{hostname}}/complete_profile
@@ -55,10 +58,12 @@ Authorization: {{token}}
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
-Content-Disposition: form-data; name="image"; filename="ana-zwin.jpeg"
+Content-Disposition: form-data; name="image"; filename="got.jpg"
+Content-Type: image/jpeg
 
-< /Users/anel-bou/http_files/ana-zwin.jpeg
+< /Users/anel-bou/http_files/got.jpg
 --boundary--
+
 # image should be either '.jpg', '.jpeg', or '.png', and less than 1024*1024 bytes (1MB)
 # -------------------------------------------------------------------------
 ### --------------------- UPLOAD MULTIPLE FEED IMAGES ---------------------
@@ -211,7 +216,7 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "idOrUsername": 2
+    "idOrUsername": 
 }
 
 # idOrUsername should contain either the username of the visited profile or his id

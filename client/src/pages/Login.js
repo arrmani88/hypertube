@@ -36,7 +36,7 @@ const Login = () => {
 			console.log(rsp.data)
 			if (rsp.status === 200) {
 				setErrorMessage(' ') // clear error msg
-				dispatch(setUserLoggedIn(rsp.data))
+				dispatch(setUserLoggedIn({ userData: rsp.data, accessToken: rsp.data.accessToken }))
 				localStorage.setItem('accessToken', rsp.data.accessToken)
 				navigate('/')
 			}
