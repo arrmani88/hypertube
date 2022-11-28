@@ -5,9 +5,9 @@ const dbController = require('../models/db_controller')
 const util = require('util')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
 
-router.get('/', validateToken, async (req, res) => {
+router.get('/:idOrUsername', validateToken, async (req, res) => {
     try {
-        const { idOrUsername } = req.body
+        const idOrUsername = req.params.idOrUsername
         const visitedprofile = await queryPromise(
             "SELECT * FROM users WHERE id = ? OR username = ?",
             [idOrUsername, idOrUsername]

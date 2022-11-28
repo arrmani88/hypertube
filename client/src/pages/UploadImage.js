@@ -21,8 +21,11 @@ const UploadImage = () => {
 	const user = useSelector(selectUser)
 	const [errorMessage, setErrorMessage] = useState(' ')
 	const [avatarImage, setAvatarImage] = useState(
-		process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
-		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
+		process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (
+			user.userData.images?.length > 0  && user.userData.images[0]?.image
+				? user.userData.images[0]?.image 
+				: 'blank-profile-image.png'
+		)
 	)
 
 	const chooseImage = async e => {
@@ -36,18 +39,20 @@ const UploadImage = () => {
 				const rsp = await axios.post(
 					process.env.REACT_APP_SERVER_HOSTNAME + '/upload_profile_image',
 					formData,
-					{ headers: { 'Content-Type': file.type, Authorization: `${process.env.REACT_APP_MANUALTOKEN}` } }
+					{ headers: { 'Content-Type': file.type, Authorization: `${user.accessToken}` } }
 				)
 				var images = [ ...user.userData.images ] // we need to change the old image with a new one, so ew create a new `images` array to edit it
 				images[0] = {...images[0], image: rsp.data.newImageName} // we add the new image to the the `images` array
 				const updatedUserData = { ...user.userData, images } // we initialize an new object to set it as user Data
-				setAvatarImage(process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
-					+ ((updatedUserData.images[0]?.image) || 'blank-profile-image.png'))
+				setAvatarImage(process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (
+					updatedUserData.images?.length > 0  && updatedUserData.images[0]?.image
+						? updatedUserData.images[0]?.image 
+						: 'blank-profile-image.png'
+				))
 				dispatch(updateUserData(updatedUserData))
 			} catch (error) {
-				if (error.response?.data?.error === "Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file") {
+				if (error.response?.data?.error === "Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file")
 					console.log(setErrorMessage(error.response?.data?.error))
-				}
 				console.log(error)
 			} finally {
 				setIsLoading(false)

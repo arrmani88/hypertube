@@ -2,15 +2,16 @@
 # @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2NTU0NzAyNjB9.jwbDc_qdpzlc14n7er7XU1VH8zuByKtBZ-nDNxWnCPo
 # @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njk1NDY4NDd9.UM-8QQkVACPAsIPea8HEMyJxILkrOoaz9fY-8OV8cyQ
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFycm1hbmk4OCIsImlkIjoxLCJpYXQiOjE2Njk1NDY4NDd9.UM-8QQkVACPAsIPea8HEMyJxILkrOoaz9fY-8OV8cyQ
+@da3token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRkYTNsaSIsImlkIjoyLCJpYXQiOjE2Njk2MzkzOTN9.urddhIlVdX0QkyUpgeDPJ631DGrqWJwBcS4Vh_oTrdw
 ### ------------------------------- REGISTER -------------------------------
 POST {{hostname}}/register
 Content-Type: application/json
 
 {
-    "firstName": "anas",
-    "lastName": "el boudali",
-    "username": "arrmani88",
-    "email": "a@a.com",
+    "firstName": "dda",
+    "lastName": "eli",
+    "username": "dda3li",
+    "email": "ab@a.com",
     "password": "qweqwe123"
 }
 
@@ -127,17 +128,21 @@ Content-Type: application/json
 # --------------------------------------------------------------------------
 ### ------------------------ UPDATE PROFILE DATA ---------------------------
 POST {{hostname}}/update_profile
-Authorization: {{token}}
+Authorization: {{da3token}}
 Content-Type: application/json
 
 {
-    "newfirstName": "bb",
+    "newFirstName": "zezezezez",
+    "newCity": "zazazaza",
+    "newUsername": "zozozozoz",
     "username": "arrmani88",
     "password": "qweqwe123",
     "oldTags": ["ee", "bb", "cc", "dd", "aa"],
     "newTags": ["11", "22", "33", "44", "55"]
 }
 
+# username and password are required
+# properties naming: newFirstName newLastName newUsername newEmail newPassword newBirthday newCity newGender newSexualPreferences newBiography
 # -------------------------------------------------------------------------
 ### --------------------------  LIKE PROFILE  -----------------------------
 POST {{hostname}}/like
@@ -195,29 +200,23 @@ GET {{hostname}}/get_blocked_users
 Authorization: {{token}}
 
 # -------------------------------------------------------------------------
-### ------------------------- DELETE FEED IMAGES --------------------------
-POST {{hostname}}/delete_feed_images
+### ------------------------- DELETE IMAGES --------------------------
+POST {{hostname}}/delete_images
 Authorization: {{token}}
 Content-Type: application/json
 
 {
     "images": [
-        "1668022436347_2208c81f5ade73223703255b96889318.jpeg",
-        "1668022436352_7ed12feede45b7a21c621375e1919718.jpeg",
-        "1668022436355_8832cdff0e5c3332b29ae4bd149f0b21.jpeg",
-        "1668516857029_400cee9791b2128a183c0a75b712891c.png"
+        "1669650865628_6f0ce538f71e48dd5ab55ea4406148d3.jpg",
+        "1669650860972_8832cdff0e5c3332b29ae4bd149f0b21.jpeg"
     ]
 }
 
 # -------------------------------------------------------------------------
 ### ------------------------------ GET USER -------------------------------
-GET {{hostname}}/get_user
+@idOrUsername = arrmani88
+GET {{hostname}}/get_user/{{idOrUsername}}
 Authorization: {{token}}
-Content-Type: application/json
-
-{
-    "idOrUsername": 
-}
 
 # idOrUsername should contain either the username of the visited profile or his id
 # -------------------------------------------------------------------------

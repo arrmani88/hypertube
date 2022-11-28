@@ -14,10 +14,10 @@ let j
 let count = 1
 
 const getArrayOfUpdatedFields = (body, id) => {
-	const { newfirstName, newlastName, newUsername, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = body
+	const { newFirstName, newLastName, newUsername, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = body
 	let rtrn = []
-	newfirstName != null ? rtrn.push(newfirstName) : 0
-	newlastName != null ? rtrn.push(newlastName) : 0
+	newFirstName != null ? rtrn.push(newFirstName) : 0
+	newLastName != null ? rtrn.push(newLastName) : 0
 	newUsername != null ? rtrn.push(newUsername) : 0
 	newEmail != null ? rtrn.push(newEmail) : 0
 	newPassword != null ? rtrn.push(newPassword) : 0
@@ -105,24 +105,41 @@ const updateUsersTags = async (oldTagsIDs, newTagsIDs, uid) => {
 
 router.post('/', confirmIdentityWithPassword, isAccountComplete, async (req, res) => {
 	try {
-		const { newfirstName, newlastName, newUsername, newEmail, newPassword, newBirthday, newGender, newSexualPreferences, newBiography, oldTags, newTags} = req.body
+		const { newFirstName, newLastName, newUsername, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, oldTags, newTags} = req.body
 		if (newTags != null && oldTags != null) {
 			await getOldTagsIDs(oldTags)
 			await getNewTagsIDs(newTags)
 			await updateUsersTags(oldTagsIDs, newTagsIDs, req.user.id)
 		}
+		// 1st of all, we need to know how many keys/values we'll update, to know how many commas (,) we will insert in the sql query string
+		// lets begin with collecting the keys in an array
+		const arrayOfKeys = Object.keys(req.body)
+		// we need to know the index of the keys that aren't included in the following query string (to remove them)
+		const newTagsIndex = arrayOfKeys.indexOf('newTags')
+		// index is -1 if the item isn't found
+		// if the index is > -1; then remove the value (2nd param means remove only 1 value)
+		newTagsIndex > -1 && arrayOfKeys.splice(newTagsIndex, 1)
+		// repeat the same process with `oldTags`
+		const oldTagsIndex = arrayOfKeys.indexOf('oldTags')
+		oldTagsIndex > -1 && arrayOfKeys.splice(oldTagsIndex, 1)
+
+		// -2 because the keys `username` and `password` should be included in the body,
+		// but arent included in the query string
+		// -1 means: if the length is 2, means we have 2 keys, whhich means we should only add 1 comma (,)
+		var keysLength = arrayOfKeys.length - 2
+		console.log('length=', keysLength)
 		result = await queryPromise(
 			"UPDATE users SET " +
-				(newfirstName != null ? "firstName = ? " : "") +
-				(newlastName != null ? "lastName = ? " : "") +
-				(newUsername != null ? "username = ? " : "") +
-				(newEmail != null ? "email = ? " : "") +
-				(newPassword != null ? "password = ? " : "") +
-				(newBirthday != null ? "birthday = ? " : "") +
-				(newCity != null ? "city = ? " : "") +
-				(newGender != null ? "gender = ? " : "") +
-				(newSexualPreferences != null ? "sexualPreferences = ? " : "") +
-				(newBiography != null ? "biography = ? " : "") +
+				(newFirstName != null && (keysLength-- || 1) ? "firstName = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newLastName != null && (keysLength-- || 1) ? "lastName = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newUsername != null && (keysLength-- || 1) ? "username = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newEmail != null && (keysLength-- || 1) ? "email = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newPassword != null && (keysLength-- || 1) ? "password = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newBirthday != null && (keysLength-- || 1) ? "birthday = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newCity != null && (keysLength-- || 1) ? "city = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newGender != null && (keysLength-- || 1) ? "gender = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newSexualPreferences != null && (keysLength-- || 1) ? "sexualPreferences = ? " + (keysLength > 0 ? ", ": "") : "") +
+				(newBiography != null && (keysLength-- || 1) ? "biography = ? " : "") +
 				"WHERE id = ?",
 			getArrayOfUpdatedFields(req.body, (req.user.id).toString()),
 		)
