@@ -5,6 +5,7 @@ const validateToken = require('../middlewares/validate_token.js')
 const isAccountComplete = require('../middlewares/is_account_complete.js')
 const confirmIdentityWithPassword = require('../middlewares/confirm_identity_with_password.js')
 const util = require('util')
+const { isName, isEmail, isPassword, isBirthday, isGender, isCity } = require("../functions/input_validation");
 const queryPromise = util.promisify(dbController.query.bind(dbController))
 var oldTagsIDs = []
 var newTagsIDs = []
@@ -13,12 +14,39 @@ let insertNewTagsQuery = "INSERT INTO tags(value) VALUES"
 let j
 let count = 1
 
+
+const validateUpdatedData = async (req, res, next) => {
+	try {
+		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = req.body
+		if (newFirstName && !isName(newFirstName)) 		return res.status(422).json({ details: "Invalid first name syntax" });
+		else if (newLastName && !isName(newLastName)) 	return res.status(422).json({ details: "Invalid last name syntax" });
+		else if (newEmail && !isEmail(newEmail)) 		return res.status(422).json({ details: "Invalid email syntax" });
+		else if (newPassword && !isPassword(newPassword)) return res.status(422).json({ details: "Password should be between 6 and 20 characters" });
+		else if (newBirthday && !isBirthday(newBirthday)) return res.status(422).json({ details: "Date should be YYYY-MM-DD" })
+		else if (newCity && !isCity(newCity)) 			return res.status(422).json({ details: "Invalid city syntax" })
+		else if (newGender && !isGender(newGender)) 	return res.status(422).json({ details: "Gender should be 'M', 'F', or 'N'" })
+		else if (newSexualPreferences && !isGender(newSexualPreferences)) return res.status(422).json({ details: "Sexual preferences should be 'M', 'F', or 'N'" })
+		else {
+			dbController.query(
+				"SELECT * FROM users WHERE email LIKE ? LIMIT 1",
+				[newEmail],
+				(error, result) => {
+					if (error) return res.status(400).json(error);
+					if (result.length == 0) return next();
+					else return res.status(409).json({ Exception: { Details: "Username or email already used" }, });
+				}
+			);
+		}
+	} catch (error) {
+		return res.status(400).json(error)
+	}
+};
+
 const getArrayOfUpdatedFields = (body, id) => {
-	const { newFirstName, newLastName, newUsername, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = body
+	const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = body
 	let rtrn = []
 	newFirstName != null ? rtrn.push(newFirstName) : 0
 	newLastName != null ? rtrn.push(newLastName) : 0
-	newUsername != null ? rtrn.push(newUsername) : 0
 	newEmail != null ? rtrn.push(newEmail) : 0
 	newPassword != null ? rtrn.push(newPassword) : 0
 	newBirthday != null ? rtrn.push(newBirthday) : 0
@@ -33,8 +61,7 @@ const getArrayOfUpdatedFields = (body, id) => {
 const getArrayOfUpdatedTags = (body, id) => {
 	const { oldTags, newTags } = body
 	let rtrn = []
-	for (let i = 0; i < oldTags.length; i++) 
-	{
+	for (let i = 0; i < oldTags.length; i++) {
 		rtrn.push(newTags[i], id, oldTags[i])
 	}
 	return rtrn
@@ -44,15 +71,15 @@ const getOldTagsIDs = async (oldTags) => {
 	oldTagsIDs = []
 	var result = await queryPromise( // get old tags IDs
 		"SELECT * FROM tags WHERE " +
-			(oldTags.length >= 1 ?    "value = ?" : "") +
-			(oldTags.length >= 2 ? "or value = ?" : "") +
-			(oldTags.length >= 3 ? "or value = ?" : "") +
-			(oldTags.length >= 4 ? "or value = ?" : "") +
-			(oldTags.length >= 5 ? "or value = ?" : ""),
+		(oldTags.length >= 1 ? "value = ?" : "") +
+		(oldTags.length >= 2 ? "or value = ?" : "") +
+		(oldTags.length >= 3 ? "or value = ?" : "") +
+		(oldTags.length >= 4 ? "or value = ?" : "") +
+		(oldTags.length >= 5 ? "or value = ?" : ""),
 		oldTags
 	)
-	for (let i = 0 ; i < oldTags.length ; i++)
-		for (j = 0 ; j < result.length ; j++)
+	for (let i = 0; i < oldTags.length; i++)
+		for (j = 0; j < result.length; j++)
 			if (result[j].value == oldTags[i])
 				oldTagsIDs.push(result[j].id)
 	console.log('old tags IDs:' + oldTagsIDs)
@@ -89,13 +116,13 @@ const getNewTagsIDs = async (newTags) => {
 			count++
 		}
 	}
-	for (count = 0 ; count < existingTags.length ; count++)
+	for (count = 0; count < existingTags.length; count++)
 		newTagsIDs.push(existingTags[count].id)
 	console.log('new tags ids' + newTagsIDs)
 }
 
 const updateUsersTags = async (oldTagsIDs, newTagsIDs, uid) => {
-	for (let index = 0 ; index < newTagsIDs.length ; index++) {
+	for (let index = 0; index < newTagsIDs.length; index++) {
 		await queryPromise(
 			"UPDATE usersTags SET tagID = ? WHERE uid = ? AND tagID = ? LIMIT 1",
 			[newTagsIDs[index], uid, oldTagsIDs[index]]
@@ -103,50 +130,46 @@ const updateUsersTags = async (oldTagsIDs, newTagsIDs, uid) => {
 	}
 }
 
-router.post('/', confirmIdentityWithPassword, isAccountComplete, async (req, res) => {
+router.post('/', validateToken, validateUpdatedData, confirmIdentityWithPassword, isAccountComplete, async (req, res) => {
 	try {
-		const { newFirstName, newLastName, newUsername, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, oldTags, newTags} = req.body
+		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, oldTags, newTags } = req.body
 		if (newTags != null && oldTags != null) {
 			await getOldTagsIDs(oldTags)
 			await getNewTagsIDs(newTags)
 			await updateUsersTags(oldTagsIDs, newTagsIDs, req.user.id)
 		}
-		// 1st of all, we need to know how many keys/values we'll update, to know how many commas (,) we will insert in the sql query string
-		// lets begin with collecting the keys in an array
-		const arrayOfKeys = Object.keys(req.body)
-		// we need to know the index of the keys that aren't included in the following query string (to remove them)
-		const newTagsIndex = arrayOfKeys.indexOf('newTags')
-		// index is -1 if the item isn't found
-		// if the index is > -1; then remove the value (2nd param means remove only 1 value)
-		newTagsIndex > -1 && arrayOfKeys.splice(newTagsIndex, 1)
-		// repeat the same process with `oldTags`
-		const oldTagsIndex = arrayOfKeys.indexOf('oldTags')
-		oldTagsIndex > -1 && arrayOfKeys.splice(oldTagsIndex, 1)
+		var keysCount = 0
+		req.body.hasOwnProperty('newFirstName') && keysCount++
+		req.body.hasOwnProperty('newLastName') && keysCount++
+		req.body.hasOwnProperty('newEmail') && keysCount++
+		req.body.hasOwnProperty('newPassword') && keysCount++
+		req.body.hasOwnProperty('newBirthday') && keysCount++
+		req.body.hasOwnProperty('newCity') && keysCount++
+		req.body.hasOwnProperty('newGender') && keysCount++
+		req.body.hasOwnProperty('newSexualPreferences') && keysCount++
+		req.body.hasOwnProperty('newBiography') && keysCount++
 
-		// -2 because the keys `username` and `password` should be included in the body,
-		// but arent included in the query string
-		// -1 means: if the length is 2, means we have 2 keys, whhich means we should only add 1 comma (,)
-		var keysLength = arrayOfKeys.length - 2
-		console.log('length=', keysLength)
+		console.log(newEmail)
 		result = await queryPromise(
 			"UPDATE users SET " +
-				(newFirstName != null && (keysLength-- || 1) ? "firstName = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newLastName != null && (keysLength-- || 1) ? "lastName = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newUsername != null && (keysLength-- || 1) ? "username = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newEmail != null && (keysLength-- || 1) ? "email = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newPassword != null && (keysLength-- || 1) ? "password = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newBirthday != null && (keysLength-- || 1) ? "birthday = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newCity != null && (keysLength-- || 1) ? "city = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newGender != null && (keysLength-- || 1) ? "gender = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newSexualPreferences != null && (keysLength-- || 1) ? "sexualPreferences = ? " + (keysLength > 0 ? ", ": "") : "") +
-				(newBiography != null && (keysLength-- || 1) ? "biography = ? " : "") +
-				"WHERE id = ?",
+			(newFirstName != null && (keysCount-- || 1) ? "firstName = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newLastName != null && (keysCount-- || 1) ? "lastName = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newEmail != null && (keysCount-- || 1) ? "email = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newPassword != null && (keysCount-- || 1) ? "password = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newBirthday != null && (keysCount-- || 1) ? "birthday = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newCity != null && (keysCount-- || 1) ? "city = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newGender != null && (keysCount-- || 1) ? "gender = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newSexualPreferences != null && (keysCount-- || 1) ? "sexualPreferences = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newBiography != null && (keysCount-- || 1) ? "biography = ? " : "") +
+			/******************************************************************************** */
+			(newEmail ? " , isAccountConfirmed = 0 " : "") +
+			"WHERE id = ?",
 			getArrayOfUpdatedFields(req.body, (req.user.id).toString()),
 		)
 		res.send("Changes saved successfully")
 	} catch (err) {
 		console.log(err)
-		res.status(400).json({ error: err.message })
+		return res.status(400).json({ error: err.message })
 	}
 })
 

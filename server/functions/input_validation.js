@@ -29,6 +29,7 @@ function isGender(gender) {
 }
 
 function isCity(city) {
+	if (typeof city !== 'string') return false
 	const rgx = /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/
 	return rgx.test(String(city))
 }

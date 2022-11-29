@@ -132,17 +132,18 @@ Authorization: {{da3token}}
 Content-Type: application/json
 
 {
-    "newFirstName": "zezezezez",
-    "newCity": "zazazaza",
-    "newUsername": "zozozozoz",
-    "username": "arrmani88",
+    "newFirstName": "aanas",
+    "newCity": "sdsds",
+    "newGender": "M",
+    "newEmail": "a3@a.com",
     "password": "qweqwe123",
     "oldTags": ["ee", "bb", "cc", "dd", "aa"],
     "newTags": ["11", "22", "33", "44", "55"]
 }
 
-# username and password are required
-# properties naming: newFirstName newLastName newUsername newEmail newPassword newBirthday newCity newGender newSexualPreferences newBiography
+# changing the username is forbidden
+# sending the password through the body is mandatory
+# properties naming: newFirstName newLastName newEmail newPassword newBirthday newCity newGender newSexualPreferences newBiography
 # -------------------------------------------------------------------------
 ### --------------------------  LIKE PROFILE  -----------------------------
 POST {{hostname}}/like
@@ -150,7 +151,7 @@ Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "likedID": 2
+    "likedID": 20
 }
 
 # -------------------------------------------------------------------------

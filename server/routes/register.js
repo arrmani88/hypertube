@@ -12,25 +12,13 @@ const fieldIsNullMessage = "One of the fields 'firstName', 'lastName', 'username
 const validateRegistrationInput = async (req, res, next) => {
   try {
     const { firstName, lastName, username, email, password } = req.body;
-    if (!firstName || !lastName || !username || !email || !password) {
-      res.status(422);
-      return res.json({ error: { details: fieldIsNullMessage } });
-    } else if (!isName(firstName)) {
-      res.status(422);
-      return res.json({ error: { details: "Invalid 'firstName' syntax" } });
-    } else if (!isName(lastName)) {
-      res.status(422);
-      return res.json({ error: { details: "Invalid 'lastName' syntax" } });
-    } else if (!isUsername(username)) {
-      res.status(422);
-      return res.json({ error: { details: "Invalid 'username' syntax" } });
-    } else if (!isEmail(email)) {
-      res.status(422);
-      return res.json({ error: { details: "Invalid 'email' syntax" } });
-    } else if (!isPassword(password)) {
-      res.status(422);
-      return res.json({error: { details: "Password should be between 6 and 20 characters" }});
-    } else {
+    if (!firstName || !lastName || !username || !email || !password) return res.json({ error: { details: fieldIsNullMessage } });
+    else if (!isName(firstName))    return res.json({  details: "Invalid 'firstName' syntax" });
+    else if (!isName(lastName))     return res.json({  details: "Invalid 'lastName' syntax" });
+    else if (!isUsername(username)) return res.json({  details: "Invalid 'username' syntax" });
+    else if (!isEmail(email))       return res.json({  details: "Invalid 'email' syntax" });
+    else if (!isPassword(password)) return res.json({  details: "Password should be between 6 and 20 characters" });
+    else {
       dbController.query(
         "SELECT * FROM users WHERE username LIKE ? OR email LIKE ? LIMIT 1",
         [username, email],
