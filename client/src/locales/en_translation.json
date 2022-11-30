@@ -42,6 +42,8 @@
 	"check_inbox_to_reset_password" :"Please check your email inbox to reset your password",
     "male": "Male",
     "female": "Female",
-    "edit": "Edit"
+    "edit": "Edit",
+	"save": "Save",
+	"cancel": "Cancel"
     
 }

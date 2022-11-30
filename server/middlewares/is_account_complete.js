@@ -35,3 +35,4 @@ const isAccountComplete = (req, res, next) => {
 }
 
 module.exports = isAccountComplete
+

@@ -30,6 +30,7 @@ III.2.2 Thumbnails
 
 
 [
-	- setting error dial loading facj kay redirigi men App() l verify-your-account (lakan isAccountConfirmed: 0)
+	- setting error dial loading facj kay redirigi men App() l verify-your-account (lakan isAccountConfirmed: 0) ---> App.js :46
 	- f server khass ga3 routes itzad lihom isAccountComplete middleware (gha li fihom darori verification dial wch account complete)
+	- :3001/update_profile to send email confirmation after email update
 ]

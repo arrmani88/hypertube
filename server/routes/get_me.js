@@ -6,7 +6,8 @@ const util = require('util')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
 const isAccountComplete = require('../middlewares/is_account_complete')
 
-router.get('/', validateToken, isAccountComplete, async (req, res) => {
+// router.get('/', validateToken, isAccountComplete, async (req, res) => {
+router.get('/', validateToken, async (req, res) => {
 	try {
 		const user = await queryPromise("SELECT * FROM users WHERE id = ?", req.user.id)
 		const images = await queryPromise('SELECT * FROM images WHERE uid = ?', req.user.id)

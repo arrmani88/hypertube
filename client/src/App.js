@@ -22,19 +22,10 @@ import { setUserLoggedIn, selectUser, setUserLoggedOut } from "./redux/userSlice
 import PrivateRoute from "./components/PrivateRoute";
 import User from "./pages/User";
 
-i18n
-	.use(initReactI18next)
-	.use(LanguageDetector)
-	.init({
-		resources: {
-			en: { translation: EnTranslation },
-			de: { translation: DeTranslation }
-		},
+i18n.use(initReactI18next).use(LanguageDetector).init({
+		resources: { en: { translation: EnTranslation }, de: { translation: DeTranslation } },
 		fallbackLng: "en",
-		detection: {
-			order: ['cookie', 'localStorage', 'path', 'subdomain'],
-			caches: ['cookie', 'localStorage']
-		}
+		detection: { order: ['cookie', 'localStorage', 'path', 'subdomain'], caches: ['cookie', 'localStorage'] }
 	});
 
 function App() {
@@ -62,7 +53,7 @@ function App() {
 
 	return (
 		<Loading isLoading={isLoading}>
-			{user.isLoggedIn !== null // if the user state isn't Loading 
+			{user.isLoggedIn !== null // if the user state isn't loading
 				&& <>
 					<SideBar />
 					<Routes>
@@ -87,4 +78,3 @@ function App() {
 }
 
 export default App;
-

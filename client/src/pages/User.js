@@ -17,6 +17,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { kFirstNameRegex } from '../constants/regex'
 import * as yup from 'yup'
+import { GoCheck } from 'react-icons/go'
+import { IoClose } from 'react-icons/io5'
 
 const User = () => {
 	const dispatch = useDispatch()
@@ -164,10 +166,16 @@ const User = () => {
 							<input {...register('birthday')} type='date' />
 						</label>
 						<div className='mt-[20px]' />
-						<button className={styles.editButton} onClick={() => { setEditingMode(true) }} >
-							<p>{t('_save_')}</p>
-							<BiEditAlt className={`text-[40px]`} />
-						</button>
+						<div className='flex w-full' >
+							<button className={styles.cancelButton} onClick={() => { setEditingMode(true) }} >
+								<p>{t('cancel')}</p>
+								<IoClose className={`text-[40px]`} />
+							</button>
+							<button className={styles.editButton} onClick={() => { setEditingMode(true) }} >
+								<p>{t('save')}</p>
+								<GoCheck className={`text-[40px]`} />
+							</button>
+						</div>
 					</form>
 
 				}

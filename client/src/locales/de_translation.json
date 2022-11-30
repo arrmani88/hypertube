@@ -42,5 +42,7 @@
 	"check_inbox_to_reset_password": "Bitte uberprüfen Sie Ihren Posteingang um Ihr Passwort zu zurücksetzen",
     "male": "Männlich",
     "female": "Weiblich",
-    "edit": "Bearbeiten"
+    "edit": "Bearbeiten",
+	"save": "Sichern",
+	"cancel": "Abbrechen"
 }
