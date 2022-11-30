@@ -9,9 +9,10 @@ const isAccountComplete = (req, res, next) => {
 			(err, result) => {
 				if (!result || result.length == 0) res.status(400).json({ Exception: "Inknown user id" })
 				else if (err) return res.json({ error: err })
-				else if (result[0].isAccountConfirmed == 0) return res.status(400).json({ exception: "unconfirmed email address", description: "Please check your email inbox to confirm your email account before performing this action" })
+				else if (result[0].isAccountConfirmed == 0) return res.status(400).json({ exception: "unconfirmed email address", username: result[0].username, description: "Please check your email inbox to confirm your email account before performing this action" })
 				else if (result[0].birthday == null || result[0].gender == null || result[0].city == null || result[0].sexualPreferences == null || result[0].biography == null || result[0].areTagsAdded == 0) {
 					return res.status(400).json({
+						username: result[0].username,
 						exception: "incomplete profile",
 						description: "Please complete your profile informations before performing this action, by filling the following fields: "
 							+ (result[0].birthday == null ? "Birthday, " : "")

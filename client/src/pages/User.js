@@ -97,8 +97,11 @@ const User = () => {
 		}
 	}
 
-	const submitform = () => {
-		
+	const submitform = async (data) => {
+		console.log(data)
+		// await axios.post(
+		// 	process.enc.REACT_APP_SERVER_HOSTNAME + '/update_profile',
+		// )
 	}
 
 	return (

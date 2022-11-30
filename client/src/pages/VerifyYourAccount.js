@@ -1,65 +1,77 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavbarUserUnlogged } from '../components/Navbar'
 import styles from './styles/AccountVerified.module.css'
 import IMGdark2 from '../images/dark2.jpg'
-// import { BsPlayFill } from 'react-icons/bs'
-// import Divider from '../components/Divider'
+import { BsPlayFill } from 'react-icons/bs'
+import Divider from '../components/Divider'
 import { useDispatch } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
-
-const gradient = {
-	position: 'absolute',
-	background: 'radial-gradient(circle, rgba(0,0,0,0) 15%, rgba(0,0,0,1) 100%)',
-	height: '100vh',
-	width: '100vw'
-}
-// const button = {
-// 	display: 'flex',
-// 	flexDirection: 'row',
-// 	alignItems: 'center',
-// 	justifyContent: 'center',
-// 	background: '#474747',
-// 	color: 'white',
-// 	cursor: 'pointer',
-// 	margin: '10px',
-// 	padding: '5px 10px 5px 10px',
-// 	borderRadius: '5px',
-// }
-const cardContent = {
-	display: 'flex',
-	flexDirection: 'column',
-	width: 'min(80vw, 500px)',
-	alignItems: 'center',
-	padding: '10px'
-}
-// const textButton = {
-// 	fontSize: '18px'
-// }
+import axios from 'axios'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import ReactLoading from 'react-loading'
+import { GoCheck } from 'react-icons/go'
+import styles2 from './styles/VerifyYourAccount.module.css'
 
 const VerfifyYourAccount = () => {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
+	const [searchParams] = useSearchParams();
+	const navigate = useNavigate()
+	const username = searchParams.get('username')
+	const [loadingIconState, setLoadingIconState] = useState(false)
+	const [checkIconState, setCheckIconState] = useState(false)
+	const [errorMessage, setErrorMessage] = useState(' ')
+	let result
 
-	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		console.log('redirecteeeeeeeeeeeeed')
+		dispatch(hideLoading())
+		if (!username) navigate('/404')
+	}, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+	const resendEmail = async () => {
+		try {
+			setCheckIconState(false)
+			setLoadingIconState(true)
+			await Promise.all([
+				new Promise(resolve => setTimeout(resolve, 1000)),
+				axios.get(process.env.REACT_APP_SERVER_HOSTNAME + '/resend-confirmation-email/' + username).then(rsp => {
+					result = rsp
+				})
+			])
+			setLoadingIconState(false)
+			setCheckIconState(true)
+			await new Promise(resolve => setTimeout(resolve, 1500))
+			setCheckIconState(false)
+		} catch (error) {
+			setLoadingIconState(false)
+			error.response?.status === 404 && setErrorMessage(error.response.data)
+		}
+	}
 
 	return (<>
 		<NavbarUserUnlogged />
 		<div className={styles.page}>
 			<img className={styles.backgroundImg} src={IMGdark2} alt='background_img' />
-			<div style={gradient} />
+			<div className={styles2.gradient} />
 			<div className={styles.card} >
-				<div style={cardContent} >
+				<div className={styles2.cardContent} >
 					<h1 className={styles.cardTitle}>{t('please_confrim_your_account')}</h1>
 					<h1 className={styles.cardDescription}>{t('check_your_inbox_to_confirm')}</h1>
-					{/* <div className='w-[100%]' >
+					<div className='w-[100%]' >
 						<Divider> {t('or')} </Divider>
 					</div>
 					<h1 className={styles.cardDescription} >{t('no_mail_received')}</h1>
-					<button style={button} >
-						<h1 style={textButton} >{t('resend_confirmation_email')}</h1>
-						<BsPlayFill className={`text-[40px]`} />
-					</button> */}
+					<div className='flex items-center' >
+						<div className='w-[25px]' />
+						<h1 onClick={resendEmail} className={styles2.textButton} >{t('resend_confirmation_email')}</h1>
+						<div className='w-[25px] h-[25px] ml-[10px]' >
+							{ loadingIconState === true && <ReactLoading type='spin' height={'100%'} width={'100%'} /> }
+							{ checkIconState === true && <GoCheck className={styles2.checkIcon} /> }
+						</div>
+					</div>
+					<h1 className={styles2.errorMessage} >{errorMessage}</h1>
 				</div>
 			</div>
 		</div>

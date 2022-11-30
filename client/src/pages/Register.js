@@ -49,7 +49,7 @@ const Register = () => {
 			setIsButtonLoading(true)
 			await axios.post(process.env.REACT_APP_SERVER_HOSTNAME + '/register',registrationData)
 			dispatch(showLoading())
-			navigate({ pathname: '/verify_your_account' })
+			navigate({ pathname: '/verify-your-account' })
 		} catch (err) {
 			console.log(err)
 		}

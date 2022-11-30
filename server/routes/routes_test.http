@@ -252,3 +252,8 @@ GET {{hostname}}/get_me
 Authorization: {{token}}
 
 # -------------------------------------------------------------------------
+### --------------------- RESEND CONFIRMATION EMAIL -----------------------
+@RCE-username = arrmani88
+GET {{hostname}}/resend-confirmation-email/{{RCE-username}}
+
+# -------------------------------------------------------------------------

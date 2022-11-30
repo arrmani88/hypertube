@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar";
 import Register from "./pages/Register";
 import i18n from "i18next";
@@ -41,6 +41,7 @@ function App() {
 	const isLoading = useSelector((state) => state.loading.value)
 	const user = useSelector(selectUser)
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const checkIfUserLoggedIn = async () => {
@@ -50,6 +51,8 @@ function App() {
 					? dispatch(setUserLoggedOut())
 					: dispatch(setUserLoggedIn(result))
 			} catch (error) {
+				if (error.response?.data?.exception === 'unconfirmed email address')
+					navigate(`/verify-your-account?username=${error.response.data.username}`)
 				console.log(error)
 			}
 		}
@@ -62,23 +65,21 @@ function App() {
 			{user.isLoggedIn !== null // if the user state isn't Loading 
 				&& <>
 					<SideBar />
-					<BrowserRouter>
-						<Routes>
-							<Route path='/' element={<Hypertube />} />
-							<Route path='/login' element={<Login />} />
-							<Route path='/register' element={<Register />} />
-							<Route path='/verify-your-account' element={<VerfifyYourAccount />} />
-							<Route path='/confirm-email/:token' element={<AccountVerified />} />
-							<Route path='/loading' element={<Loading />} />
-							<Route path='/send-reset-password-email' element={<SendResetPasswordEmail />} />
-							<Route path="reset-password/:token" element={<ResetPassword />} />
+					<Routes>
+						<Route path='/' element={<Hypertube />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/register' element={<Register />} />
+						<Route path='/verify-your-account' element={<VerfifyYourAccount />} />
+						<Route path='/confirm-email/:token' element={<AccountVerified />} />
+						<Route path='/loading' element={<Loading />} />
+						<Route path='/send-reset-password-email' element={<SendResetPasswordEmail />} />
+						<Route path="reset-password/:token" element={<ResetPassword />} />
 
-							<Route path='/upload-image' element={<PrivateRoute child={<UploadImage />} />} />
-							<Route path="/user/:parameterUsername" element={<PrivateRoute child={ <User/> } />} />
+						<Route path='/upload-image' element={<PrivateRoute child={<UploadImage />} />} />
+						<Route path="/user/:parameterUsername" element={<PrivateRoute child={<User />} />} />
 
-							<Route path='*' element={<NoPageFound />} />
-						</Routes>
-					</BrowserRouter>
+						<Route path='*' element={<NoPageFound />} />
+					</Routes>
 				</>
 			}
 		</Loading>

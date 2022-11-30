@@ -27,3 +27,9 @@ III.2.2 Thumbnails
 	• The page will be sortable and filtered according to criteria such as name, genre,
 		the IMDb grade, the gap of production year etc...
 
+
+
+[
+	- setting error dial loading facj kay redirigi men App() l verify-your-account (lakan isAccountConfirmed: 0)
+	- f server khass ga3 routes itzad lihom isAccountComplete middleware (gha li fihom darori verification dial wch account complete)
+]

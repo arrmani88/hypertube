@@ -149,18 +149,17 @@ router.post('/', validateToken, validateUpdatedData, confirmIdentityWithPassword
 		req.body.hasOwnProperty('newSexualPreferences') && keysCount++
 		req.body.hasOwnProperty('newBiography') && keysCount++
 
-		console.log(newEmail)
 		result = await queryPromise(
 			"UPDATE users SET " +
-			(newFirstName != null && (keysCount-- || 1) ? "firstName = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newLastName != null && (keysCount-- || 1) ? "lastName = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newEmail != null && (keysCount-- || 1) ? "email = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newPassword != null && (keysCount-- || 1) ? "password = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newBirthday != null && (keysCount-- || 1) ? "birthday = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newCity != null && (keysCount-- || 1) ? "city = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newGender != null && (keysCount-- || 1) ? "gender = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newSexualPreferences != null && (keysCount-- || 1) ? "sexualPreferences = ? " + (keysCount > 0 ? ", " : "") : "") +
-			(newBiography != null && (keysCount-- || 1) ? "biography = ? " : "") +
+			(newFirstName	&& (keysCount-- || 1) ? "firstName = ? " 	+ (keysCount > 0 ? ", " : "") : "") +
+			(newLastName	&& (keysCount-- || 1) ? "lastName = ? " 	+ (keysCount > 0 ? ", " : "") : "") +
+			(newEmail		&& (keysCount-- || 1) ? "email = ? " 		+ (keysCount > 0 ? ", " : "") : "") +
+			(newPassword	&& (keysCount-- || 1) ? "password = ? " 	+ (keysCount > 0 ? ", " : "") : "") +
+			(newBirthday	&& (keysCount-- || 1) ? "birthday = ? " 	+ (keysCount > 0 ? ", " : "") : "") +
+			(newCity		&& (keysCount-- || 1) ? "city = ? " 		+ (keysCount > 0 ? ", " : "") : "") +
+			(newGender		&& (keysCount-- || 1) ? "gender = ? " 		+ (keysCount > 0 ? ", " : "") : "") +
+			(newSexualPreferences	&& (keysCount-- || 1) ? "sexualPreferences = ? " + (keysCount > 0 ? ", " : "") : "") +
+			(newBiography	&& (keysCount-- || 1) ? "biography = ? " : "") +
 			/******************************************************************************** */
 			(newEmail ? " , isAccountConfirmed = 0 " : "") +
 			"WHERE id = ?",

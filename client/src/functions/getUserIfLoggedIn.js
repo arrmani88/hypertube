@@ -10,8 +10,7 @@ const getUserIfLoggedIn = async () => {
 		)
 		return user.status === 200 ? {userData: user.data, accessToken: storedAccessToken} : {}
 	} catch (error) {
-		if (error.response.data.error.message === 'invalid token'
-				|| error.response.data.error.message === 'jwt malformed')
+		if (error.response?.data?.error?.message === 'invalid token' || error.response?.data?.error?.message === 'jwt malformed')
 			return {}
 		else
 			throw error
