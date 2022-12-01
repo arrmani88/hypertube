@@ -4,9 +4,8 @@ import { selectUser } from '../redux/userSlice'
 import Home from './Home'
 import Landing from './Landing'
 
-const Hypertube = () => {
-	const user = useSelector(selectUser)
-	return (user.isLoggedIn === true ?  <Home /> : <Landing />)
+const Hypertube = ({isLoggedIn}) => {
+	return (isLoggedIn === true ?  <Home /> : <Landing />)
 }
 
 export default Hypertube

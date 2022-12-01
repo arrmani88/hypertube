@@ -19,8 +19,10 @@ import ResetPassword from "./pages/ResetPassword";
 import { useEffect } from "react";
 import getUserIfLoggedIn from "./functions/getUserIfLoggedIn";
 import { setUserLoggedIn, selectUser, setUserLoggedOut } from "./redux/userSlice";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoutes from "./components/PrivateRoutes";
 import User from "./pages/User";
+import PublicRoutes from "./components/PublicRoutes";
+import Landing from "./pages/Landing";
 
 i18n.use(initReactI18next).use(LanguageDetector).init({
 		resources: { en: { translation: EnTranslation }, de: { translation: DeTranslation } },
@@ -42,8 +44,8 @@ function App() {
 					? dispatch(setUserLoggedOut())
 					: dispatch(setUserLoggedIn(result))
 			} catch (error) {
-				if (error.response?.data?.exception === 'unconfirmed email address')
-					navigate(`/verify-your-account?username=${error.response.data.username}`)
+				// if (error.response?.data?.exception === 'unconfirmed email address')
+				// 	navigate(`/verify-your-account?username=${error.response.data.username}`)
 				console.log(error)
 			}
 		}
@@ -57,19 +59,23 @@ function App() {
 				&& <>
 					<SideBar />
 					<Routes>
-						<Route path='/' element={<Hypertube />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/register' element={<Register />} />
-						<Route path='/verify-your-account' element={<VerfifyYourAccount />} />
-						<Route path='/confirm-email/:token' element={<AccountVerified />} />
-						<Route path='/loading' element={<Loading />} />
-						<Route path='/send-reset-password-email' element={<SendResetPasswordEmail />} />
-						<Route path="reset-password/:token" element={<ResetPassword />} />
+						<Route path='/' element={<Hypertube isLoggedIn={user.isLoggedIn}/>} />
+						<Route element={ <PublicRoutes isLoggedIn={user.isLoggedIn} /> } >
+							<Route path='/login' element={<Login />} />
+							<Route path='/register' element={<Register />} />
+							<Route path='/verify-your-account' element={<VerfifyYourAccount />} />
+							<Route path='/confirm-email/:token' element={<AccountVerified />} />
+							<Route path='/loading' element={<Loading />} />
+							<Route path='/send-reset-password-email' element={<SendResetPasswordEmail />} />
+							<Route path="reset-password/:token" element={<ResetPassword />} />
+						</Route>
+						
+						<Route element={ <PrivateRoutes isLoggedIn={user.isLoggedIn} /> } >
+							<Route path='/upload-image' element={<UploadImage />} />
+							<Route path="/user/:parameterUsername" element={<User />} />
+						</Route>
 
-						<Route path='/upload-image' element={<PrivateRoute child={<UploadImage />} />} />
-						<Route path="/user/:parameterUsername" element={<PrivateRoute child={<User />} />} />
-
-						<Route path='*' element={<NoPageFound />} />
+						{/* <Route path='*' element={<NoPageFound />} /> */}
 					</Routes>
 				</>
 			}
