@@ -83,7 +83,7 @@ const Login = () => {
 					<h1 className={styles.loginText}>{t('login')}</h1>
 					<BsPlayFill className={`text-[40px]`} />
 				</button>
-				<h1 className={styles.errorMessage} >{errorMessage}</h1>
+				<h1 className={styles.errorMessage}>{errorMessage}</h1>
 			</form>
 			<div className={styles.textCenter} >
 				<h1 onClick={redirectToResetPassword} className={styles.passwordforgotten} >I forgot my password</h1>

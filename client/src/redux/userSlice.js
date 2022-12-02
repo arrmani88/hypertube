@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { userData: {}, isLoggedIn: null, accessToken: null } 
+const initialState = {
+	userData: {},
+	isLoggedIn: null,
+	accessToken: null,
+	isAccountComplete: null
+}
 // the `userData` property should be either: 
 //		1: null if the app is currently searching for user credentials --> (state is loading)
 //		2: {} if the search is finished and no user is connected --> (state is loaded)
@@ -27,11 +32,16 @@ export const userSlice = createSlice({
 		},
 		updateUserData: (state, actions) => {
 			state.userData = actions.payload
+		},
+		setProfileStatus: (state, actions) => {
+			state.isAccountComplete = actions.payload.isAccountComplete
+			if (actions.payload.username)
+				state.userData = { username: actions.payload.username }
 		}
 	}
 })
 
-export const { setUserLoggedIn, setUserLoggedOut, updateUserData } = userSlice.actions
+export const { setUserLoggedIn, setUserLoggedOut, updateUserData, setProfileStatus } = userSlice.actions
 export const selectUser = (state) => state.user
 export default userSlice.reducer
 

@@ -3,31 +3,31 @@ import { useTranslation } from 'react-i18next'
 import { NavbarUserUnlogged } from '../components/Navbar'
 import styles from './styles/AccountVerified.module.css'
 import IMGdark2 from '../images/dark2.jpg'
-import { BsPlayFill } from 'react-icons/bs'
 import Divider from '../components/Divider'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
 import axios from 'axios'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ReactLoading from 'react-loading'
 import { GoCheck } from 'react-icons/go'
 import styles2 from './styles/VerifyYourAccount.module.css'
+import { selectUser } from '../redux/userSlice'
 
 const VerfifyYourAccount = () => {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
-	const [searchParams] = useSearchParams();
 	const navigate = useNavigate()
-	const username = searchParams.get('username')
+	const user = useSelector(selectUser)
 	const [loadingIconState, setLoadingIconState] = useState(false)
 	const [checkIconState, setCheckIconState] = useState(false)
 	const [errorMessage, setErrorMessage] = useState(' ')
 	let result
 
 	useEffect(() => {
-		console.log('redirecteeeeeeeeeeeeed')
+		console.log(user.isAccountComplete)
+		if (!(user.userData.username)) navigate('*')
+		else if (user.isAccountComplete === true) navigate('/')
 		dispatch(hideLoading())
-		if (!username) navigate('/404')
 	}, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	const resendEmail = async () => {
@@ -36,9 +36,8 @@ const VerfifyYourAccount = () => {
 			setLoadingIconState(true)
 			await Promise.all([
 				new Promise(resolve => setTimeout(resolve, 1000)),
-				axios.get(process.env.REACT_APP_SERVER_HOSTNAME + '/resend-confirmation-email/' + username).then(rsp => {
-					result = rsp
-				})
+				axios.get(process.env.REACT_APP_SERVER_HOSTNAME + '/resend-confirmation-email/' + user.userData.username)
+					.then(rsp => { result = rsp })
 			])
 			setLoadingIconState(false)
 			setCheckIconState(true)
