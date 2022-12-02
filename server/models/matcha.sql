@@ -39,6 +39,14 @@ CREATE TABLE IF NOT EXISTS `likes` (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS `drops` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uid` int NOT NULL,
+  `dropedID` int not NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS `blocks` (
   `id` int NOT NULL AUTO_INCREMENT,
   `uid` int NOT NULL,

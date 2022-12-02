@@ -5,8 +5,9 @@ const dbController = require('../models/db_controller')
 const util = require('util')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
 const fs = require('fs')
+const isAccountComplete = require('../middlewares/is_account_complete')
 
-router.post('/', validateToken, async (req, res) => {
+router.post('/', validateToken, isAccountComplete, async (req, res) => {
     try {
         var result = await queryPromise(
             `DELETE FROM images WHERE uid = ${req.user.id} AND image IN (` +

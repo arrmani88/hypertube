@@ -7,6 +7,7 @@ const validateToken = require('../middlewares/validate_token')
 const dbController = require('../models/db_controller')
 const fs = require('fs')
 const util = require('util')
+const isAccountComplete = require('../middlewares/is_account_complete')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
 var nbImagesCanUploadMore
 var receivedImagesCount
@@ -36,7 +37,7 @@ const multi_upload = util.promisify(
 	}).array('images', 4)
 )
 
-router.post('/', validateToken, async (req, res) => {
+router.post('/', validateToken, isAccountComplete, async (req, res) => {
 	receivedImagesCount = 0
 	req.newFilesNames = []
 	try {

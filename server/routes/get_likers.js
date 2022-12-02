@@ -4,6 +4,7 @@ const validateToken = require('../middlewares/validate_token')
 const dbController = require('../models/db_controller')
 const util = require('util')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
+const isAccountComplete = require('../middlewares/is_account_complete')
 
 const getArrayOfUSers = async (result) => {
     try {
@@ -27,7 +28,7 @@ const getArrayOfUSers = async (result) => {
     }
 }
 
-router.get('/', validateToken, async (req, res) => {
+router.get('/', validateToken, isAccountComplete, async (req, res) => {
     try {
         const result = await queryPromise(`SELECT * FROM likes WHERE likedID = ${req.user.id}`)
         res.json(await getArrayOfUSers(result))

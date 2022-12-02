@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const { isPassword } = require("../functions/input_validation");
 const e = require("express");
+const isAccountComplete = require('../middlewares/is_account_complete')
 
 const validatePassword = async (req, res, next) => {
 	try {
@@ -64,7 +65,7 @@ router.post("/", (req, res) => {
 });
 
 // update password in DB
-router.post("/:token", validatePassword, (req, res) => {
+router.post("/:token", validatePassword, isAccountComplete, (req, res) => {
 	const token = req.params.token;
 	const { password } = req.body;
 	// try {

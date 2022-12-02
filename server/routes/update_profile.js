@@ -14,7 +14,6 @@ let insertNewTagsQuery = "INSERT INTO tags(value) VALUES"
 let j
 let count = 1
 
-
 const validateUpdatedData = async (req, res, next) => {
 	try {
 		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = req.body
@@ -33,7 +32,7 @@ const validateUpdatedData = async (req, res, next) => {
 				(error, result) => {
 					if (error) return res.status(400).json(error);
 					if (result.length == 0) return next();
-					else return res.status(409).json({ Exception: { Details: "Username or email already used" }, });
+					else return res.status(409).json({ Exception: { Details: "Email already used" }, });
 				}
 			);
 		}
@@ -130,7 +129,7 @@ const updateUsersTags = async (oldTagsIDs, newTagsIDs, uid) => {
 	}
 }
 
-router.post('/', validateToken, validateUpdatedData, confirmIdentityWithPassword, isAccountComplete, async (req, res) => {
+router.post('/', validateToken, validateUpdatedData, confirmIdentityWithPassword, async (req, res) => {
 	try {
 		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, oldTags, newTags } = req.body
 		if (newTags != null && oldTags != null) {

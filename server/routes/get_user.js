@@ -4,8 +4,9 @@ const validateToken = require('../middlewares/validate_token')
 const dbController = require('../models/db_controller')
 const util = require('util')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
+const isAccountComplete = require('../middlewares/is_account_complete')
 
-router.get('/:idOrUsername', validateToken, async (req, res) => {
+router.get('/:idOrUsername', validateToken, isAccountComplete, async (req, res) => {
     try {
         const idOrUsername = req.params.idOrUsername
         const visitedprofile = await queryPromise(

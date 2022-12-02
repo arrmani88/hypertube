@@ -4,8 +4,9 @@ const validateToken = require('../middlewares/validate_token')
 const dbController = require('../models/db_controller')
 const util = require('util')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
+const isAccountComplete = require('../middlewares/is_account_complete')
 
-router.get('/', validateToken, async (req, res) => {
+router.get('/', validateToken, isAccountComplete, async (req, res) => {
     var ret = []
     var usr
     var usrImg

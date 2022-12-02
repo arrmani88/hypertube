@@ -40,7 +40,7 @@ router.post('/', validateToken, isAccountComplete, async (req, res) => {
 			res.send("Profile already liked")
 		}
 	} catch (err) {
-		res.status(400).json({ error: err })
+		return res.status(400).json({ error: err })
 	}
 })
 
