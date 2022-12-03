@@ -19,12 +19,12 @@ router.get('/', validateToken, isAccountComplete, async (req, res) => {
 					`GROUP BY usersTags.uid) AS commonTagsCount, \n` +
 				`(SELECT ST_Distance_Sphere(point('${req.user.longitude}', '${req.user.latitude}'), point(longitude, latitude)) / 1000) AS distance \n` +
 			`FROM users \n` +
-	
+
 			`LEFT JOIN images ON users.id = images.uid \n` +
 			`LEFT JOIN usersTags ON users.id = usersTags.uid \n` +
 			`LEFT JOIN blocks ON (${req.user.id} = blocks.uid OR ${req.user.id} = blocks.blockedID) \n` +
 			`LEFT JOIN matchedUsers ON (users.id = matchedUsers.uid1 OR users.id = matchedUsers.uid2) \n` +
-	
+
 			`WHERE users.id != ${req.user.id} \n` +
 			`AND TIMESTAMPDIFF(YEAR, birthday, CURDATE()) BETWEEN ${ageMin} AND ${ageMax} \n` +
 			`AND fameRating BETWEEN ${ratingMin} AND ${ratingMax} \n` + 
@@ -39,7 +39,7 @@ router.get('/', validateToken, isAccountComplete, async (req, res) => {
 			`AND '${req.user.sexualPreferences}' LIKE gender \n` +
 			`AND (SELECT ST_Distance_Sphere(point('${req.user.longitude}', '${req.user.latitude}'), point(longitude, latitude)) / 1000) \n` +
 				`<= ${distance} \n` +
-	
+
 			`GROUP BY users.id \n` +
 			`ORDER BY users.fameRating DESC, ` +
 				`commonTagsCount DESC, ` +

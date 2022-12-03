@@ -1,4 +1,6 @@
 const dbController = require('../models/db_controller')
+const util = require('util')
+const queryPromise = util.promisify(dbController.query.bind(dbController))
 
 const isAccountComplete = (req, res, next) => {
 	try {
@@ -23,8 +25,22 @@ const isAccountComplete = (req, res, next) => {
 							+ (result[0].areTagsAdded == 0 ? "Tags" : "")
 					})
 				} else {
-					req.user = result[0]
-					next()
+					dbController.query(
+						"SELECT * FROM images WHERE isProfileImage = 1 AND uid = ? LIMIT 1",
+						req.user.id,
+						(error, imageResult) => {
+							if (error) return res.status(400).json({ error: err })
+							if (imageResult.length === 0) return res.status(400).json({
+								username: result[0].username,
+								exception: "incomplete profile",
+								description: "You must upload a profile image to complete your profile"
+							})
+							else {
+								req.user = result[0]
+								next()
+							}
+						}
+					)
 				}
 			}
 		)

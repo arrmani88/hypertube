@@ -11,6 +11,5 @@ routes/dbController: ach nder wast catch error
 lakan user mbloqui sa7bo, get_user treturni profile not found
 
 # knt kandir: {
-	nzid profile picture check f isAccountComplete
 	wach nkhelli unlike ola nder blastha drop
 }

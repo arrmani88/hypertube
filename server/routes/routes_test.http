@@ -214,11 +214,9 @@ Content-Type: application/json
 
 # -------------------------------------------------------------------------
 ### ------------------------------ GET USER -------------------------------
-@idOrUsername = arrmani88
-GET {{hostname}}/get_user/{{idOrUsername}}
+GET {{hostname}}/get_user/arrmani88
 Authorization: {{token}}
 
-# idOrUsername should contain either the username of the visited profile or his id
 # -------------------------------------------------------------------------
 ### ------------------------------ GET LIKERS ------------------------------
 GET {{hostname}}/get_likers
