@@ -8,6 +8,8 @@ routes to do:
 	1. search for profile by username
 	2. consult profile (email hidden)
 	3. edit profile
+	4. Home (aflam + search)
+	5. wartch films 
 
 • The user must be able to register and connect via Omniauth.
 • Disconnect with 1 click
@@ -30,7 +32,5 @@ III.2.2 Thumbnails
 
 
 [
-	- setting error dial loading facj kay redirigi men App() l verify-your-account (lakan isAccountConfirmed: 0) ---> App.js :46
-	- f server khass ga3 routes itzad lihom isAccountComplete middleware (gha li fihom darori verification dial wch account complete)
 	- :3001/update_profile to send email confirmation after email update
 ]

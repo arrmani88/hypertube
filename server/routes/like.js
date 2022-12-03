@@ -21,15 +21,15 @@ router.post('/', validateToken, isAccountComplete, async (req, res) => {
 			)
 			await queryPromise( // increment fame rating
 				"UPDATE users SET fameRating = fameRating + 1 WHERE id = ?",
-				[likedID]
+				likedID
 			)
 			result = await queryPromise( // to see if both profiles like each other to match them
 				"SELECT * FROM likes WHERE uid = ? AND likedID = ?",
 				[likedID, req.user.id]
 			)
-			if (result.length == 0) {
+			if (result.length == 0)
 				res.send("Profile liked, persons not matched")
-			} else {
+			else {
 				await queryPromise(
 					"INSERT INTO matchedUsers(uid1, uid2) VALUES(?,?)",
 					[req.user.id, likedID]

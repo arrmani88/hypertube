@@ -154,13 +154,13 @@ Content-Type: application/json
 }
 
 # -------------------------------------------------------------------------
-### -------------------------- UNLIKE PROFILE -----------------------------
-POST {{hostname}}/unlike
+### -------------------------- drop PROFILE -----------------------------
+POST {{hostname}}/drop
 Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "unlikedID": 2
+    "dropedID": 2
 }
 
 # -------------------------------------------------------------------------
