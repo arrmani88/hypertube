@@ -9,7 +9,7 @@ routes to do:
 	2. consult profile (email hidden)
 	3. edit profile
 	4. Home (aflam + search)
-	5. wartch films 
+	5. watch films 
 
 • The user must be able to register and connect via Omniauth.
 • Disconnect with 1 click

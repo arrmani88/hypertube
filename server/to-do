@@ -8,8 +8,10 @@ ROUTES:
 
 routes/dbController: ach nder wast catch error
 #tags f complete_profile & update_profile
-lakan user mbloqui sa7bo, get_user treturni profile not found
 
 # knt kandir: {
 	wach nkhelli unlike ola nder blastha drop
+	n3ayet l send-email men wast update profile la kan updata email
 }
+
+
