@@ -131,13 +131,9 @@ Authorization: {{da3token}}
 Content-Type: application/json
 
 {
-    "newFirstName": "aanas",
-    "newCity": "sdsds",
-    "newGender": "M",
-    "newEmail": "a3@a.com",
-    "password": "qweqwe123",
-    "oldTags": ["ee", "bb", "cc", "dd", "aa"],
-    "newTags": ["11", "22", "33", "44", "55"]
+    "newFirstName": "lustad",
+    "lastName": "",
+    "password": "qweqwe123"
 }
 
 # changing the username is forbidden
@@ -254,3 +250,13 @@ Authorization: {{token}}
 GET {{hostname}}/resend-confirmation-email/{{RCE-username}}
 
 # -------------------------------------------------------------------------
+
+
+
+    # "newFirstName": "aanas",
+    # "newCity": "sdsds",
+    # "newGender": "M",
+    # "newEmail": "a3@a.com",
+    # "password": "qweqwe123",
+    # "oldTags": ["ee", "bb", "cc", "dd", "aa"],
+    # "newTags": ["11", "22", "33", "44", "55"]

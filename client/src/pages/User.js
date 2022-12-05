@@ -15,7 +15,6 @@ import { AiOutlineFileImage } from 'react-icons/ai'
 import avatarStyles from './styles/UploadImage.module.css'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { kFirstNameRegex } from '../constants/regex'
 import * as yup from 'yup'
 import { GoCheck } from 'react-icons/go'
 import { IoClose } from 'react-icons/io5'
@@ -28,14 +27,15 @@ const User = () => {
 	const [userInfo, setUserInfo] = useState({})
 	const [editingMode, setEditingMode] = useState(false)
 	const [isAvatarButtonLoading, setIsAvatarButtonLoading] = useState(false)
-	const [errorMessage, setErrorMessage] = useState(' ')
+	const [imageErrorMessage, setImageErrorMessage] = useState(' ')
+	const [passwordErrorMessage, setPasswordErrorMessage] = useState(' ')
 	const { parameterUsername } = useParams()
 	const formData = new FormData()
 	const schema = yup.object({
-		firstName: yup.string().matches((/^$|^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ\s\-]+$/), 'Invalid first name'),
-		lastName: yup.string().matches((/^$|^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ\s\-]+$/), 'Invalid last name'),
+		newFirstName: yup.string().matches((/^$|^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ\s-]+$/), 'Invalid first name'),
+		newLastName: yup.string().matches((/^$|^[a-zA-ZÀ-ÖÙ-öù-ÿĀ-žḀ-ỿ\s-]+$/), 'Invalid last name'),
 	})
-	const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
+	const { register, handleSubmit, formState: { errors }, reset } = useForm({ resolver: yupResolver(schema) })
 
 	useEffect(() => {
 		const getPageData = async () => {
@@ -44,9 +44,9 @@ const User = () => {
 					process.env.REACT_APP_SERVER_HOSTNAME + '/get_user/' + parameterUsername,
 					{ headers: { Authorization: `${user.accessToken}` } },
 				)
-				console.log(result)
 				setUserInfo({
-					fullName: result.data.firstName + ' ' + result.data.lastName,
+					firstName: result.data.firstName,
+					lastName: result.data.lastName,
 					username: result.data.username,
 					birthday: result.data.birthday,
 					gender: (result.data.gender === 'M' ? 'male' : 'female'),
@@ -58,19 +58,20 @@ const User = () => {
 					isEditable: user.userData.username === result.data.username ? true : false
 				})
 			} catch (error) {
-				if (error.response.status == 404) navigate('/404')
+				if (error.response.status === 404) navigate('/404')
 				console.log(error)
 			} finally {
 				dispatch(hideLoading())
 			}
 		}
 		getPageData()
+		// eslint-disable-next-line
 	}, [])
 
 	const updateImage = async e => {
 		if (e.target.files[0]) {
 			try {
-				setErrorMessage(' ')
+				setImageErrorMessage(' ')
 				setIsAvatarButtonLoading(true)
 				const file = e.target.files[0]
 				formData.delete('image') // case if the user uploaded a picture, then uploaded a second one: delete the first one from formData
@@ -94,7 +95,7 @@ const User = () => {
 				dispatch(updateUserData(updatedUserData))
 			} catch (error) {
 				if (error.response?.data?.error === "Invalid file type, try uploading a '.jpg', '.jpeg' or a '.png' file")
-					console.log(setErrorMessage(error.response?.data?.error))
+					console.log(setImageErrorMessage(error.response?.data?.error))
 				console.log(error)
 			} finally {
 				setIsAvatarButtonLoading(false)
@@ -103,10 +104,35 @@ const User = () => {
 	}
 
 	const updateProfile = async (data) => {
-		console.log(data)
-		// await axios.post(
-		// 	process.enc.REACT_APP_SERVER_HOSTNAME + '/update_profile',
-		// )
+		try {
+			Object.keys(data).forEach(k => { if (data[k] === "") delete data[k] }) // remove values containing an empty string ""
+			await axios.post(
+				process.env.REACT_APP_SERVER_HOSTNAME + '/update_profile',
+				data,
+				{ headers: { 'Content-Type': 'application/json', Authorization: `${user.accessToken}` } }
+			)
+			Object.keys(data).forEach(k => {
+				if (k === 'newFirstName') {
+					data['firstName'] = data[k]
+					delete data[k]
+				} else if (k === 'newLastName') {
+					data['lastName'] = data[k]
+					delete data[k]
+				} else if (k === 'newBirthday') {
+					data['birthday'] = data[k]
+					delete data[k]
+				}
+			})
+			delete data['password']
+			dispatch(updateUserData({...user.userData, firstName: data.firstName }))
+			setUserInfo({ ...userInfo, ...data })
+		} catch (error) {
+			if (error.response?.data === "Wrong password") setPasswordErrorMessage("Wrong password")
+			else console.log(error)
+		} finally {
+			reset() // clear <input>
+			setEditingMode(false)
+		}
 	}
 
 	return (
@@ -126,10 +152,10 @@ const User = () => {
 					}
 					<img className={avatarStyles.userAvatarImg} src={userInfo.image} alt='userImg' onError={() => { console.log('errrrrrrr') }} />
 				</div>
-{/****************************************************************************---------------------------------------------------------------*/}
+				<h1 className={avatarStyles.imageErrorMessage} >{imageErrorMessage}</h1>
 				{editingMode === false
 					? <>
-						<h1 className={styles.firstLastName}>{userInfo.fullName}</h1>
+						<h1 className={styles.firstLastName}>{userInfo.firstName+' '+userInfo.lastName}</h1>
 						<div>
 							<div className={styles.row} >
 								<h1 className={styles.icon}>@</h1>
@@ -158,25 +184,31 @@ const User = () => {
 					: <form onSubmit={handleSubmit(updateProfile)} className={styles.updateForm} >
 						<label>
 							<p>{t('first_name')}</p>
-							<input {...register('firstName')} placeholder={t('your') + t('first_name')} />
-							<h1>{errors.firstName?.message || ' '} </h1>
+							<input {...register('newFirstName')} placeholder={t('your') + t('first_name')} />
+							<h1>{errors.newFirstName?.message || ' '} </h1>
 						</label>
 						<label>
 							<p>{t('last_name')}</p>
-							<input {...register('lastName')} placeholder={t('your') + t('last_name')} />
-							<h1>{errors.lastName?.message ? errors.lastName?.message : ' '} </h1>
+							<input {...register('newLastName')} placeholder={t('your') + t('last_name')} />
+							<h1>{errors.newLastName?.message ?? ' '} </h1>
 						</label>
 						<label>
 							<p>{t('birthday')}</p>
-							<input {...register('birthday')} type='date' />
+							<input {...register('newBirthday')} type='date' />
+							<h1>   </h1>
+						</label>
+						<label>
+							<p>{t('your_password')}</p>
+							<input {...register('password')} placeholder={t('your') + t('password')} onChange={() => { setPasswordErrorMessage(' ') }} />
+							<h1>{passwordErrorMessage !== ' '} </h1>
 						</label>
 						<div className='mt-[20px]' />
 						<div className='flex w-full' >
-							<button className={styles.cancelButton} onClick={() => { setEditingMode(true) }} >
+							<button className={styles.cancelButton} onClick={() => { setEditingMode(false); reset() }} >
 								<p>{t('cancel')}</p>
 								<IoClose className={`text-[40px]`} />
 							</button>
-							<button className={styles.editButton} onClick={() => { setEditingMode(true) }} >
+							<button className={styles.editButton} >
 								<p>{t('save')}</p>
 								<GoCheck className={`text-[40px]`} />
 							</button>
@@ -190,10 +222,3 @@ const User = () => {
 }
 
 export default User
-
-
-/*
-	let avatarImage = process.env.REACT_APP_SERVER_HOSTNAME + '/images/'
-		+ ((user.userData.images[0]?.image) || 'blank-profile-image.png')
-
-*/

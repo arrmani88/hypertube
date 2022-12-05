@@ -11,10 +11,10 @@ const confirmIdentityWithPassword = (req, res, next) => {
 			else {
 				if (result.length === 0) return res.status(404).json({ details: `No user with the given username '${username}' found` })
 				bcrypt.compare(password, result[0].password, (error, isMatched) => {
-					if (error) return res.json({error: error})
-					else if (!isMatched) {
+					if (error) return res.json(error)
+					else if (!isMatched)
 						return res.status(403).send("Wrong password")
-					} else {
+					else {
 						req.user = result[0]
 						next()
 					}

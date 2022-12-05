@@ -16,8 +16,11 @@ let count = 1
 
 const validateUpdatedData = async (req, res, next) => {
 	try {
-		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography } = req.body
-		if (newFirstName && !isName(newFirstName)) 		return res.status(422).json({ details: "Invalid first name syntax" });
+		const { password, newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, newTags } = req.body
+		if (!newFirstName && !newLastName && !newEmail && !newPassword && !newBirthday && !newCity && !newGender && !newSexualPreferences && (!newTags || newTags == []) && !newBiography)
+			return res.status(422).json({ details: "At least one of the fields newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography or newTags should be sent"  });
+		else if (!password) return res.status(422).json({ details: "Field password is required to confirm your identity" });
+		else if (newFirstName && !isName(newFirstName)) return res.status(422).json({ details: "Invalid first name syntax" });
 		else if (newLastName && !isName(newLastName)) 	return res.status(422).json({ details: "Invalid last name syntax" });
 		else if (newEmail && !isEmail(newEmail)) 		return res.status(422).json({ details: "Invalid email syntax" });
 		else if (newPassword && !isPassword(newPassword)) return res.status(422).json({ details: "Password should be between 6 and 20 characters" });
@@ -129,7 +132,7 @@ const updateUsersTags = async (oldTagsIDs, newTagsIDs, uid) => {
 	}
 }
 
-router.post('/', validateToken, validateUpdatedData, confirmIdentityWithPassword, async (req, res) => {
+router.post('/', validateToken, isAccountComplete, validateUpdatedData, confirmIdentityWithPassword, async (req, res) => {
 	try {
 		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, oldTags, newTags } = req.body
 		if (newTags != null && oldTags != null) {
