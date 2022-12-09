@@ -6,6 +6,8 @@ import { Outlet, Navigate } from 'react-router-dom'
 const OnlyCompletedProfileRoutes = () => {
 	const user = useSelector(selectUser)
 	
+	console.log('OnlyCompletedProfileRoutes=', user.isAccountComplete === false ? '<Navigate to={`/verify-your-account`} />' : '<Outlet />')
+
 	if (user.isAccountComplete === false)
 		return <Navigate to={`/verify-your-account`} />
 	else

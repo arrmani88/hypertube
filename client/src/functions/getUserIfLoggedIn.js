@@ -10,8 +10,12 @@ const getUserIfLoggedIn = async () => {
 		)
 		return user.status === 200 ? {userData: user.data, accessToken: storedAccessToken} : {}
 	} catch (error) {
-		if (error.response?.data?.error?.message === 'invalid token' || error.response?.data?.error?.message === 'jwt malformed')
+		console.log(error)
+		if (error.response?.status == 404 || error.response?.data?.error?.message === 'invalid token' || error.response?.data?.error?.message === 'jwt malformed') {
+			localStorage.removeItem('accessToken')
 			return {}
+		}
+			
 		else
 			throw error
 	}

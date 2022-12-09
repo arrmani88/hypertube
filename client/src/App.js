@@ -62,12 +62,12 @@ function App() {
 					<SideBar />
 					<Routes>
 						<Route path='verify-your-account' element={<VerfifyYourAccount />} />
+						<Route path='/confirm-email/:token' element={<AccountVerified />} />
 						<Route element={<OnlyCompletedProfileRoutes />} >
 							<Route path='/' element={<Hypertube isLoggedIn={user.isLoggedIn} />} />
 							<Route element={<PublicRoutes isLoggedIn={user.isLoggedIn} />} >
 								<Route path='/login' element={<Login />} />
 								<Route path='/register' element={<Register />} />
-								<Route path='/confirm-email/:token' element={<AccountVerified />} />
 								<Route path='/loading' element={<Loading />} />
 								<Route path='/send-reset-password-email' element={<SendResetPasswordEmail />} />
 								<Route path="reset-password/:token" element={<ResetPassword />} />

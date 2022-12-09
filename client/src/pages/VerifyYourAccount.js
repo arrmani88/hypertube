@@ -36,7 +36,7 @@ const VerfifyYourAccount = () => {
 			setLoadingIconState(true)
 			await Promise.all([
 				new Promise(resolve => setTimeout(resolve, 1000)),
-				axios.get(process.env.REACT_APP_SERVER_HOSTNAME + '/resend-confirmation-email/' + user.userData.username)
+				axios.get(process.env.REACT_APP_SERVER_HOSTNAME + '/send-confirmation-email/' + user.userData.username)
 					.then(rsp => { result = rsp })
 			])
 			setLoadingIconState(false)

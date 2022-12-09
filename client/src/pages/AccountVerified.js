@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { showLoading, hideLoading } from '../redux/loadingSlice'
-import { selectUser, setUserLoggedIn } from '../redux/userSlice'
+import { selectUser, setProfileStatus, setUserLoggedIn } from '../redux/userSlice'
 import getUserIfLoggedIn from '../functions/getUserIfLoggedIn'
 
 const AccountVerified = () => {
@@ -26,6 +26,7 @@ const AccountVerified = () => {
 				localStorage.setItem('accessToken', `${rsp.data.access_token}`)
 				const result = await getUserIfLoggedIn()
 				dispatch(setUserLoggedIn(result))
+				dispatch(setProfileStatus({ isAccountComplete: true }))
 				dispatch(hideLoading())
 			} catch (err) {
 				console.log(err)
