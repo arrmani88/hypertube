@@ -1,0 +1,26 @@
+.container {
+	height: 100vh;
+	width: 100vw;
+}
+.header {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 600px;
+	max-height: 50%;
+}
+.headerImg {
+	min-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+}
+.headerGradient {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, rgba(0,0,0,0.8884147408963585) 0%, rgba(0,0,0,0.4486388305322129) 83%);
+}
+.movieTitle {
+	font-size: 30px;
+	color: white;
+}

@@ -50,5 +50,9 @@ const isAccountComplete = (req, res, next) => {
 	}
 }
 
-module.exports = isAccountComplete
+const isAccountComplete1 = (req, res, next) => {
+	next()
+}
+
+module.exports = isAccountComplete1
 

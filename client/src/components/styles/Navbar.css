@@ -65,7 +65,7 @@
 /* ------------------------------------------------ */
 @media only screen and (max-width: 700px) {
 	.navbarContainer {
-		height: 70px;
+		height: 60px;
 	}
 	.logo {
 		height: 25px;
@@ -113,6 +113,9 @@
 /* ------------------------------------------------ */
 /* ------------------------------------------------ */
 @media only screen and (max-width: 400px) {
+	.navbarContainer {
+		height: 50px;
+	}
 	.buttonsContainer {
 		display: none;
 	}
@@ -123,6 +126,9 @@
 /* ------------------------------------------------ */
 /* ------------------------------------------------ */
 @media only screen and (max-width: 375px) {
+	.navbarContainer {
+		height: 45px;
+	}
 	.logo {
 		padding-left: 15px;
 		width: 50vw;

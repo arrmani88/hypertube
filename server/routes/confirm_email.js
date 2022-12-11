@@ -34,6 +34,7 @@ router.get('/:emailConfirmationToken', async (req, res) => {
                                     decodedData.id,
                                     (error, images) => {
                                         if (error) return res.status(400).json({ error })
+                                        if (!result[0]) return res.status(404).send('No user found')
                                         const { password, created_at, updated_at, fameRating, areTagsAdded, ...userPublicData } = result[0]
                                         res.json({
                                             'access_token': accessToken,

@@ -20,7 +20,7 @@ const Main = () => {
 		!movie ? <div /> :
 			<div className="w-full h-[550px] text-white">
 				<div className="w-full h-full flex-col">
-					<div className="absolutew-[80%]h-[550px]bg-gradient-to-rfrom-black" />
+					<div className="absolute w-[80%] h-[550px] bg-gradient-to-r from-black" />
 					<img className="w-full h-full object-cover" src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt={movie?.original_title} />
 					<div className='absolute top-[10%] p-4 md:p-8'>
 						<h1 className='text-3xl md:text-5xl font-bold'>{movie?.title}</h1>

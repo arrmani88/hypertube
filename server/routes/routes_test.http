@@ -7,10 +7,10 @@ POST {{hostname}}/register
 Content-Type: application/json
 
 {
-    "firstName": "dda",
-    "lastName": "eli",
-    "username": "dda3li",
-    "email": "ab@a.com",
+    "firstName": "lhosayn",
+    "lastName": "lhosayn",
+    "username": "lhosayn",
+    "email": "lhosayn@lh.co",
     "password": "qweqwe123"
 }
 
@@ -127,12 +127,11 @@ Content-Type: application/json
 # --------------------------------------------------------------------------
 ### ------------------------ UPDATE PROFILE DATA ---------------------------
 POST {{hostname}}/update_profile
-Authorization: {{da3token}}
+Authorization: {{token}}
 Content-Type: application/json
 
 {
-    "newFirstName": "lustad",
-    "lastName": "",
+    "newEmail": "email12@a.co",
     "password": "qweqwe123"
 }
 
@@ -247,7 +246,7 @@ Authorization: {{token}}
 # -------------------------------------------------------------------------
 ### --------------------- RESEND CONFIRMATION EMAIL -----------------------
 @RCE-username = arrmani88
-GET {{hostname}}/resend-confirmation-email/{{RCE-username}}
+GET {{hostname}}/send-confirmation-email/{{RCE-username}}
 
 # -------------------------------------------------------------------------
 

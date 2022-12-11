@@ -6,6 +6,7 @@ const isAccountComplete = require('../middlewares/is_account_complete.js')
 const confirmIdentityWithPassword = require('../middlewares/confirm_identity_with_password.js')
 const util = require('util')
 const { isName, isEmail, isPassword, isBirthday, isGender, isCity } = require("../functions/input_validation");
+const { confirmationEmailSender } = require('./send_confirmation_email')
 const queryPromise = util.promisify(dbController.query.bind(dbController))
 var oldTagsIDs = []
 var newTagsIDs = []
@@ -132,7 +133,7 @@ const updateUsersTags = async (oldTagsIDs, newTagsIDs, uid) => {
 	}
 }
 
-router.post('/', validateToken, isAccountComplete, validateUpdatedData, confirmIdentityWithPassword, async (req, res) => {
+router.post('/', validateToken, validateUpdatedData, confirmIdentityWithPassword, async (req, res) => {
 	try {
 		const { newFirstName, newLastName, newEmail, newPassword, newBirthday, newCity, newGender, newSexualPreferences, newBiography, oldTags, newTags } = req.body
 		if (newTags != null && oldTags != null) {
@@ -162,12 +163,16 @@ router.post('/', validateToken, isAccountComplete, validateUpdatedData, confirmI
 			(newGender		&& (keysCount-- || 1) ? "gender = ? " 		+ (keysCount > 0 ? ", " : "") : "") +
 			(newSexualPreferences	&& (keysCount-- || 1) ? "sexualPreferences = ? " + (keysCount > 0 ? ", " : "") : "") +
 			(newBiography	&& (keysCount-- || 1) ? "biography = ? " : "") +
-			/******************************************************************************** */
+			/*********************************************************************************/
 			(newEmail ? " , isAccountConfirmed = 0 " : "") +
 			"WHERE id = ?",
 			getArrayOfUpdatedFields(req.body, (req.user.id).toString()),
 		)
-		res.send("Changes saved successfully")
+		if (newEmail) {
+			confirmationEmailSender(req.user.username, req.user.id)
+			return res.json("Changes saved successfully, we sent you a mail to confirm your email address, please check your inbox");
+		}
+		return res.send("Changes saved successfully")
 	} catch (err) {
 		console.log(err)
 		return res.status(400).json({ error: err.message })

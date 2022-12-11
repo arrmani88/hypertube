@@ -32,7 +32,7 @@ const getLikers = require('./routes/get_likers')
 const getVisitors = require('./routes/get_visitors')
 const getFeedUsers = require('./routes/get_feed_users')
 const getMe = require('./routes/get_me')
-const resendConfirmationEmail = require('./routes/resend_confirmation_email')
+const { router: sendConfirmationEmail } = require('./routes/send_confirmation_email')
 
 app.use(express.json())
 app.options('*', corsMiddleware)
@@ -57,7 +57,7 @@ app.use('/get_likers', getLikers)
 app.use('/get_visitors', getVisitors)
 app.use('/get_feed_users', getFeedUsers)
 app.use('/get_me', getMe)
-app.use('/resend-confirmation-email', resendConfirmationEmail)
+app.use('/send-confirmation-email', sendConfirmationEmail)
 
 server.listen(port, () => console.log(`Matcha listening on port ${port}`))
 
