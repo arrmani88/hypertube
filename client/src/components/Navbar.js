@@ -11,6 +11,7 @@ import { selectUser, setUserLoggedOut } from '../redux/userSlice'
 
 const NavbarUserLoggedIn = () => {
 	const dispatch = useDispatch()
+	const { t } = useTranslation()
 	const user = useSelector(selectUser)
 	let avatarImg = process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (
 		user.userData.images?.length > 0  && user.userData.images[0]?.image
@@ -22,12 +23,12 @@ const NavbarUserLoggedIn = () => {
 		<div className='navbarContainer'>
 			<div className='balanceEmptyDivAvatar' />
 			<div className='navbarSections'>
-				<h1 className='sectionNavbar'>Search</h1>
+				<h1 className='sectionNavbar'>{t('search')}</h1>
 				<div className='sectionSpaceEmptyDiv' />
 				<h1 className='sectionNavbar'>Trailer</h1>
 				<img onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className='logo' src={hypertubeLogo} alt={'logo'} />
 				<h1 className='sectionNavbar'>Actors</h1>
-				<h1 className='sectionNavbar'>Log out</h1>
+				<h1 className='sectionNavbar'>{t('log_out')}</h1>
 			</div>
 			<img className='avatarUserNavbar' src={avatarImg} alt='userImg' />
 			<BiMenuAltRight onClick={() => dispatch(openSidebar())} className='menuIcon'></BiMenuAltRight>

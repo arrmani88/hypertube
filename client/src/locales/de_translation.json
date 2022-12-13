@@ -45,5 +45,7 @@
     "edit": "Bearbeiten",
 	"save": "Sichern",
 	"cancel": "Abbrechen",
-    "your_password": "Ihr Passwort"
+    "your_password": "Ihr Passwort",
+    "log_out": "Ausloggen",
+    "search": "Suchen"
 }
