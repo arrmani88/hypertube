@@ -22,12 +22,12 @@ const NavbarUserLoggedIn = () => {
 		<div className='navbarContainer'>
 			<div className='balanceEmptyDivAvatar' />
 			<div className='navbarSections'>
-				<h1 className='sectionNavbar'>About</h1>
+				<h1 className='sectionNavbar'>Search</h1>
 				<div className='sectionSpaceEmptyDiv' />
 				<h1 className='sectionNavbar'>Trailer</h1>
 				<img onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className='logo' src={hypertubeLogo} alt={'logo'} />
 				<h1 className='sectionNavbar'>Actors</h1>
-				<h1 className='sectionNavbar'>Settings</h1>
+				<h1 className='sectionNavbar'>Log out</h1>
 			</div>
 			<img className='avatarUserNavbar' src={avatarImg} alt='userImg' />
 			<BiMenuAltRight onClick={() => dispatch(openSidebar())} className='menuIcon'></BiMenuAltRight>

@@ -5,19 +5,19 @@
 	padding-top: 16px;
 	margin-left: 60px;
 }
-.row {
-	padding-left: 50px;
-	padding-right: 50px;
+.container {
 	display: flex;
-	width: 100%;
-	flex-direction: row;
+	max-width: 100%;
 	overflow: auto;
-	align-items: center;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none;/* Firefox */
+	align-items: center;
+	flex-direction: row;
 	scroll-behavior: smooth;
+	padding-left: 50px;
+	padding-right: 50px;
 }
-.row::-webkit-scrollbar {
+.container::-webkit-scrollbar {
 	display: none;
 }
 .arrowScroll {
@@ -61,7 +61,7 @@
 		font-size: 20px;
 		margin-left: 40px;
 	}
-	.row {
+	.container {
 		padding-left: 30px;
 		padding-right: 30px;
 	}

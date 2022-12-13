@@ -1,6 +1,7 @@
 .container {
-	height: 100vh;
-	width: 100vw;
+	/* height: 100vh; */
+	/* width: 100vw; */
+	/* overflow-x: hidden; */
 }
 .header {
 	display: flex;
@@ -8,10 +9,11 @@
 	width: 100%;
 	height: 600px;
 	max-height: 50%;
+	align-items: center;
 }
 .headerImg {
-	min-width: 100%;
-	max-height: 100%;
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 }
 .headerGradient {
@@ -20,7 +22,54 @@
 	height: 100%;
 	background: linear-gradient(90deg, rgba(0,0,0,0.8884147408963585) 0%, rgba(0,0,0,0.4486388305322129) 83%);
 }
+.headerContent {
+	position: absolute;
+	align-items: center;
+	flex-direction: row;
+	height: 60%;
+	margin-left: 30px;
+}
 .movieTitle {
-	font-size: 30px;
 	color: white;
+	font-size: 40px;
+	font-weight: 600;
+}
+.playButton {
+	background-color: #cfd3da;
+	padding: 8px 20px 8px 20px;
+	color: black;
+	border-width: 1px;
+	margin-right: 8px;
+}
+.watchLaterButton {
+	border-width: 1px;
+	padding: 8px 20px 8px 20px;
+	color: white;
+}
+.rating{
+	color: #92a3b8;
+	font-size: 15px;
+	padding: 10px 10px 10px 0;
+}
+.summary{
+	color: #e3e5ea;
+	max-width: 650px;
+}
+
+@media only screen and (max-width: 675px) {
+	.movieTitle {
+		font-size: 30px;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.movieTitle {
+		font-size: 25px;
+	}
+	.headerContent{
+		height: 80%;
+	}
+	.summary {
+		font-size: 15px;
+	}
 }
