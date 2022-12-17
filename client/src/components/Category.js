@@ -7,7 +7,7 @@ const Category = ({title, movies}) => {
 		var slider = document.getElementById(`slider${title}`)
 		slider.scrollLeft = slider.scrollLeft + size
 	}
-	
+
 	return (
 		movies === [] ? <div /> : 
 		<div>

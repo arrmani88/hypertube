@@ -13,7 +13,7 @@ const DropDownMenu = ({ childs, controller, keyName, className }) => {
 			 [keyName]: selectedItem
 		})
 	}
-console.log(controller)
+// console.log(controller.queryParams)
 
 	useEffect(() => {
 		let handleClick = (e) => {
