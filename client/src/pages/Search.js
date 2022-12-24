@@ -20,7 +20,7 @@ const Search = () => {
 	const dispatch = useDispatch()
 	const [queryParams, setQueryParams] = useState({})
 	const [pageState, setPageState] = useState({
-		isPageLoading: true,
+		isPageLoading: false,
 		films: null
 	})
 

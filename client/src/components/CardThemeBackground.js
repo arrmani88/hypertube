@@ -3,11 +3,11 @@ import { NavbarUserLoggedIn, NavbarUserUnlogged } from './Navbar'
 import styles from './styles/CardThemeBackground.module.css'
 
 const CardThemeBackground = ({
-		children,
-		imgLink,
-		loginButtonShown,
-		registerButtonShown
-	}) => {
+	children,
+	imgLink,
+	loginButtonShown,
+	registerButtonShown
+}) => {
 
 	return (<>
 		{loginButtonShown === true || registerButtonShown === true // means the user isn't logged cuz he needs to 
