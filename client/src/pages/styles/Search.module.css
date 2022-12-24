@@ -28,7 +28,6 @@
 	margin-left: 10px;
 	cursor: pointer;
 }
-
 .movies {
 	align-items: flex-start;
 	justify-content: center;
@@ -37,17 +36,41 @@
 	padding: 50px;
 }
 .movie {
-	width: 200px;
 	flex-direction: column;
+	width: 200px;
 	margin: 15px;
+}
+.thumbnail {
+	display: flex;
+	/* position: relative; */
+	height: 255px;
+	width: 167px;
+}
+.movieDetails{
+	position: absolute;
+	width: 167px;
+	height: 255px;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+}
+.movieDetails:hover {
+	opacity: 1;
+}
+.movieGenre{
+	color: white;
+}
+.movieYear {
+	color: white;
+	font-size: 40px;
 }
 .movieTitle {
 	color: white;
 	font-size: 18px;
 	font-weight: 800;
-}
-.thumbnail {
-	height: 250px;
 }
 .starIcon {
 	color: yellow;
@@ -56,4 +79,16 @@
 .rating{
 	color: white;
 	font-size: 15px;
+}
+.playNow {
+    background-color: #cfd3da;
+    padding: 8px 20px 8px 20px;
+    color: black;
+    margin-right: 8px;
+}
+.showMore {
+    background-color: #cfd3da;
+    padding: 8px 20px 8px 20px;
+    color: black;
+    margin-right: 8px;
 }

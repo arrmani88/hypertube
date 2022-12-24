@@ -45,7 +45,6 @@
 .thumbnail {
 	display: inline-block;
 	min-width: 180px;
-	/* height: auto; */
 	margin: 30px 10px 30px 10px;
 	scale: 1;
 	transition-duration: 300ms;

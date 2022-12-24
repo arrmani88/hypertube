@@ -9,7 +9,7 @@ const Category = ({title, movies}) => {
 	}
 
 	return (
-		movies === [] ? <div /> : 
+		movies === [] ? <div /> :
 		<div>
 			<h2 className='title'>{title}</h2>
 			<div className='container' id={`slider${title}`}>
