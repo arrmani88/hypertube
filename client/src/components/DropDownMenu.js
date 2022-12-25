@@ -2,9 +2,11 @@ import React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import styles from './styles/DropDownMenu.module.css'
 import { IoCloseCircle } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
 
 const DropDownMenu = ({ childs, controller, keyName, className }) => {
 	const [menuState, setMenuState] = useState(false)
+	const { t } = useTranslation()
 	const dropdownRef = useRef(null)
 
 	const changeGenre = (selectedItem) => {
@@ -28,7 +30,7 @@ const DropDownMenu = ({ childs, controller, keyName, className }) => {
 		<div className={styles.container +' '+ className} onClick={() => setMenuState(!menuState)} ref={dropdownRef} >
 			<div className={styles.dropdownButton} >
 				<h1 className={controller.queryParams[keyName] ? '' : 'font-bold'}>
-					{controller.queryParams[keyName] ?? keyName }
+					{controller.queryParams[keyName] ?? t(keyName) }
 				</h1>
 			</div>
 
@@ -36,7 +38,7 @@ const DropDownMenu = ({ childs, controller, keyName, className }) => {
 
 				<div className='flex row items-center font-bold mb-[8px] cursor-pointer' >
 					<div className={styles.item} onClick={() => { changeGenre(null) }} >
-						Deselect
+						{t('deselect')}
 					</div>
 					<IoCloseCircle className='pb-[2px]' />
 				</div>

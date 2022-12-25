@@ -47,5 +47,13 @@
 	"cancel": "Abbrechen",
     "your_password": "Ihr Passwort",
     "log_out": "Ausloggen",
-    "search": "Suchen"
+    "search": "Suchen",
+    "play": "Abspleien",
+	"show_more": "Mehr anzeigen",
+	"Genre": "Genre",
+	"Quality": "Qualität",
+	"Sort by": "Sortieren nach",
+	"deselect": "Abzuwählen",
+	"watch_later": "Später ansehen",
+	"imdb_rating": "IMDb bewertung"
 }

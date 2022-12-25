@@ -6,6 +6,7 @@ import { hideLoading } from '../redux/loadingSlice'
 import { selectUser } from '../redux/userSlice'
 import axios from 'axios'
 import Category from '../components/Category'
+import { useTranslation } from 'react-i18next'
 
 const tmpImg = 'https://image.tmdb.org/t/p/original//198vrF8k7mfQ4FjDJsBmdQcaiyq.jpg'
 const requests = {
@@ -18,7 +19,8 @@ const requests = {
 
 const Home = () => {
 	const dispatch = useDispatch()
-	const user = useSelector(selectUser)
+	// const user = useSelector(selectUser)
+	const { t } = useTranslation()
 	const [movies, setMovies] = useState({})
 	console.log('header=', movies.headerMovie)
 
@@ -54,10 +56,10 @@ const Home = () => {
 					<div className={styles.headerContent} >
 						<h1 className={styles.movieTitle}>{movies.headerMovie.title}</h1>
 						<div className='row'>
-							<button className={styles.playButton}>Play</button>
-							<button className={styles.watchLaterButton}>Watch later</button>
+							<button className={styles.playButton}>{t('play')}</button>
+							<button className={styles.watchLaterButton}>{t('watch_later')}</button>
 						</div>
-						<h1 className={styles.rating}>IMDb rating: {movies.headerMovie.rating}/10</h1>
+						<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
 						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
 					</div>
 				</div>

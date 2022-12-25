@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import CardThemeBackground from '../components/CardThemeBackground'
 import { hideLoading } from '../redux/loadingSlice'
 import IMGpeakyBlinders from '../images/peaky_blinders1.jpeg'
-import styles from './styles/Search.module.css'
+import styles from './styles/Search.module.scss'
 import { BsSearch } from 'react-icons/bs'
 import DropDownMenu from '../components/DropDownMenu'
 import axios from 'axios'
@@ -12,14 +12,19 @@ import { AiFillStar } from 'react-icons/ai'
 import { RiAddFill } from 'react-icons/ri'
 import RedButton from '../components/RedButton'
 import { BsPlayFill } from 'react-icons/bs'
+import { useTranslation } from 'react-i18next'
+// import { MDCSlider } from '@material/slider';
 
 const genres = ['Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action', 'Thriller', 'Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
 const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
 
+
 const Search = () => {
+	// const slider = new MDCSlider(document.querySelector('.mdc-slider'))
 	const dispatch = useDispatch()
 	const searchRef = useRef(null)
+	const { t } = useTranslation()
 	const [queryParams, setQueryParams] = useState({
 		page: 0
 	})
@@ -29,22 +34,25 @@ const Search = () => {
 		lastPage: null
 	})
 
-	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-next-line
+	// eslint-disable-next-line
+	useEffect(() => { dispatch(hideLoading()) }, [])
 
-	const showMoreFilms = (e) => {
+	const showMoreFilms = async (e) => {
 		e.preventDefault()
-		if (queryParams.page < pageState.lastPage) search()
+		if (queryParams.page < pageState.lastPage)
+			await fetchFilms({ doAppendResult: true })
 	}
 
-	const searchForFilms = (e) => {
+	const searchForFilms = async (e) => {
 		e.preventDefault()
-		if (queryParams.page === 0) search()
+		setPageState({ films: null })
+		await fetchFilms({ doAppendResult: false })
 	}
-
-	const search = async () => {
+	
+	const fetchFilms = async ({ doAppendResult }) => {
 		try {
-			setQueryParams(prevState => ({ ...prevState, page: prevState.page + 1 }))
 			setPageState(prevState => ({ ...prevState, isPageLoading: true }))
+			setQueryParams(prevState => ({ ...prevState, page: prevState.page + 1 }))
 			const resultFilms = await axios.get(
 				`https://yts.mx/api/v2/list_movies.json` +
 				`?limit=40&page=${queryParams.page + 1}` +
@@ -53,9 +61,7 @@ const Search = () => {
 				(queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) +
 				(queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``)
 			)
-			console.log(resultFilms.data.data)
-			if (pageState.films) // lakano deja kaynin aflam, gha appendi jdad 3la l9dam 
-				resultFilms.data.data.movies = [].concat(pageState.films.data.data.movies, resultFilms.data.data.movies)
+			doAppendResult === true && (resultFilms.data.data.movies = [].concat(pageState.films.data.data.movies, resultFilms.data.data.movies))
 			setPageState(prevState => ({ ...prevState, films: resultFilms, lastPage: (resultFilms.data.data.movie_count / 40).toFixed() }))
 		} catch (error) {
 			console.log(error)
@@ -68,7 +74,8 @@ const Search = () => {
 		<CardThemeBackground imgLink={IMGpeakyBlinders} >
 			<div className={styles.container} >
 				<form className='row flex' >
-					<input ref={searchRef} className={styles.searchField} placeholder='Search' />
+
+					<input ref={searchRef} className={styles.searchField} placeholder={t('search')} />
 					<button onClick={searchForFilms} className={styles.searchButton} >
 						<BsSearch />
 					</button>
@@ -94,7 +101,7 @@ const Search = () => {
 										))}
 										<div className='mt-[10px]' />
 										<button className={styles.playNow} >
-											<h1>Play now</h1>
+											<h1>{t('play')}</h1>
 											<BsPlayFill className='mt-[3px] text-2xl' />
 										</button>
 									</div>
@@ -115,7 +122,7 @@ const Search = () => {
 
 				{pageState.films && (queryParams.page < pageState.lastPage) &&
 					<div className='w-[400px]' >
-						<RedButton onClick={showMoreFilms} text={'Show more'} icon={<RiAddFill />} />
+						<RedButton onClick={showMoreFilms} text={t('show_more')} icon={<RiAddFill />} />
 					</div>
 				}
 
