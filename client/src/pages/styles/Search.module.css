@@ -42,7 +42,7 @@
 }
 .thumbnail {
 	display: flex;
-	/* position: relative; */
+	position: relative;
 	height: 255px;
 	width: 167px;
 }
@@ -55,10 +55,16 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	top: 15px;
+	transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
 	opacity: 0;
 }
 .movieDetails:hover {
 	opacity: 1;
+	top: 0px;
+	transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
 }
 .movieGenre{
 	color: white;
@@ -81,14 +87,15 @@
 	font-size: 15px;
 }
 .playNow {
-    background-color: #cfd3da;
-    padding: 8px 20px 8px 20px;
-    color: black;
-    margin-right: 8px;
-}
-.showMore {
-    background-color: #cfd3da;
-    padding: 8px 20px 8px 20px;
-    color: black;
-    margin-right: 8px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background: red;
+	color: white;
+	cursor: pointer;
+	font-size: 20px;
+	width: 80%;
+	height: 40px;
+	border-radius: 5px;
 }

@@ -16,6 +16,7 @@
 	/* width: 100%; */
     /* top: 90px; */
     top: 160px;
+    z-index: 1;
 }
 .dropdownMenu::before {
     position: absolute;
@@ -60,9 +61,6 @@
 	text-align: center;
 	cursor: pointer;
 }
-
-
-
 
 .flag {
     width: 50px;
