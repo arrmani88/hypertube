@@ -1,8 +1,11 @@
 import React from 'react'
 import './styles/Category.css'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
+import { useTranslation } from 'react-i18next'
 
 const Category = ({title, movies}) => {
+	const { t } = useTranslation()
+
 	const scroll = (size) => {
 		var slider = document.getElementById(`slider${title}`)
 		slider.scrollLeft = slider.scrollLeft + size
@@ -11,7 +14,7 @@ const Category = ({title, movies}) => {
 	return (
 		movies === [] ? <div /> :
 		<div>
-			<h2 className='title'>{title}</h2>
+			<h2 className='title'>{t(title)}</h2>
 			<div className='container' id={`slider${title}`}>
 				{movies.map((movie) => (
 					<img key={`${movie?.id}`} className='thumbnail' src={movie?.medium_cover_image} alt={movie?.title} />

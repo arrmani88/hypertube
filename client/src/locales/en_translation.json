@@ -54,7 +54,10 @@
 	"Quality": "Quality",
 	"Sort by": "Sort by",
 	"deselect": "Deselect",
-	"watch_later": "Watch later"
-    ,
-	"imdb_rating": "IMDb rating"
+	"watch_later": "Watch later",
+	"imdb_rating": "IMDb bewertung",
+	"popular": "Popular",
+	"top_rated": "Top rated",
+	"latest": "Latest"
+
 }

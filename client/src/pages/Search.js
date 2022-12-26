@@ -13,13 +13,14 @@ import { RiAddFill } from 'react-icons/ri'
 import RedButton from '../components/RedButton'
 import { BsPlayFill } from 'react-icons/bs'
 import { useTranslation } from 'react-i18next'
+import emptyMovieImage from '../images/empty_movie_image.jpeg'
 // import { MDCSlider } from '@material/slider';
 
 const genres = ['Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action', 'Thriller', 'Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
 const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
 
-
+// client/src/images/empty_film_image.jpeg
 const Search = () => {
 	// const slider = new MDCSlider(document.querySelector('.mdc-slider'))
 	const dispatch = useDispatch()
@@ -48,7 +49,7 @@ const Search = () => {
 		setPageState({ films: null })
 		await fetchFilms({ doAppendResult: false })
 	}
-	
+
 	const fetchFilms = async ({ doAppendResult }) => {
 		try {
 			setPageState(prevState => ({ ...prevState, isPageLoading: true }))
@@ -73,18 +74,17 @@ const Search = () => {
 	return (
 		<CardThemeBackground imgLink={IMGpeakyBlinders} >
 			<div className={styles.container} >
-				<form className='row flex' >
-
+				<form className={styles.searchContainer} >
 					<input ref={searchRef} className={styles.searchField} placeholder={t('search')} />
 					<button onClick={searchForFilms} className={styles.searchButton} >
 						<BsSearch />
 					</button>
 				</form>
-				<div className='mt-[20px]' />
-				<div className='flex row z-1000'>
-					<DropDownMenu childs={genres} keyName='Genre' controller={{ queryParams, setQueryParams }} className='ml-[10px]' />
-					<DropDownMenu childs={qualities} keyName='Quality' controller={{ queryParams, setQueryParams }} className='ml-[10px]' />
-					<DropDownMenu childs={sortBy} keyName='Sort by' controller={{ queryParams, setQueryParams }} className='ml-[10px]' />
+				<div className='mt-[5px]' />
+				<div className={styles.dropDownButtonsContainer}>
+					<DropDownMenu childs={genres} keyName='Genre' controller={{ queryParams, setQueryParams }} className='ml-[10px] my-[5px]' />
+					<DropDownMenu childs={qualities} keyName='Quality' controller={{ queryParams, setQueryParams }} className='ml-[10px] my-[5px]' />
+					<DropDownMenu childs={sortBy} keyName='Sort by' controller={{ queryParams, setQueryParams }} className='ml-[10px] my-[5px]' />
 					{/* <DropDownMenu childs={limit} keyName='Film per page' controller={{queryParams, setQueryParams}} className='ml-[10px]' /> */}
 				</div>
 
@@ -93,7 +93,7 @@ const Search = () => {
 						{pageState.films.data.data.movies.map((movie, index) => (
 							<div className={styles.movie} key={index}>
 								<div className={styles.thumbnail} >
-									<img className={styles.movieImage} src={movie.medium_cover_image} alt={movie.title} />
+									<img className={styles.movieImage} src={movie.medium_cover_image} onError={(err) => { err.target.src = emptyMovieImage }} alt={movie.title} />
 									<div className={styles.movieDetails}>
 										<h1 className={styles.movieYear} >{movie.year}</h1>
 										{movie.genres.map(genre => (
@@ -107,10 +107,13 @@ const Search = () => {
 									</div>
 								</div>
 								<h1 className={styles.movieTitle} key={`${movie.title}`}>{movie.title.substring(0, 40) + (movie.title.length > 40 ? '...' : '')}</h1>
-								<div className='flex row' >
-									<AiFillStar className={styles.starIcon} />
-									<h1 className={styles.rating}>{movie.rating}/10</h1>
-								</div>
+								{movie.rating > 0
+									? <div className='flex row' >
+										<AiFillStar className={styles.starIcon} />
+										<h1 className={styles.rating}>{movie.rating}/10</h1>
+									</div>
+									: <div className='mt-[22px]' />
+								}
 							</div>
 						))}
 					</div> : <div />
@@ -121,7 +124,7 @@ const Search = () => {
 				}
 
 				{pageState.films && (queryParams.page < pageState.lastPage) &&
-					<div className='w-[400px]' >
+					<div className={styles.showMoreFilms} >
 						<RedButton onClick={showMoreFilms} text={t('show_more')} icon={<RiAddFill />} />
 					</div>
 				}

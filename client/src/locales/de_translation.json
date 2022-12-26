@@ -48,12 +48,15 @@
     "your_password": "Ihr Passwort",
     "log_out": "Ausloggen",
     "search": "Suchen",
-    "play": "Abspleien",
+    "play": "Abspielen",
 	"show_more": "Mehr anzeigen",
 	"Genre": "Genre",
 	"Quality": "Qualität",
 	"Sort by": "Sortieren nach",
 	"deselect": "Abzuwählen",
 	"watch_later": "Später ansehen",
-	"imdb_rating": "IMDb bewertung"
+	"imdb_rating": "IMDb bewertung",
+	"popular": "Populär",
+	"top_rated": "Top bewertet",
+	"latest": "Neusten"
 }

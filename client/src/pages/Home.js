@@ -3,12 +3,10 @@ import styles from './styles/Home.module.css'
 import { NavbarUserLoggedIn } from '../components/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
-import { selectUser } from '../redux/userSlice'
 import axios from 'axios'
 import Category from '../components/Category'
 import { useTranslation } from 'react-i18next'
 
-const tmpImg = 'https://image.tmdb.org/t/p/original//198vrF8k7mfQ4FjDJsBmdQcaiyq.jpg'
 const requests = {
 	requestPopular: `https://yts.mx/api/v2/list_movies.json?sort_by=like_count&minimum_rating=6`,
 	requestLatest: `https://yts.mx/api/v2/list_movies.json?sort_by=date_added&minimum_rating=6`,
@@ -19,18 +17,21 @@ const requests = {
 
 const Home = () => {
 	const dispatch = useDispatch()
-	// const user = useSelector(selectUser)
 	const { t } = useTranslation()
 	const [movies, setMovies] = useState({})
-	console.log('header=', movies.headerMovie)
+	var headerMovie
+	
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
 				await Promise.all([
-					axios.get(requests.requestPopular).then(rsp => {
-						console.log('-------------------- data jaat --------------------')
-						setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie: rsp.data.data.movies[Math.floor(Math.random() * rsp.data.data.movies.length)] }))
+					axios.get(requests.requestPopular).then(async rsp => {
+						headerMovie = rsp.data.data.movies[Math.floor(Math.random() * rsp.data.data.movies.length)]
+						await axios.get(`https://yts.mx/api/v2/movie_details.json?imdb_id=${headerMovie.imdb_code}&with_images=true`).then(resp => {
+							headerMovie.wallpaper = resp.data.data.movie.large_screenshot_image1
+							setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
+						})
 					}),
 					// axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
 					// axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
@@ -43,7 +44,7 @@ const Home = () => {
 			}
 		}
 		getData()
-	}, []) // eslint-disable-line react-hooks/exhaustive-deps
+	}, []) // eslint-disable-line
 
 	return (
 		movies.isDataLoaded === true ? <>
@@ -51,7 +52,7 @@ const Home = () => {
 			<div className={styles.container} >
 
 				<div className={styles.header} >
-					<img className={styles.headerImg} src={tmpImg} alt={'headerImg'} />
+					<img className={styles.headerImg} src={movies.headerMovie.wallpaper} alt={'headerImg'} />
 					<div className={styles.headerGradient} />
 					<div className={styles.headerContent} >
 						<h1 className={styles.movieTitle}>{movies.headerMovie.title}</h1>
@@ -63,11 +64,9 @@ const Home = () => {
 						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
 					</div>
 				</div>
-
-				<Category title='Popular' movies={movies.popular} />
-				<Category title='Top rated' movies={movies.popular} />
-				<Category title='Latest' movies={movies.popular} />
-
+				<Category title='popular' movies={movies.popular} />
+				<Category title='top_rated' movies={movies.popular} />
+				<Category title='latest' movies={movies.popular} />
 			</div>
 		</> : <div />
 	)
