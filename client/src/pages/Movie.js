@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { hideLoading } from '../redux/loadingSlice'
 import css from './styles/Movie.module.css'
+import imdbLogo from '../images/imdb_logo.png'
 
 const Movie = () => {
 	const { imdbID } = useParams()
@@ -36,12 +37,24 @@ const Movie = () => {
 	return (
 		<>{movie.isDataLoaded &&
 			<div className={css.container} >
-				<div className={css.header} >
+				<div className={css.backdropImageContainer} >
 					<img className={css.backdropImage} src={movie.backdrop_image} />
 					<div className={css.gradient} />
 				</div>
-				<div className={css.filmContent} >
-
+				<div className={css.content} >
+					<div className={css.contentLeftSection} >
+						<img src={movie.large_cover_image} className={css.moviePoster} />
+					</div>
+					<div className={css.contentRightSection} >
+						<h1 className={css.movieTitle}>{movie.title}</h1>
+						<div className='flex row w-full items-center' >
+							<img src={imdbLogo} className='w-[60px] mr-[10px]' />
+							<h1 className='text-white text-[25px] text-gray-400' >{movie.rating}</h1>
+							<h1 className='mx-[20px] text-white text-[25px]' >|</h1>
+							<h1 className='text-white text-[25px] text-gray-400' >{movie.year}</h1>
+							<h1 className='mx-[20px] text-white text-[25px]' >|</h1>
+						</div>
+					</div>
 				</div>
 			</div>
 		}</>

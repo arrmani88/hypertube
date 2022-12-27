@@ -1,8 +1,10 @@
 .container {
-	width: 100vw;
-	height: 100vh;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	/* width: 100vw; */
 }
-.header {
+.backdropImageContainer {
     display: flex;
 	position: relative;
     width: 100%;
@@ -22,4 +24,33 @@
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
+}
+.content {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	width: 80%;
+	top: -300px;
+}
+/* ------------------ LEFT SECTION ------------------ */
+.contentLeftSection {
+	display: flex;
+	flex-direction: column;
+}
+.moviePoster {
+	border-radius: 50px;
+	width: 25vw;
+	max-width: 400px;
+}
+/* ------------------ MID SECTION ------------------ */
+.contentRightSection {
+	display: flex;
+	flex-direction: column;
+	margin: 0px 0px 30px 30px;
+	width: 120vw;
+}
+.movieTitle {
+	color: white;
+	font-size: 50px;
+	font-weight: 900;
 }
