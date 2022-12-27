@@ -17,13 +17,10 @@ import emptyMovieImage from '../images/empty_movie_image.jpeg'
 import imdbLogo from '../images/imdb_logo.png'
 // import { MDCSlider } from '@material/slider';
 
-// const genres = ['Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action', 'Thriller', 'Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
 const genres = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western"]
 const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
 
-
-// client/src/images/empty_film_image.jpeg
 const Search = () => {
 	// const slider = new MDCSlider(document.querySelector('.mdc-slider'))
 	const dispatch = useDispatch()
@@ -143,6 +140,7 @@ export default Search
 
 
 
+// const genres = ['Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action', 'Thriller', 'Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
 
 
 // const limit = ['10', '20', '30', '40', '50']

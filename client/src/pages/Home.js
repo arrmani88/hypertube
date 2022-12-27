@@ -36,8 +36,6 @@ const Home = () => {
 							setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
 						})
 					}),
-
-
 					// axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
 					// axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
 				])
@@ -68,6 +66,7 @@ const Home = () => {
 						<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
 						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
 					</div>
+					<div className={styles.headerBottomGradient} />
 				</div>
 				<Category title='popular' movies={movies.popular} />
 				<Category title='top_rated' movies={movies.popular} />
