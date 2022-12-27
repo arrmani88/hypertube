@@ -14,11 +14,14 @@ import RedButton from '../components/RedButton'
 import { BsPlayFill } from 'react-icons/bs'
 import { useTranslation } from 'react-i18next'
 import emptyMovieImage from '../images/empty_movie_image.jpeg'
+import imdbLogo from '../images/imdb_logo.png'
 // import { MDCSlider } from '@material/slider';
 
-const genres = ['Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action', 'Thriller', 'Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
+// const genres = ['Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action', 'Thriller', 'Drama', 'Mystery', 'Crime', 'Animation', 'Adventure', 'Fantasy']
+const genres = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western"]
 const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
+
 
 // client/src/images/empty_film_image.jpeg
 const Search = () => {
@@ -109,8 +112,8 @@ const Search = () => {
 								<h1 className={styles.movieTitle} key={`${movie.title}`}>{movie.title.substring(0, 40) + (movie.title.length > 40 ? '...' : '')}</h1>
 								{movie.rating > 0
 									? <div className='flex row' >
-										<AiFillStar className={styles.starIcon} />
-										<h1 className={styles.rating}>{movie.rating}/10</h1>
+										<img src={imdbLogo} className='h-[22px] mr-[5px]' />
+										<h1 className={styles.rating}>{movie.rating}</h1>
 									</div>
 									: <div className='mt-[22px]' />
 								}

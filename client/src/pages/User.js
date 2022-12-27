@@ -18,6 +18,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { GoCheck } from 'react-icons/go'
 import { IoClose } from 'react-icons/io5'
+import cx from "clsx";
 
 const User = () => {
 	const dispatch = useDispatch()
@@ -124,7 +125,7 @@ const User = () => {
 				}
 			})
 			delete data['password']
-			dispatch(updateUserData({...user.userData, firstName: data.firstName }))
+			dispatch(updateUserData({ ...user.userData, firstName: data.firstName }))
 			setUserInfo({ ...userInfo, ...data })
 		} catch (error) {
 			if (error.response?.data === "Wrong password") setPasswordErrorMessage("Wrong password")
@@ -138,85 +139,89 @@ const User = () => {
 	return (
 		useSelector(state => state.loading.value) === false
 			? <CardThemeBackground imgLink={IMGvikings2} >
-				<div className={avatarStyles.changeImageContainer}>
-					{editingMode === true &&
-						<div className={avatarStyles.uploadIconContainer} >
-							<label className={avatarStyles.uploadIconBackground} onChange={updateImage} htmlFor='imgUpload' >
-								{isAvatarButtonLoading === true
-									? <ReactLoading className={avatarStyles.uploadIcon} type='spin' />
-									: <AiOutlineFileImage className={avatarStyles.uploadIcon} />
-								}
-								<input hidden id='imgUpload' type='file' />
-							</label>
+				<div className={styles.outsiderContainer} >
+					<div className={styles.container} >
+						<div className={avatarStyles.changeImageContainer}>
+							{editingMode === true &&
+								<div className={avatarStyles.uploadIconContainer} >
+									<label className={avatarStyles.uploadIconBackground} onChange={updateImage} htmlFor='imgUpload' >
+										{isAvatarButtonLoading === true
+											? <ReactLoading className={avatarStyles.uploadIcon} type='spin' />
+											: <AiOutlineFileImage className={avatarStyles.uploadIcon} />
+										}
+										<input hidden id='imgUpload' type='file' />
+									</label>
+								</div>
+							}
+							<img className={avatarStyles.userAvatarImg} src={userInfo.image} alt='userImg' onError={() => { console.log('errrrrrrr') }} />
 						</div>
-					}
-					<img className={avatarStyles.userAvatarImg} src={userInfo.image} alt='userImg' onError={() => { console.log('errrrrrrr') }} />
-				</div>
-				<h1 className={avatarStyles.imageErrorMessage} >{imageErrorMessage}</h1>
-				{editingMode === false
-					? <>
-						<h1 className={styles.firstLastName}>{userInfo.firstName+' '+userInfo.lastName}</h1>
-						<div>
-							<div className={styles.row} >
-								<h1 className={styles.icon}>@</h1>
-								<h1 className={styles.userData} >{userInfo.username}</h1>
-							</div>
-							<div className='mt-[15px]' />
-							<div className={styles.row} >
-								<FaBirthdayCake className={styles.icon} />
-								<h1 className={styles.userData} >{userInfo.birthday}</h1>
-							</div>
-							<div className='mt-[20px]' />
-							<div className={styles.row} >
-								<FaGenderless className={styles.icon} />
-								<h1 className={styles.userData}>{t(userInfo.gender)}</h1>
-							</div>
-						</div>
-						{userInfo.isEditable === true
-							&& <>
+						<h1 className={avatarStyles.imageErrorMessage} >{imageErrorMessage}</h1>
+						{editingMode === false
+							? <div className={styles.userDataContainer} >
+								<h1 className={styles.firstLastName}>{userInfo.firstName + ' ' + userInfo.lastName}</h1>
+								<div>
+									<div className={styles.row} >
+										<h1 className={styles.icon}>@</h1>
+										<h1 className={styles.userData} >{userInfo.username}</h1>
+									</div>
+									<div className='mt-[15px]' />
+									<div className={styles.row} >
+										<FaBirthdayCake className={styles.icon} />
+										<h1 className={styles.userData} >{userInfo.birthday}</h1>
+									</div>
+									<div className='mt-[20px]' />
+									<div className={styles.row} >
+										<FaGenderless className={styles.icon} />
+										<h1 className={styles.userData}>{t(userInfo.gender)}</h1>
+									</div>
+								</div>
+								{userInfo.isEditable === true
+									&& <>
+										<div className='mt-[20px]' />
+										<button className={styles.editButton} onClick={() => { setEditingMode(true) }} >
+											<p>{t('edit')}</p>
+											<BiEditAlt className={`text-[40px]`} />
+										</button>
+									</>}
+							</div >
+							: <form onSubmit={handleSubmit(updateProfile)} className={styles.updateForm} >
+								<label>
+									<p>{t('first_name')}</p>
+									<input {...register('newFirstName')} placeholder={t('your') + t('first_name')} />
+									<h1>{errors.newFirstName?.message || ' '} </h1>
+								</label>
+								<label>
+									<p>{t('last_name')}</p>
+									<input {...register('newLastName')} placeholder={t('your') + t('last_name')} />
+									<h1>{errors.newLastName?.message ?? ' '} </h1>
+								</label>
+								<label>
+									<p>{t('birthday')}</p>
+									<input {...register('newBirthday')} type='date' />
+									<h1>   </h1>
+								</label>
+								<label>
+									<p>{t('your_password')}</p>
+									<input {...register('password')} placeholder={t('your') + t('password')} onChange={() => { setPasswordErrorMessage(' ') }} />
+									<h1>{passwordErrorMessage !== ' '} </h1>
+								</label>
 								<div className='mt-[20px]' />
-								<button className={styles.editButton} onClick={() => { setEditingMode(true) }} >
-									<p>{t('edit')}</p>
-									<BiEditAlt className={`text-[40px]`} />
-								</button>
-							</>}
-					</>
-					: <form onSubmit={handleSubmit(updateProfile)} className={styles.updateForm} >
-						<label>
-							<p>{t('first_name')}</p>
-							<input {...register('newFirstName')} placeholder={t('your') + t('first_name')} />
-							<h1>{errors.newFirstName?.message || ' '} </h1>
-						</label>
-						<label>
-							<p>{t('last_name')}</p>
-							<input {...register('newLastName')} placeholder={t('your') + t('last_name')} />
-							<h1>{errors.newLastName?.message ?? ' '} </h1>
-						</label>
-						<label>
-							<p>{t('birthday')}</p>
-							<input {...register('newBirthday')} type='date' />
-							<h1>   </h1>
-						</label>
-						<label>
-							<p>{t('your_password')}</p>
-							<input {...register('password')} placeholder={t('your') + t('password')} onChange={() => { setPasswordErrorMessage(' ') }} />
-							<h1>{passwordErrorMessage !== ' '} </h1>
-						</label>
-						<div className='mt-[20px]' />
-						<div className='flex w-full' >
-							<button className={styles.cancelButton} onClick={() => { setEditingMode(false); reset() }} >
-								<p>{t('cancel')}</p>
-								<IoClose className={`text-[40px]`} />
-							</button>
-							<button className={styles.editButton} >
-								<p>{t('save')}</p>
-								<GoCheck className={`text-[40px]`} />
-							</button>
-						</div>
-					</form>
+								<div className={styles.buttonsContainer} >
+									<button className={cx(styles.cancelButton)} onClick={() => { setEditingMode(false); reset() }} >
+										<p>{t('cancel')}</p>
+										<IoClose className='text-[40px]' />
+									</button>
+									<button className={styles.saveButton} >
+										<p>{t('save')}</p>
+										<GoCheck className='text-[40px]' />
+									</button>
+								</div>
+							</form>
 
-				}
-			</CardThemeBackground>
+						}
+					</div>
+
+				</div>			</CardThemeBackground>
 			: <div />
 	)
 }

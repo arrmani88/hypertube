@@ -1,6 +1,7 @@
 .container {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 .dropdownMenu {
     display: flex;
@@ -14,8 +15,8 @@
     margin: 11px 0 11px 0;
     /* width: 70px; */
 	/* width: 100%; */
-    /* top: 90px; */
-    top: 115px;
+    top: 50px;
+    /* top: 115px; */
     z-index: 1;
 }
 .dropdownMenu::before {

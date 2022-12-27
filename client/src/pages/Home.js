@@ -15,12 +15,15 @@ const requests = {
 	// requestUpcoming:  `https://api.themoviedb.org/3/movie/upcoming?api_key=4a3da46412d3067a8577584a5b63fdeb`
 }
 
+// 1:  https://api.themoviedb.org/3/movie/tt18750342?api_key=4a3da46412d3067a8577584a5b63fdeb
+// 2: `https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`
+
 const Home = () => {
 	const dispatch = useDispatch()
 	const { t } = useTranslation()
 	const [movies, setMovies] = useState({})
 	var headerMovie
-	
+
 
 	useEffect(() => {
 		const getData = async () => {
@@ -28,11 +31,13 @@ const Home = () => {
 				await Promise.all([
 					axios.get(requests.requestPopular).then(async rsp => {
 						headerMovie = rsp.data.data.movies[Math.floor(Math.random() * rsp.data.data.movies.length)]
-						await axios.get(`https://yts.mx/api/v2/movie_details.json?imdb_id=${headerMovie.imdb_code}&with_images=true`).then(resp => {
-							headerMovie.wallpaper = resp.data.data.movie.large_screenshot_image1
+						await axios.get(`https://api.themoviedb.org/3/movie/${headerMovie.imdb_code}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`).then(resp => {
+							headerMovie.backdropImage = `https://image.tmdb.org/t/p/original/${resp.data.backdrop_path}`
 							setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
 						})
 					}),
+
+
 					// axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
 					// axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
 				])
@@ -52,7 +57,7 @@ const Home = () => {
 			<div className={styles.container} >
 
 				<div className={styles.header} >
-					<img className={styles.headerImg} src={movies.headerMovie.wallpaper} alt={'headerImg'} />
+					<img className={styles.headerImg} src={movies.headerMovie.backdropImage} alt={'headerImg'} />
 					<div className={styles.headerGradient} />
 					<div className={styles.headerContent} >
 						<h1 className={styles.movieTitle}>{movies.headerMovie.title}</h1>

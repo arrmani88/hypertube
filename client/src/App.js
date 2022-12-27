@@ -26,6 +26,7 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import OnlyCompletedProfileRoutes from "./components/redirection/OnlyCompletedProfileRoutes";
 import Search from "./pages/Search";
+import Movie from "./pages/Movie";
 
 i18n.use(initReactI18next).use(LanguageDetector).init({ resources: { en: { translation: EnTranslation }, de: { translation: DeTranslation } }, fallbackLng: "en", detection: { order: ['cookie', 'localStorage', 'path', 'subdomain'], caches: ['cookie', 'localStorage'] } });
 
@@ -78,6 +79,7 @@ function App() {
 								<Route path='/upload-image' element={<UploadImage />} />
 								<Route path="/user/:parameterUsername" element={<User />} />
 								<Route path="/search" element={<Search />} />
+								<Route path="/movie/:imdbID" element={<Movie />} />
 							</Route>
 						</Route>
 						<Route path='*' element={<NoPageFound />} />
