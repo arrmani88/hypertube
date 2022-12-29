@@ -58,6 +58,13 @@
 	"imdb_rating": "IMDb bewertung",
 	"popular": "Popular",
 	"top_rated": "Top rated",
-	"latest": "Latest"
+	"latest": "Latest",
+    "watch_now": "Watch now",
+    "genres": "Genres",
+    "language": "Language",
+    "adult": "Adult",
+    "duration": "Duration",
+    "released": "Release",
+	"downloads": "Downloads"
 
 }

@@ -54,3 +54,52 @@
 	font-size: 50px;
 	font-weight: 900;
 }
+
+.movieDescription {
+	color: rgb(156 163 175);
+	font-size: 20px;
+	width: 800px;
+}
+.movieDetail {
+	display: flex;
+	position: relative;
+	/* flex-wrap: wrap; */
+	margin: 10px 15px 10px 0;
+	width: 800px;
+	min-height: 25px;
+	flex-direction: row;
+	align-items: baseline;
+}
+
+.movieGenresContainer {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	/* margin: 10px 15px 10px 0; */
+	width: 800px;
+	min-height: 25px;
+	flex-direction: row;
+	margin-left: 25px;
+}
+
+.detailTitle {
+	font-size: 25px;
+	color: rgb(156 163 175);
+	height: 100%;
+	width: 175px;
+}
+.movieGenre {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 30px;
+	background-color: rgb(61, 61, 61);
+	height: 30px;
+	color: white;
+	padding: 18px 25px 18px 25px;
+	margin: 0 15px 5px 0;
+}
+.flag {
+	margin-left: 10px;
+	scale: 3;
+}

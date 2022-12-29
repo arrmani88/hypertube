@@ -1,10 +1,13 @@
 import React from 'react'
-import styles from './styles/RedButton.module.css'
+import { useTranslation } from 'react-i18next'
+import './styles/RedButton.css'
 
-const RedButton = ({onClick, icon, text}) => {
+const RedButton = ({onClick, icon, text, tailwind}) => {
+	const { t } = useTranslation()
+
 	return (
-		<button onClick={onClick} className={styles.button} >
-			<h1>{text}</h1>
+		<button onClick={onClick} className={'button ' + tailwind??''} >
+			<h1>{t(text)}</h1>
 			{icon}
 		</button>
 	)

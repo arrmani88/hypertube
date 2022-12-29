@@ -125,7 +125,7 @@ const Search = () => {
 
 				{pageState.films && (queryParams.page < pageState.lastPage) &&
 					<div className={styles.showMoreFilms} >
-						<RedButton onClick={showMoreFilms} text={t('show_more')} icon={<RiAddFill />} />
+						<RedButton onClick={showMoreFilms} text='show_more' icon={<RiAddFill />} tailwind='w-11/12' />
 					</div>
 				}
 
