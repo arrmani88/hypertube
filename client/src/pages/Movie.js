@@ -113,4 +113,4 @@ const Movie = () => {
 
 export default Movie
 
-// {localeEmoji('en')}
+// http://localhost:3000/movie/tt18265816
