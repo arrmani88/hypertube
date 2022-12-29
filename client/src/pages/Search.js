@@ -15,6 +15,7 @@ import { BsPlayFill } from 'react-icons/bs'
 import { useTranslation } from 'react-i18next'
 import emptyMovieImage from '../images/empty_movie_image.jpeg'
 import imdbLogo from '../images/imdb_logo.png'
+import { useNavigate } from 'react-router-dom'
 // import { MDCSlider } from '@material/slider';
 
 const genres = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western"]
@@ -26,6 +27,7 @@ const Search = () => {
 	const dispatch = useDispatch()
 	const searchRef = useRef(null)
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const [queryParams, setQueryParams] = useState({
 		page: 0
 	})
@@ -62,6 +64,7 @@ const Search = () => {
 				(queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) +
 				(queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``)
 			)
+			console.log(resultFilms)
 			doAppendResult === true && (resultFilms.data.data.movies = [].concat(pageState.films.data.data.movies, resultFilms.data.data.movies))
 			setPageState(prevState => ({ ...prevState, films: resultFilms, lastPage: (resultFilms.data.data.movie_count / 40).toFixed() }))
 		} catch (error) {
@@ -100,7 +103,7 @@ const Search = () => {
 											<h1 className={styles.movieGenre} key={genre}>{genre}</h1>
 										))}
 										<div className='mt-[10px]' />
-										<button className={styles.playNow} >
+										<button className={styles.playNow} onClick={() => {navigate(`/movie/${movie.imdb_code}`)}} >
 											<h1>{t('play')}</h1>
 											<BsPlayFill className='mt-[3px] text-2xl' />
 										</button>
