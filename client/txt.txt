@@ -9,7 +9,7 @@ routes to do:
 	2. consult profile (email hidden)
 	3. edit profile
 	4. Home (aflam + search)
-	5. watch films 
+	5. watch films
 
 • The user must be able to register and connect via Omniauth.
 • Disconnect with 1 click
@@ -34,3 +34,10 @@ III.2.2 Thumbnails
 [
 	- :3001/update_profile to send email confirmation after email update
 ]
+
+
+// http://localhost:3000/movie/tt18265816
+// http://localhost:3000/movie/tt22803380
+tap enter in search
+
+https://yts.torrentbay.to/api/v2/list_movies.json

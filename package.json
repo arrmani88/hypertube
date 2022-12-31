@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "country-locale-map": "^1.8.11",
-    "locale-emoji": "^0.3.0",
-    "react-country-flag": "^3.0.2"
-  }
-}
