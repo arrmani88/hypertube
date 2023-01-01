@@ -38,6 +38,5 @@ III.2.2 Thumbnails
 
 // http://localhost:3000/movie/tt18265816
 // http://localhost:3000/movie/tt22803380
-tap enter in search
 
 https://yts.torrentbay.to/api/v2/list_movies.json
