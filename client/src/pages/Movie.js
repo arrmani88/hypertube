@@ -20,19 +20,24 @@ const Movie = () => {
 	const dispatch = useDispatch()
 	const { t } = useTranslation()
 
-	const { error, data: movie, status } = useQuery({
+	const { error, data: movie, status, refetch } = useQuery({
 		queryKey: 'key bach ki noumer data dial lmovie fel cache',
-		queryFn: async () => {
-			return await Promise.all([
+		queryFn: async (par) => {
+			console.log('par=', par)
+			const movieDeata = await Promise.all([
 				axios.get(`https://yts.mx/api/v2/movie_details.json?imdb_id=${imdbID}`),
 				axios.get(`https://api.themoviedb.org/3/movie/${imdbID}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`),
 			]).then(([ytsRsp, tmdbRsp]) => {
-				console.log(' ------------ data fetched ------------')
 				return { sourceYts: ytsRsp.data.data.movie, sourceTmdb: tmdbRsp.data }
 			})
+			return movieDeata
+		},
+
+		onError: (error) => {
+			// refetch('123')
 		},
 		refetchOnWindowFocus: false,
-		staleTime: 14400000, // 4 dsway3 to ms
+		staleTime: 14400000, // 4 dsway3 to ms bhac i3tabr data dial lcache qdima
 	})
 
 	useEffect(() => {
@@ -42,7 +47,6 @@ const Movie = () => {
 	if (error) 
 		console.log(error)
 	else if (status === 'success') {
-		console.log(' ------------- #rebuilt# --------------')
 		return (
 			<div className={css.container} >
 				<NavbarUserLoggedIn />

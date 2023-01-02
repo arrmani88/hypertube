@@ -32,7 +32,7 @@ III.2.2 Thumbnails
 
 
 [
-	- :3001/update_profile to send email confirmation after email update
+	:3000/movie - fach mayl9ach lmovie f Tmdb, i 3awd ijib data gha men yts
 ]
 
 
