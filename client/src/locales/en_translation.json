@@ -65,6 +65,8 @@
     "adult": "Adult",
     "duration": "Duration",
     "released": "Release",
-	"downloads": "Downloads"
+	"downloads": "Downloads",
+    "unknown": "Unknown",
+    "show_less": "Show less"
 
 }

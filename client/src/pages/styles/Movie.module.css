@@ -27,10 +27,16 @@
 }
 .content {
 	display: flex;
-	flex-direction: row;
 	position: relative;
-	width: 80%;
+	justify-content: center;
+	flex-direction: column;
 	top: -300px;
+	width: 80%;
+	
+}
+.movieIntroduction {
+	display: flex;
+	flex-direction: row;
 }
 /* ------------------ LEFT SECTION ------------------ */
 .contentLeftSection {
@@ -46,48 +52,78 @@
 .contentRightSection {
 	display: flex;
 	flex-direction: column;
-	margin: 0px 0px 30px 30px;
-	width: 120vw;
+	margin: 0px 0px 0 30px;
 }
 .movieTitle {
 	color: white;
 	font-size: 50px;
 	font-weight: 900;
+	width: 100%;
+	word-break: break-word;
 }
 
 .movieDescription {
 	color: rgb(156 163 175);
 	font-size: 20px;
-	width: 800px;
+	max-width: 800px;
 }
+
 .movieDetail {
 	display: flex;
 	position: relative;
 	/* flex-wrap: wrap; */
 	margin: 10px 15px 10px 0;
-	width: 800px;
+	/* width: 800px; */
 	min-height: 25px;
 	flex-direction: row;
 	align-items: baseline;
 }
-
 .movieGenresContainer {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
 	/* margin: 10px 15px 10px 0; */
-	width: 800px;
+	/* width: 800px; */
+	width: fit-content;
 	min-height: 25px;
 	flex-direction: row;
-	margin-left: 25px;
+	/* margin-left: 25px; */
 }
-
 .detailTitle {
 	font-size: 25px;
 	color: rgb(156 163 175);
 	height: 100%;
 	width: 175px;
 }
+.detailContent {
+	font-size: 20px;
+	color: white;
+}
+.movieStatistics {
+	display: flex;
+	/* flex-direction: column; */
+	align-items: flex-start;
+	width: fit-content;
+}
+.statsIcon {
+	font-size: 25px;
+	color: #9ca3af;
+	margin-right: 10px;
+}
+.movieStat {
+	font-size: 25px;
+	color: #9ca3af;
+}
+/* 'text-[25px] text-gray-400' */
+
+.movieStatsMiddleSeparator {
+	margin: 0 20px 0 20px;
+	margin-left: 20px;
+    margin-right: 20px;
+	color: #9ca3af;
+	font-size: 25px;
+}
+
 .movieGenre {
 	display: flex;
 	align-items: center;
@@ -102,4 +138,208 @@
 .flag {
 	margin-left: 10px;
 	scale: 3;
+}
+.descriptionBottom {
+	display: none;
+}
+.redButton {
+	margin: 15px 0 15px 0;
+	width: 350px;
+}
+.moviePosterBottom {
+	display: none;
+}
+.separator {
+	margin: 0 20px 0 20px;
+	color: #9ca3af;
+	font-size: 25px;
+}
+.imdbLogo {
+	width: 60px;
+	margin-right: 10px;
+}
+
+/* ------------------------------------------------------------------------------------------- */
+/* @media only screen and (max-width: 1430px) {.movieDescription {}} */
+
+@media only screen and (max-width: 1100px) {
+	.content {
+		top: -200px;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.descriptionTop {
+		display: none;
+	}
+	.descriptionBottom {
+		margin-top: 20px;
+		display: unset;
+	}
+	.moviePoster {
+		border-radius: 30px;
+	}
+}
+
+@media only screen and (max-width: 950px) {
+	.movieStatistics {
+		flex-direction: column;
+	}
+	.movieStatsMiddleSeparator {
+		display: none;
+	}
+	.redButton {
+		width: 275px;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.content {
+		top: -150px;
+	}
+	.movieTitle {
+		font-size: 40px;
+		font-weight: 900;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+	.movieTitle {
+		font-size: 30px;
+		font-weight: 800;
+	}
+	.movieStat {
+		font-size: 20px;
+	}
+	.detailTitle {
+		font-size: 20px;
+	}
+
+
+}
+
+@media only screen and (max-width: 800px) {
+	.content {
+		top: -105px;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.redButton {
+		width: 220px;
+		height: 50px;
+		font-size: 25px;
+	}
+}
+
+
+@media only screen and (max-width: 600px) {
+	.detailTitle {
+		/* min-width: 135px; */
+		width: fit-content;
+		padding-right: 15px;
+	}
+	.content {
+		width: 90%;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.content {
+		display: flex;
+		align-items: center;
+		width: 98%;
+		top: -80px
+	}
+	.contentLeftSection {
+		display: none;
+	}
+	.moviePosterBottom {
+		display: unset;
+	}
+	.movieStatistics {
+		flex-direction: row;
+	}
+	.movieStatsMiddleSeparator {
+		display: unset;
+	}
+	.movieStat {
+		font-size: 18px;
+	}
+	.separator {
+		margin: 0 10px 0 10px;
+	}
+	.movieStatsMiddleSeparator {
+		margin: 0 10px 0 10px;
+	}
+	.movieStatistics {
+		width: 100%;
+		justify-content: center;
+	}
+	.movieTitle {
+		text-align: center;
+	}
+	.moviePosterBottom {
+		border-radius: 50px;
+		width: 50vw;
+		max-width: 400px;
+		margin-bottom: 20px;
+	}
+	.contentRightSection {
+		margin: 0;
+		align-items: center;
+	}
+	.movieDescription {
+		padding: 0 10px 0 10px;
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.content {
+		top: -60px
+	}
+	.movieStatistics {
+		flex-direction: column;
+		display: contents;
+	}
+	.movieStatsMiddleSeparator {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.moviePosterBottom{
+		border-radius: 30px;
+	}
+}
+
+@media only screen and (max-width: 325px) {
+	.movieTitle {
+		font-size: 25px;
+	}
+	.movieStat {
+		font-size: 15px;
+	}
+	.imdbLogo {
+		width: 45px;
+	}
+	.movieDetail {
+		margin: 8px 0 8px 0 ;
+	}
+	.movieDescription {
+		font-size: 18px;
+	}
+}
+
+@media only screen and (max-width: 275px) {
+	.content {
+		top: -30px;
+	}
+}
+
+@media only screen and (max-width: 250px) {
+	.redButton {
+		width: 190px;
+		font-size: 22px;
+	}
 }

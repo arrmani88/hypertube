@@ -65,5 +65,7 @@
     "adult": "Erwachsener",
     "duration": "Dauer",
     "released": "Veröffentlicht",
-	"downloads": "Herunterladungen"
+	"downloads": "Herunterladungen",
+    "unknown": "Unbekannt",
+    "show_less": "Weniger anzeigen"
 }
