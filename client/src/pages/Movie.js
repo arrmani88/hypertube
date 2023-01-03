@@ -56,6 +56,7 @@ const Movie = () => {
 
 	if (status === 'error') console.log(error)
 	else if (status === 'success') {
+		console.log(movie)
 		if (movie.sourceYts.id === 0)
 			return (<Navigate to='/not-found' />)
 		else return (
@@ -73,16 +74,13 @@ const Movie = () => {
 						<div className={css.contentRightSection} >
 							<h1 className={css.movieTitle}>{movie.sourceYts.title}</h1>
 							<div className={css.movieStatistics} >
-
 								<div className='flex row items-center w-max' >
 									<img src={imdbLogo} className={css.imdbLogo} alt='imdbLogo' />
 									<h1 className={css.movieStat} >{movie.sourceYts.rating}</h1>
 									<h1 className={css.separator} >|</h1>
 									<h1 className={css.movieStat} >{movie.sourceYts.year}</h1>
 								</div>
-
 								<h1 className={css.movieStatsMiddleSeparator} >|</h1>
-
 								<div className='flex row items-center w-max' >
 									<ImDownload3 className={css.statsIcon} />
 									<h1 className={css.movieStat} >{movie.sourceYts.download_count} </h1>
@@ -90,11 +88,9 @@ const Movie = () => {
 									<AiFillHeart className={css.statsIcon} />
 									<h1 className={css.movieStat} >{getDataSource('popularity')}</h1>
 								</div>
-
 							</div>
 							<RedButton text='watch_now' icon={<BsPlayFill />} tailwind={css.redButton} />
 							<img src={movie.sourceYts.large_cover_image} className={css.moviePosterBottom} alt='largeCoverImg' />
-
 							<div className={css.descriptionTop} >
 								<h1 className={css.movieDescription} >
 									{movie.sourceYts.description_intro.length > 350
@@ -105,12 +101,10 @@ const Movie = () => {
 											</button>
 										</>
 										: <>{movie.sourceYts.description_intro}</>
-
 									}
 								</h1>
 							</div>
-
-							{/* <div className={css.movieDetail} >
+							<div className={css.movieDetail} >
 								<h1 className={css.detailTitle} >{t('genres')}</h1>
 								<div className={css.movieGenresContainer} >
 									{movie.sourceYts.genres.map(genre => (
@@ -119,10 +113,7 @@ const Movie = () => {
 										</div>
 									))}
 								</div>
-							</div> */}
-							{/* -------------------------------------------------------------------------------------- */}
-
-
+							</div> {/* -------------------------------------------------------------------------------------- */}
 							<div className={css.movieDetail} >
 								<h1 className={css.detailTitle} >{t('language')}</h1>
 								<h1 className={css.flag} >{localeEmoji('en')}</h1>
@@ -143,7 +134,6 @@ const Movie = () => {
 							</div> {/* -------------------------------------------------------------------------------------- */}
 						</div>
 					</div>
-
 					<div className={css.descriptionBottom} >
 						<h1 className={css.movieDescription} >
 							{movie.sourceYts.description_intro.length > 350
@@ -154,10 +144,17 @@ const Movie = () => {
 									</button>
 								</>
 								: <>{movie.sourceYts.description_intro}</>
-
 							}
 						</h1>
 					</div>
+
+					<iframe
+						src={`https://www.youtube.com/embed/${movie.sourceYts.yt_trailer_code}`}
+						width="1280"
+						height="720"
+						// frameborder="0"
+						// allowfullscreen="allowfullscreen"
+					/>
 
 				</div>
 			</div>

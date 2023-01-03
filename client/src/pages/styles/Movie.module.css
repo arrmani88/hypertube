@@ -94,6 +94,7 @@
 	color: rgb(156 163 175);
 	height: 100%;
 	width: 175px;
+	min-width: 175px;
 }
 .detailContent {
 	font-size: 20px;
@@ -213,6 +214,8 @@
 	}
 	.detailTitle {
 		font-size: 20px;
+		min-width: 130px;
+		width: 130px;
 	}
 
 
@@ -291,6 +294,10 @@
 	}
 	.movieDescription {
 		padding: 0 10px 0 10px;
+	}
+	.detailTitle {
+		display: flex;
+		justify-content: flex-end;
 	}
 }
 
