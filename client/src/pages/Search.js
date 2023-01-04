@@ -26,21 +26,16 @@ const Search = () => {
 	const searchRef = useRef(null)
 	const { t } = useTranslation()
 	const [queryParams, setQueryParams] = useState({})
-	// const [pageState, setPageState] = useState({})
 
 	const showMoreFilms = async (e) => {
-		console.log('show - more')
 		e.preventDefault()
 		if (pageState?.pageNumber < pageState.lastPage)
 			await mutateAsync({ doAppendResult: true })
-		// setPageState(mutationData)
 	}
 
 	const searchForFilms = async (e) => {
-		console.log('first search')
 		e.preventDefault()
 		await mutateAsync({ doAppendResult: false })
-		// setPageState(mutationData)
 	}
 
 	const { data: pageState, error, status, mutateAsync } = useMutation({
@@ -160,3 +155,4 @@ export default Search
 	// 	}
 	// }
 	// ----------------------------------------------------------------------------------------------------------------------------------------------------------	
+	

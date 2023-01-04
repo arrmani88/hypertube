@@ -49,3 +49,15 @@
     cursor: pointer;
     padding: 5px 0 5px 0;
 }
+
+@media only screen and (max-width: 365px ){
+    .flag {
+        width: 40px;
+    }
+}
+
+@media only screen and (max-width: 725px ){
+    .dropdownMenu {
+        top: 50px;
+    }
+}

@@ -15,6 +15,20 @@ routes to do:
 • Disconnect with 1 click
 • A film research field.
 
+give me a text like this one where you replace the key users with the key hello and as a value the corresponding translation
+de,
+	"users": "Benutzer"
+dk,
+	"users": "Brugere"
+es,
+	"users": "Usuarios"
+it,
+	"users": "Utenti"
+no,
+	"users": "Brukere"
+se,
+	"users": "Användare"
+
 /*******************************************/
 III.2.2 Thumbnails
 	• If a research has been done, the results will show as thumbnails sorted by names.
@@ -36,7 +50,11 @@ III.2.2 Thumbnails
 ]
 
 
-// http://localhost:3000/movie/tt18265816
-// http://localhost:3000/movie/tt22803380
+http://localhost:3000/movie/tt9764362
+search ki clignoti
+ytb video responsv
+slider
+scale dial category f 'home' (overflow-x and -y)
 
 https://yts.torrentbay.to/api/v2/list_movies.json
+

@@ -6,6 +6,9 @@ import { hideLoading } from '../redux/loadingSlice'
 import axios from 'axios'
 import Category from '../components/Category'
 import { useTranslation } from 'react-i18next'
+import RedButton from '../components/RedButton'
+import { BsPlayFill } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 
 const requests = {
 	requestPopular: `https://yts.mx/api/v2/list_movies.json?sort_by=like_count&minimum_rating=6`,
@@ -14,13 +17,13 @@ const requests = {
 	// requestNowPlaying: `https://api.themoviedb.org/3/movie/now_playing?api_key=4a3da46412d3067a8577584a5b63fdeb`,
 	// requestUpcoming:  `https://api.themoviedb.org/3/movie/upcoming?api_key=4a3da46412d3067a8577584a5b63fdeb`
 }
-
 // 1:  https://api.themoviedb.org/3/movie/tt18750342?api_key=4a3da46412d3067a8577584a5b63fdeb
 // 2: `https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`
 
 const Home = () => {
 	const dispatch = useDispatch()
 	const { t } = useTranslation()
+	const navigate = useNavigate()
 	const [movies, setMovies] = useState({})
 	var headerMovie
 
@@ -36,8 +39,8 @@ const Home = () => {
 							setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
 						})
 					}),
-					// axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
-					// axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
+					axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
+					axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
 				])
 				dispatch(hideLoading())
 			} catch (error) {
@@ -56,21 +59,20 @@ const Home = () => {
 
 				<div className={styles.header} >
 					<img className={styles.headerImg} src={movies.headerMovie.backdropImage} alt={'headerImg'} />
-					<div className={styles.headerGradient} />
+					<div className={styles.headerGradient} />					
+					<div className={styles.headerBottomGradient} />
 					<div className={styles.headerContent} >
 						<h1 className={styles.movieTitle}>{movies.headerMovie.title}</h1>
-						<div className='row'>
-							<button className={styles.playButton}>{t('play')}</button>
-							<button className={styles.watchLaterButton}>{t('watch_later')}</button>
-						</div>
+						<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movies.headerMovie?.imdb_code}`} >
+							<RedButton text='play' tailwind={styles.redButton} icon={<BsPlayFill />} />
+						</a>
 						<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
 						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
 					</div>
-					<div className={styles.headerBottomGradient} />
 				</div>
 				<Category title='popular' movies={movies.popular} />
-				<Category title='top_rated' movies={movies.popular} />
-				<Category title='latest' movies={movies.popular} />
+				<Category title='top_rated' movies={movies.latest} />
+				<Category title='latest' movies={movies.topRated} />
 			</div>
 		</> : <div />
 	)

@@ -55,7 +55,7 @@
 	"Sort by": "Sort by",
 	"deselect": "Deselect",
 	"watch_later": "Watch later",
-	"imdb_rating": "IMDb bewertung",
+	"imdb_rating": "IMDb rating",
 	"popular": "Popular",
 	"top_rated": "Top rated",
 	"latest": "Latest",
@@ -67,6 +67,7 @@
     "released": "Release",
 	"downloads": "Downloads",
     "unknown": "Unknown",
-    "show_less": "Show less"
+    "show_less": "Show less",
+    "trailer": "Trailer"
 
 }

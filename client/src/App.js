@@ -6,6 +6,11 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
 import DeTranslation from './locales/de_translation.json'
 import EnTranslation from './locales/en_translation.json'
+import DkTranslation from './locales/dk_translation.json'
+import EsTranslation from './locales/es_translation.json'
+import ItTranslation from './locales/it_translation.json'
+import NoTranslation from './locales/no_translation.json'
+import SeTranslation from './locales/se_translation.json'
 import Login from "./pages/Login";
 import AccountVerified from "./pages/AccountVerified";
 import VerfifyYourAccount from "./pages/VerifyYourAccount";
@@ -22,13 +27,21 @@ import { setUserLoggedIn, selectUser, setUserLoggedOut, setProfileStatus } from 
 import PrivateRoutes from "./components/redirection/PrivateRoutes";
 import User from "./pages/User";
 import PublicRoutes from "./components/redirection/PublicRoutes";
-import Landing from "./pages/Landing";
-import Home from "./pages/Home";
 import OnlyCompletedProfileRoutes from "./components/redirection/OnlyCompletedProfileRoutes";
 import Search from "./pages/Search";
 import Movie from "./pages/Movie";
+import UserSearch from "./pages/UserSearch";
 
-i18n.use(initReactI18next).use(LanguageDetector).init({ resources: { en: { translation: EnTranslation }, de: { translation: DeTranslation } }, fallbackLng: "en", detection: { order: ['cookie', 'localStorage', 'path', 'subdomain'], caches: ['cookie', 'localStorage'] } });
+i18n.use(initReactI18next).use(LanguageDetector).init({ resources: {
+		en: { translation: EnTranslation },
+		de: { translation: DeTranslation },
+		dk: { translation: DkTranslation },
+		es: { translation: EsTranslation },
+		it: { translation: ItTranslation },
+		no: { translation: NoTranslation },
+		se: { translation: SeTranslation },
+	}, fallbackLng: "en", detection: { order: ['cookie', 'localStorage', 'path', 'subdomain'], caches: ['cookie', 'localStorage'] }
+});
 
 function App() {
 	const isLoading = useSelector((state) => state.loading.value)
@@ -79,6 +92,7 @@ function App() {
 								<Route path='/upload-image' element={<UploadImage />} />
 								<Route path="/user/:parameterUsername" element={<User />} />
 								<Route path="/search" element={<Search />} />
+								<Route path="/user-search" element={<UserSearch />} />
 								<Route path="/movie/:imdbID" element={<Movie />} />
 							</Route>
 						</Route>

@@ -22,16 +22,20 @@ const NavbarUserLoggedIn = () => {
 	
 	return (
 		<div className='navbarContainer'>
-			<div className='balanceEmptyDivAvatar' />
+			{/* <div className='balanceEmptyDivAvatar' /> */}
+			<div className='leftLanguagesDropdown' ><LanguagesDropdown /></div>
 			<div className='navbarSections'>
 				<h1 onClick={() => {navigate('/search')}} className='sectionNavbar'>{t('search')}</h1>
-				<h1 className='sectionNavbar'>Trailer</h1>
-				<img onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className='logo' src={hypertubeLogo} alt={'logo'} />
+				<h1 className='sectionNavbar'>{t('users')}</h1>
+				<img onClick={() => {navigate('/')}} className='logo' src={hypertubeLogo} alt={'logo'} />
 				<h1 className='sectionNavbar'>Actors</h1>
 				<h1 className='sectionNavbar'>{t('log_out')}</h1>
 			</div>
 			<img className='avatarUserNavbar' src={avatarImg} alt='userImg' />
-			<BiMenuAltRight onClick={() => dispatch(openSidebar())} className='menuIcon'></BiMenuAltRight>
+			<div className='rightButtonsContainer' >
+				<div className='rightLanguagesDropdown' ><LanguagesDropdown /></div>
+				<BiMenuAltRight onClick={() => dispatch(openSidebar())} className='menuIcon'></BiMenuAltRight>
+			</div>
 		</div>
 	)
 }
@@ -68,3 +72,7 @@ const NavbarUserUnlogged = (props) => {
 }
 
 export { NavbarUserLoggedIn, NavbarUserUnlogged }
+
+// () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+	

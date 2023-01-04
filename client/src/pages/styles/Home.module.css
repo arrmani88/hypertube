@@ -63,6 +63,11 @@
 	max-width: 650px;
 }
 
+.redButton {
+	font-size: 25px;
+	width: 300px;
+}
+
 @media only screen and (max-width: 675px) {
 	.movieTitle {
 		font-size: 30px;

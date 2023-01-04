@@ -148,13 +148,16 @@ const Movie = () => {
 						</h1>
 					</div>
 
-					<iframe
-						src={`https://www.youtube.com/embed/${movie.sourceYts.yt_trailer_code}`}
-						width="1280"
-						height="720"
+					<div className={css.ytbVideoContainer} >
+						<iframe
+							src={`https://www.youtube.com/embed/${movie.sourceYts.yt_trailer_code}`}
+							width="1280"
+							height="720"
+							className={css.ytbVideo}
 						// frameborder="0"
 						// allowfullscreen="allowfullscreen"
-					/>
+						/>
+					</div>
 
 				</div>
 			</div>
