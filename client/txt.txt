@@ -1,3 +1,18 @@
+give me a text like this one where you replace (the translation of users) with (the translation of (search for users)) in the same language as the previous value
+de,
+	"search_for_user": "Benutzer"
+dk,
+	"search_for_user": "Brugere"
+es,
+	"search_for_user": "Usuarios"
+it,
+	"search_for_user": "Utenti"
+no,
+	"search_for_user": "Brukere"
+se,
+	"search_for_user": "Användare"
+
+
 name should takke full width in drawer
 change drawer background color
 
@@ -14,20 +29,6 @@ routes to do:
 • The user must be able to register and connect via Omniauth.
 • Disconnect with 1 click
 • A film research field.
-
-give me a text like this one where you replace the key users with the key hello and as a value the corresponding translation
-de,
-	"users": "Benutzer"
-dk,
-	"users": "Brugere"
-es,
-	"users": "Usuarios"
-it,
-	"users": "Utenti"
-no,
-	"users": "Brukere"
-se,
-	"users": "Användare"
 
 /*******************************************/
 III.2.2 Thumbnails
@@ -46,7 +47,7 @@ III.2.2 Thumbnails
 
 
 [
-	:3000/movie - fach mayl9ach lmovie f Tmdb, i 3awd ijib data gha men yts
+	f :3000/search-users fach makil9a tachi user kay throwi error li khasseha tcatcha awla ki tall3 "Uncaught error"
 ]
 
 
@@ -55,6 +56,9 @@ search ki clignoti
 ytb video responsv
 slider
 scale dial category f 'home' (overflow-x and -y)
+-----------------------------------------------------
+card themebackgrnd to be responsv
+remove profile image from :3000/user
 
 https://yts.torrentbay.to/api/v2/list_movies.json
 

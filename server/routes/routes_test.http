@@ -249,6 +249,19 @@ Authorization: {{token}}
 GET {{hostname}}/send-confirmation-email/{{RCE-username}}
 
 # -------------------------------------------------------------------------
+### --------------------------- SEARCH USERS -------------------------------
+@SU-search = lhos
+GET {{hostname}}/search-users/{{SU-search}}
+Authorization: {{token}}
+
+# -------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 
 

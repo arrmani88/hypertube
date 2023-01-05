@@ -10,7 +10,6 @@ const validateToken = (req, res, next) => {
 		const decodedUser = verify(accessToken, process.env.LOGIN_RANDOM_STRING)
 		if (decodedUser) {
 			req.user = decodedUser
-			console.log(req.user)
 			next()
 		}
 	} catch (err) {

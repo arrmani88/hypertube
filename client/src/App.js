@@ -30,7 +30,7 @@ import PublicRoutes from "./components/redirection/PublicRoutes";
 import OnlyCompletedProfileRoutes from "./components/redirection/OnlyCompletedProfileRoutes";
 import Search from "./pages/Search";
 import Movie from "./pages/Movie";
-import UserSearch from "./pages/UserSearch";
+import SearchUsers from "./pages/SearchUsers";
 
 i18n.use(initReactI18next).use(LanguageDetector).init({ resources: {
 		en: { translation: EnTranslation },
@@ -92,7 +92,7 @@ function App() {
 								<Route path='/upload-image' element={<UploadImage />} />
 								<Route path="/user/:parameterUsername" element={<User />} />
 								<Route path="/search" element={<Search />} />
-								<Route path="/user-search" element={<UserSearch />} />
+								<Route path="/search-users" element={<SearchUsers />} />
 								<Route path="/movie/:imdbID" element={<Movie />} />
 							</Route>
 						</Route>

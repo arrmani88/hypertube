@@ -19,7 +19,7 @@ import { useMutation } from 'react-query'
 const genres = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western"]
 const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
-const filmPerPage = 4
+const filmPerPage = 50
 
 const Search = () => {
 	const dispatch = useDispatch()
@@ -76,7 +76,7 @@ const Search = () => {
 					{/* <DropDownMenu childs={limit} keyName='Film per page' controller={{queryParams, setQueryParams}} className='ml-[10px]' /> */}
 				</div>
 
-				{status === 'success' || status === 'loading' ?
+				{(status === 'success' || status === 'loading') &&
 					<div className={styles.movies}>
 						{pageState?.films?.data.data.movies?.map((movie, index) => (
 							<div className={styles.movie} key={index}>
@@ -97,7 +97,7 @@ const Search = () => {
 								<h1 className={styles.movieTitle} key={`${movie.title}`}>{movie.title.substring(0, 40) + (movie.title.length > 40 ? '...' : '')}</h1>
 								{movie.rating > 0
 									? <div className='flex row' >
-										<img src={imdbLogo} className='h-[22px] mr-[5px]' />
+										<img src={imdbLogo} className='h-[22px] mr-[5px]' alt='imdbLogo' />
 										<h1 className={styles.rating}>{movie.rating}</h1>
 									</div>
 									: <div className='mt-[22px]' />
@@ -110,7 +110,7 @@ const Search = () => {
 								<h1 className={styles.noResultsFound} >No results found...</h1>
 							</div>
 						}
-					</div> : <div />
+					</div>
 				}
 
 				{status === 'loading' ?

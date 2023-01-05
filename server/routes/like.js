@@ -9,7 +9,7 @@ const queryPromise = util.promisify(dbController.query.bind(dbController))
 router.post('/', validateToken, isAccountComplete, async (req, res) => {
 	const { likedID } = req.body
 	try {
-		if (req.user.id == likedID) return res.status(400).send("Are you trying to like your own profile ?, sorry this isn't possible")
+		if (req.user.id == likedID) return res.status(400).send("Are you trying to like your own profile?, sorry this isn't possible")
 		var result = await queryPromise( // to see if the user already liked the profile
 			"SELECT * FROM likes WHERE uid = ? AND likedID = ?",
 			[req.user.id, likedID]
