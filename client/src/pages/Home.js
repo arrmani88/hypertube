@@ -73,7 +73,8 @@ const Home = () => {
 						url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
 						autoPlay={true}
 						muted={true}
-						loop={true}  controls = ''
+						loop={true}
+						controls = ''
 						// volume={0}
 						// config={{ youtube: ytbVariables }}
 						className={styles.video}
