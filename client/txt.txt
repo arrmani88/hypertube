@@ -1,17 +1,6 @@
-give me a text like this one where you replace (the translation of users) with (the translation of (search for users)) in the same language as the previous value
-de,
-	"search_for_user": "Benutzer"
-dk,
-	"search_for_user": "Brugere"
-es,
-	"search_for_user": "Usuarios"
-it,
-	"search_for_user": "Utenti"
-no,
-	"search_for_user": "Brukere"
-se,
-	"search_for_user": "Användare"
+give me an object that contains the string "search_for_users" as key and the translation of (Search for users) in the following languages de dk es it no se as a value, and a comment at the end of the line containing the language code as given
 
+de dk es it no se
 
 name should takke full width in drawer
 change drawer background color
@@ -30,6 +19,7 @@ routes to do:
 • Disconnect with 1 click
 • A film research field.
 
+https://yts.torrentbay.to/api/v2/list_movies.json
 /*******************************************/
 III.2.2 Thumbnails
 	• If a research has been done, the results will show as thumbnails sorted by names.
@@ -56,9 +46,9 @@ search ki clignoti
 ytb video responsv
 slider
 scale dial category f 'home' (overflow-x and -y)
+3lach padding bottom ->>> https://dev.to/bravemaster619/simplest-way-to-embed-a-youtube-video-in-your-react-app-3bk2
 -----------------------------------------------------
 card themebackgrnd to be responsv
-remove profile image from :3000/user
-
-https://yts.torrentbay.to/api/v2/list_movies.json
+remove button to delete the profile image from :3000/user
+when navigating with useNavigate makibanch loading (wark 3la search f navbar w mn be3d wark 3la HPRTB) (https://stackoverflow.com/a/71781553/15368012)
 

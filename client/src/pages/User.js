@@ -50,19 +50,18 @@ const User = () => {
 					lastName: result.data.lastName,
 					username: result.data.username,
 					birthday: result.data.birthday,
-					gender: (result.data.gender === 'M' ? 'male' : 'female'),
-					image: process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (
-						result.data.profileImage
-							? result.data.profileImage
-							: 'blank-profile-image.png'
-					),
+					gender: (result.data.gender === 'F' ? 'female' : 'male'),
+					image: process.env.REACT_APP_SERVER_HOSTNAME + '/images/' + (result.data.profileImage ? result.data.profileImage : 'blank-profile-image.png'),
 					isEditable: user.userData.username === result.data.username ? true : false
 				})
+				console.log('try bloc - end')
+				console.log(result)
 			} catch (error) {
 				if (error.response.status === 404) navigate('/404')
 				console.log(error)
 			} finally {
 				dispatch(hideLoading())
+				console.log('finally bloc - end')
 			}
 		}
 		getPageData()
@@ -137,10 +136,12 @@ const User = () => {
 	}
 
 	return (
-		useSelector(state => state.loading.value) === false
+		useSelector(state => state.loading.value) === false && userInfo.firstName
 			? <CardThemeBackground imgLink={IMGvikings2} >
 				<div className={styles.outsiderContainer} >
 					<div className={styles.container} >
+
+
 						<div className={avatarStyles.changeImageContainer}>
 							{editingMode === true &&
 								<div className={avatarStyles.uploadIconContainer} >
@@ -156,6 +157,8 @@ const User = () => {
 							<img className={avatarStyles.userAvatarImg} src={userInfo.image} alt='userImg' onError={() => { console.log('errrrrrrr') }} />
 						</div>
 						<h1 className={avatarStyles.imageErrorMessage} >{imageErrorMessage}</h1>
+
+
 						{editingMode === false
 							? <div className={styles.userDataContainer} >
 								<h1 className={styles.firstLastName}>{userInfo.firstName + ' ' + userInfo.lastName}</h1>
@@ -221,7 +224,8 @@ const User = () => {
 						}
 					</div>
 
-				</div>			</CardThemeBackground>
+				</div>
+			</CardThemeBackground>
 			: <div />
 	)
 }

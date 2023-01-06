@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CardThemeBackground from '../components/CardThemeBackground'
 import { hideLoading } from '../redux/loadingSlice'
 import IMGwolverine from '../images/wolverine.jpg'
-import stylesDup from './styles/Search.module.scss'
+import stylesDup from './styles/SearchMovies.module.scss'
 import styles from './styles/SearchUsers.module.css'
 import { BsSearch } from 'react-icons/bs'
 import axios from 'axios'
 import ReactLoading from 'react-loading'
-import { RiAddFill } from 'react-icons/ri'
-import RedButton from '../components/RedButton'
+// import { RiAddFill } from 'react-icons/ri'
+// import RedButton from '../components/RedButton'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { selectUser } from '../redux/userSlice'
@@ -26,35 +26,31 @@ const SearchUsers = () => {
 
 	const { data: users, error, status, mutateAsync } = useMutation({
 		mutationFn: async (e) => {
-			e.preventDefault()
-			return (await axios.get(
-				`${process.env.REACT_APP_SERVER_HOSTNAME}/search-users/${searchRef.current.value}`,
-				{ headers: { 'Content-Type': 'application/json', Authorization: user.accessToken } },
-			)).data
+			try {
+				e.preventDefault()
+				return (await axios.get(
+					`${process.env.REACT_APP_SERVER_HOSTNAME}/search-users/${searchRef.current.value}`,
+					{ headers: { 'Content-Type': 'application/json', Authorization: user.accessToken } },
+				)).data
+			} catch (error) {
+				console.log(error)
+				if (error.response?.status === 404) return error
+				throw error
+			}
 		},
-		// useErrorBoundary: true
-		onError: (er) => {
-			console.log('onError onError onError')
-		}
 	})
-
-	console.log('-----------------------------')
-	console.log('statusis=', status)
-	console.log('usersare=', users)
-	console.log('error caught', error)
-	console.log('-----------------------------')
 
 	return (
 		<CardThemeBackground imgLink={IMGwolverine} >
 			<div className={stylesDup.container} >
 				<form className={stylesDup.searchContainer} onSubmit={mutateAsync} >
-					<input ref={searchRef} className={stylesDup.searchField} placeholder={t('search')} />
+					<input ref={searchRef} className={stylesDup.searchField} placeholder={t('search_for_users')} />
 					<button className={stylesDup.searchButton} >
 						<BsSearch />
 					</button>
 				</form>
 
-				{(status === 'success' || status === 'loading') &&
+				{(status === 'success' || status === 'loading') && users?.response?.status !== 404 && 
 					<div className={styles.users} >
 						{users?.map((user, index) => (
 							<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/user/${user.username}`} className={styles.user} key={index} >
@@ -68,7 +64,8 @@ const SearchUsers = () => {
 						))}
 					</div>
 				}
-				{error?.response?.status === 404 &&
+
+				{users?.response?.status === 404 &&
 					<div className='h-full w-full'>
 						<h1 className={stylesDup.oops} >Oops!</h1>
 						<h1 className={stylesDup.noResultsFound} >No results found...</h1>
@@ -78,13 +75,7 @@ const SearchUsers = () => {
 				{status === 'loading' ?
 					<div className='w-full h-full flex items-center justify-center my-[30px]'><ReactLoading type='spin' /></div> : <div />
 				}
-
-				{/*status === 'success' && (pageState && pageState.pageNumber < pageState.lastPage) &&
-					<div className={stylesDup.showMoreFilms} >
-						<RedButton onClick={showMoreFilms} text='show_more' icon={<RiAddFill />} tailwind='w-11/12' />
-					</div>
-				*/}
-
+				
 			</div>
 		</CardThemeBackground>
 

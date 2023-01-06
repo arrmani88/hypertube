@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import CardThemeBackground from '../components/CardThemeBackground'
 import { hideLoading } from '../redux/loadingSlice'
 import IMGpeakyBlinders from '../images/peaky_blinders1.jpeg'
-import styles from './styles/Search.module.scss'
+import styles from './styles/SearchMovies.module.scss'
 import { BsSearch } from 'react-icons/bs'
 import DropDownMenu from '../components/DropDownMenu'
 import axios from 'axios'
@@ -21,7 +21,7 @@ const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
 const filmPerPage = 50
 
-const Search = () => {
+const SearchMovies = () => {
 	const dispatch = useDispatch()
 	const searchRef = useRef(null)
 	const { t } = useTranslation()
@@ -128,7 +128,7 @@ const Search = () => {
 	)
 }
 
-export default Search
+export default SearchMovies
 
 
 //  console.log( `https://yts.mx/api/v2/list_movies.json?limit=${filmPerPage}&page=${pageNumber}` + (searchRef?.current?.value ? `&${new URLSearchParams({ query_term: searchRef.current.value }).toString()}` : ``) + (queryParams['Genre'] ? `&genre=${queryParams['Genre']}` : ``) + (queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) + (queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``) )

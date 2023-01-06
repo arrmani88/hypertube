@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import RedButton from '../components/RedButton'
 import { BsPlayFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
+import YouTube from 'react-youtube'
 
 const requests = {
 	requestPopular: `https://yts.mx/api/v2/list_movies.json?sort_by=like_count&minimum_rating=6`,
@@ -17,8 +18,6 @@ const requests = {
 	// requestNowPlaying: `https://api.themoviedb.org/3/movie/now_playing?api_key=4a3da46412d3067a8577584a5b63fdeb`,
 	// requestUpcoming:  `https://api.themoviedb.org/3/movie/upcoming?api_key=4a3da46412d3067a8577584a5b63fdeb`
 }
-// 1:  https://api.themoviedb.org/3/movie/tt18750342?api_key=4a3da46412d3067a8577584a5b63fdeb
-// 2: `https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`
 
 const Home = () => {
 	const dispatch = useDispatch()
@@ -26,7 +25,6 @@ const Home = () => {
 	const navigate = useNavigate()
 	const [movies, setMovies] = useState({})
 	var headerMovie
-
 
 	useEffect(() => {
 		const getData = async () => {
@@ -52,22 +50,48 @@ const Home = () => {
 		getData()
 	}, []) // eslint-disable-line
 
+	const videoOptions = {
+		// position: 'absolute',
+		height: '2000',
+		width: '100%',
+		objectFit: 'cover',
+		playerVars: {
+			modestbranding: 1, // hide ytb logo
+			autoplay: 1,
+			controls: 0,
+			rel: 0,
+			showinfo: 0,
+			mute: 1,
+			loop: 1
+		}
+	};
+
+	const stl = {
+		position: 'absolute',
+		height: '100vh',
+		width: '100vw',
+		
+	}
+
 	return (
 		movies.isDataLoaded === true ? <>
 			<NavbarUserLoggedIn />
 			<div className={styles.container} >
 
 				<div className={styles.header} >
-					<img className={styles.headerImg} src={movies.headerMovie.backdropImage} alt={'headerImg'} />
-					<div className={styles.headerGradient} />					
-					<div className={styles.headerBottomGradient} />
+					{/* <img className={styles.headerImg} src={movies.headerMovie.backdropImage} alt={'headerImg'} /> */}
+					<div className={styles.videoContainer} >
+						<YouTube style={stl} videoId={movies.headerMovie.yt_trailer_code} opts={videoOptions} />
+					</div>
+					<div className={styles.headerGradient} />
+					{/* <div className={styles.headerBottomGradient} /> */}
 					<div className={styles.headerContent} >
 						<h1 className={styles.movieTitle}>{movies.headerMovie.title}</h1>
 						<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movies.headerMovie?.imdb_code}`} >
 							<RedButton text='play' tailwind={styles.redButton} icon={<BsPlayFill />} />
 						</a>
 						<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
-						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
+						{/* <p className={styles.summary}>{movies.headerMovie?.summary}</p> */}
 					</div>
 				</div>
 				<Category title='popular' movies={movies.popular} />
@@ -80,3 +104,4 @@ const Home = () => {
 
 export default Home
 
+// headerMovie.yt_trailer_code

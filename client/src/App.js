@@ -28,7 +28,7 @@ import PrivateRoutes from "./components/redirection/PrivateRoutes";
 import User from "./pages/User";
 import PublicRoutes from "./components/redirection/PublicRoutes";
 import OnlyCompletedProfileRoutes from "./components/redirection/OnlyCompletedProfileRoutes";
-import Search from "./pages/Search";
+import SearchMovies from "./pages/SearchMovies";
 import Movie from "./pages/Movie";
 import SearchUsers from "./pages/SearchUsers";
 
@@ -91,7 +91,7 @@ function App() {
 								<Route path='/verify-your-account' element={<VerfifyYourAccount />} />
 								<Route path='/upload-image' element={<UploadImage />} />
 								<Route path="/user/:parameterUsername" element={<User />} />
-								<Route path="/search" element={<Search />} />
+								<Route path="/search-movies" element={<SearchMovies />} />
 								<Route path="/search-users" element={<SearchUsers />} />
 								<Route path="/movie/:imdbID" element={<Movie />} />
 							</Route>

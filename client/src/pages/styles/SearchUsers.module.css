@@ -17,6 +17,15 @@
 	border: 2px solid white;
 	margin: 20px;
 	cursor: pointer;
+	scale: 1;
+	transition-duration: 200ms;
+	transition-timing-function: ease-in-out;
+}
+.user:hover {
+	scale: 1.25;
+	z-index: 10;
+	transition-duration: 200ms;
+	transition-timing-function: ease-in-out;
 }
 .userImage {
 	object-fit: cover;
