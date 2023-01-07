@@ -10,6 +10,12 @@ import RedButton from '../components/RedButton'
 import { BsPlayFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import ReactPlayer from 'react-player'
+import IMGhypertube from '../images/hypertube_logo.png'
+import { BiPlay } from 'react-icons/bi'
+
+import GlitchClip from 'react-glitch-effect/core/GlitchClip';
+import GlitchText from 'react-glitch-effect/core/GlitchText';
+
 
 const requests = {
 	requestPopular: `https://yts.mx/api/v2/list_movies.json?sort_by=like_count&minimum_rating=6`,
@@ -53,7 +59,8 @@ const Home = () => {
 	const ytbVariables = {
 		playerVars: {
 			// modestbranding: 1, // hide ytb logo
-			autoplay: 1,
+			// autoplay: 1,
+			playing: 1,
 			controls: 0,
 			rel: 0,
 			showinfo: 0,
@@ -63,39 +70,45 @@ const Home = () => {
 	}
 
 	return (
-		movies.isDataLoaded === true ? <>
-			<NavbarUserLoggedIn />
-			<div className={styles.container} >
-				<div className={styles.header} >
-					{/* <img className={styles.headerImg} src={movies.headerMovie.backdropImage} alt={'headerImg'} /> */}
-
-					<ReactPlayer
-						url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
-						autoPlay={true}
-						muted={true}
-						loop={true}
-						controls = ''
-						// volume={0}
-						// config={{ youtube: ytbVariables }}
-						className={styles.video}
-					/>
-
-					{/* <div className={styles.headerGradient} /> */}
-					{/* <div className={styles.headerBottomGradient} /> */}
-					<div className={styles.headerContent} >
-						<h1 className={styles.movieTitle}>{movies.headerMovie.title}</h1>
-						<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movies.headerMovie?.imdb_code}`} >
-							<RedButton text='play' tailwind={styles.redButton} icon={<BsPlayFill />} />
-						</a>
-						<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
-						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
+		movies.isDataLoaded === true &&
+		<div className={styles.container} >
+			<div className={styles.customNavbar} >
+				<h1>Movies</h1>
+				<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
+				<h1>Log out</h1>
+			</div>
+			<div className={styles.header} >
+				<div className={styles.whiteFrame} />
+				{/* <GlitchClip glitchInterval={100} > */}
+				<ReactPlayer
+					url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
+					playing={true}
+					muted={true}
+					loop={true}
+					config={{ youtube: ytbVariables }}
+					className={styles.video}
+				/>
+				{/* </GlitchClip> */}
+				<div className={styles.headerBlackLayer} />
+				<div className={styles.headerContent} >
+					{/* <GlitchClip className='w-screen' glitchInterval={1} > */}
+						<GlitchText component='h1' className='w-screen' >
+							<h1 className={`${styles.movieTitle} ${styles.scaleOnHover}`}>{movies.headerMovie.title.toUpperCase()}</h1>
+						</GlitchText>
+					{/* </GlitchClip> */}
+					{/* <h1 className={styles.movieTitle}>{movies.headerMovie.title.toUpperCase()}</h1> */}
+					<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
+					<p className={styles.summary}>{movies.headerMovie?.summary}</p>
+					<div className={`flex row items-center ${styles.movieTitle} ${styles.scaleOnHover}`} >
+						<h1>{'PLAY NOW'}</h1>
+						<BiPlay className='scale-125' />
 					</div>
 				</div>
-				<Category title='popular' movies={movies.popular} />
-				<Category title='top_rated' movies={movies.latest} />
-				<Category title='latest' movies={movies.topRated} />
 			</div>
-		</> : <div />
+			<Category title='popular' movies={movies.popular} />
+			<Category title='top_rated' movies={movies.latest} />
+			<Category title='latest' movies={movies.topRated} />
+		</div>
 	)
 }
 

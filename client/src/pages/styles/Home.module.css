@@ -1,18 +1,35 @@
-
+.container {}
 .header {
 	display: flex;
 	position: relative;
 	width: 100%;
-	/* height: 600px; */
 	height: 100vh;
-	max-height: 50%;
 	align-items: center;
 	overflow: hidden;
+	margin-bottom: 60px;
 }
-.headerImg {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+.customNavbar {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    width: calc(100vw - 40px);
+    justify-content: center;
+	z-index: 10;
+	padding-top: 50px;
+	margin: 20px;
+}
+.customNavbar h1 {
+	font-family: 'Microgamma';
+	color: white;
+	font-size: min(calc(100vw / 60), 30px);
+	text-align: center;
+	/* font-weight: 600; */
+	padding: 0 30px 0 30px;
+}
+.hypertubeLogo {
+	width: 30vw;
+	height: auto;
+	max-width: 550px;
 }
 .video iframe {
 	position: absolute;
@@ -21,32 +38,37 @@
 	left: calc((204.4vh - 100vw) / 2 * -1);
 	top: calc((115vh - 100vh) / -2);
 }
-.headerGradient {
+.headerBlackLayer {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(90deg, rgba(0,0,0,0.8884147408963585) 0%, rgba(0,0,0,0.4486388305322129) 83%);
+	background-color: black;
+	opacity: 0.7;
 }
 .headerContent {
+	display: flex;
+	flex-direction: column;
 	position: absolute;
 	align-items: center;
-	flex-direction: row;
+	justify-content: center;
 	height: 60%;
 	margin-left: 30px;
+	padding: 20px;
+	width: calc(100vw - 60px);
 }
-
-.headerBottomGradient {
+.whiteFrame {
 	position: absolute;
-	width: 100%;
-	height: 100%;
-	align-self: flex-end;
-	background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.39821866246498594) 20%, rgba(0,0,0,0) 30%);
-
+	height: 100vh;
+	width: 100vw;
+	border: 20px solid white;
+	z-index: 15;
+	pointer-events: none;
 }
-
 .movieTitle {
+	font-family: 'Microgamma';
 	color: white;
-	font-size: 40px;
+	font-size: calc(100vw / 25);
+	text-align: center;
 	font-weight: 600;
 }
 .playButton {
@@ -64,16 +86,29 @@
 .rating{
 	color: #92a3b8;
 	font-size: 15px;
-	padding: 10px 10px 10px 0;
 }
 .summary{
+	text-align: center;
 	color: #e3e5ea;
 	max-width: 650px;
 }
-
 .redButton {
 	font-size: 25px;
 	width: 300px;
+}
+.categories {
+	display: flex;
+	position: relative;
+	min-width: 100vw;
+}
+.scaleOnHover {
+	transition-duration: 200ms;
+	transition-timing-function: ease-in-out;
+}
+.scaleOnHover:hover {
+	scale: 1.2;
+	transition-duration: 200ms;
+	transition-timing-function: ease-in-out;
 }
 
 @media only screen and (max-width: 675px) {
