@@ -4,8 +4,12 @@ export const loadingSlice = createSlice({
 	name: 'loadingSlice',
 	initialState: { value: true },
 	reducers: {
-		showLoading: (state) => { state.value = true },
-		hideLoading: (state) => { state.value = false }
+		showLoading: (state) => {
+			state.value = true 
+		},
+		hideLoading: (state) => {
+			state.value = false
+		}
 	}
 })
 

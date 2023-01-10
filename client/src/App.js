@@ -71,7 +71,7 @@ function App() {
 	}, [])
 
 	return (
-		<Loading isLoading={isLoading} >
+		<Loading >
 			{user.isLoggedIn !== null && user.isAccountComplete != null // if the user state isn't loading --&&-- we know if the account state (is true or false)
 				&& <>
 					<SideBar />

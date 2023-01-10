@@ -5,7 +5,7 @@ import { selectUser } from '../redux/userSlice'
 import Home from './Home'
 import Landing from './Landing'
 
-const Hypertube = ({isLoggedIn}) => {
+const Hypertube = ({ isLoggedIn }) => {
 	const user = useSelector(selectUser)
 
 	if (user.isAccountComplete === false)

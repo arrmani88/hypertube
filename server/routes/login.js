@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const { isEmail, isUsername, isPassword } = require('../functions/input_validation')
 
 const validateLoginInput = async (req, res, next) => {
+	// console.log('-------------')
 	try {
 		const { login, password } = req.body
 		if (!login || !password) {
@@ -25,6 +26,7 @@ const validateLoginInput = async (req, res, next) => {
 
 router.post('/', validateLoginInput, async (req, res) => {
 	const { login, password } = req.body
+	// console.log(login, password)
 	dbController.query(
 		"SELECT * FROM users WHERE username = ? OR email = ?",
 		[login, login],

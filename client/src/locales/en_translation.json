@@ -68,6 +68,8 @@
 	"downloads": "Downloads",
     "unknown": "Unknown",
     "show_less": "Show less",
-    "trailer": "Trailer"
+    "trailer": "Trailer",
+	"search_for_users": "Users search",
+	"movies_search": "Movies search"
 
 }

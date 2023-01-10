@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './styles/Home.module.css'
 import { NavbarUserLoggedIn } from '../components/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,11 +12,23 @@ import { useNavigate } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import IMGhypertube from '../images/hypertube_logo.png'
 import { BiPlay } from 'react-icons/bi'
-
+import { BsFullscreen, BsFullscreenExit } from 'react-icons/bs'
+import { AiOutlineMenu } from 'react-icons/ai'
+import { GrClose } from 'react-icons/gr'
+import { US, DE, DK, ES, IT, NO, SE } from 'country-flag-icons/react/3x2'
+import i18n from 'i18next'
+import { BsSearch } from 'react-icons/bs'
+import { IoCloseSharp } from 'react-icons/io5'
 import GlitchClip from 'react-glitch-effect/core/GlitchClip';
 import GlitchText from 'react-glitch-effect/core/GlitchText';
 
 
+const ytbVariables = {
+	playerVars: {
+		// modestbranding: 1, // hide ytb logo// autoplay: 1,
+		playing: 1, controls: 0, rel: 0, showinfo: 0, mute: 1, loop: 1
+	}
+}
 const requests = {
 	requestPopular: `https://yts.mx/api/v2/list_movies.json?sort_by=like_count&minimum_rating=6`,
 	requestLatest: `https://yts.mx/api/v2/list_movies.json?sort_by=date_added&minimum_rating=6`,
@@ -24,12 +36,24 @@ const requests = {
 	// requestNowPlaying: `https://api.themoviedb.org/3/movie/now_playing?api_key=4a3da46412d3067a8577584a5b63fdeb`,
 	// requestUpcoming:  `https://api.themoviedb.org/3/movie/upcoming?api_key=4a3da46412d3067a8577584a5b63fdeb`
 }
+const languages = [
+	{ code: 'en', component: <US className={styles.flag} /> },
+	{ code: 'de', component: <DE className={styles.flag} /> },
+	{ code: 'dk', component: <DK className={styles.flag} /> },
+	{ code: 'es', component: <ES className={styles.flag} /> },
+	{ code: 'it', component: <IT className={styles.flag} /> },
+	{ code: 'no', component: <NO className={styles.flag} /> },
+	{ code: 'se', component: <SE className={styles.flag} /> },
+]
 const Home = () => {
 	const dispatch = useDispatch()
 	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const [movies, setMovies] = useState({})
+	const [menuState, setMenuState] = useState(false)
 	var headerMovie
+	const [fullScreenState, setFullScreenState] = useState(false)
+	const exitMenuRef = useRef([])
 
 	useEffect(() => {
 		const getData = async () => {
@@ -46,7 +70,7 @@ const Home = () => {
 					axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
 					axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
 				])
-				dispatch(hideLoading())
+				setTimeout(() => { dispatch(hideLoading()) }, 7000)
 			} catch (error) {
 				console.log(error)
 			} finally {
@@ -55,31 +79,73 @@ const Home = () => {
 		}
 		getData()
 	}, []) // eslint-disable-line
-
-	const ytbVariables = {
-		playerVars: {
-			// modestbranding: 1, // hide ytb logo
-			// autoplay: 1,
-			playing: 1,
-			controls: 0,
-			rel: 0,
-			showinfo: 0,
-			mute: 1,
-			loop: 1
+	// useEffect(() => {
+	// 	const onFullScreenChange = () => {
+	// 		console.log('state set to= ', Boolean(document.fullscreenElement))
+	// 		setFullScreenState(document[getFullScreenProp()] != null)
+	// 	}
+	// 	document.addEventListener('fullscreenchange', onFullScreenChange)
+	// 	return () => document.removeEventListener('fullscreenchange', onFullScreenChange)
+	// }, [])
+	// .
+	// function getFullScreenProp() { // gives the prop name for each browser
+	// 	if (typeof document.fullscreenElement !== "undefined") {
+	// 		return "fullscreenElement";
+	// 	} else if (typeof document.mozFullScreenElement !== "undefined") {
+	// 		return "mozFullScreenElement";
+	// 	} else if (typeof document.msFullscreenElement !== "undefined") {
+	// 		return "msFullscreenElement";
+	// 	} else if (typeof document.webkitFullscreenElement !== "undefined") {
+	// 		return "webkitFullscreenElement";
+	// 	} else {
+	// 		throw new Error("fullscreenElement is not supported by this browser");
+	// 	}
+	// }
+	const fullScreenMode = (modeState) => {
+		if (modeState === true) {
+			document.body.requestFullscreen()
+			setFullScreenState(true)
+		} else {
+			document.exitFullscreen();
+			setFullScreenState(false)
 		}
 	}
+
+	useEffect(() => {
+		var clickInside
+		const handleClick = (e) => {
+			clickInside = false
+			if (exitMenuRef.current) {
+				exitMenuRef.current.forEach((elem, idx) => {
+					if (elem?.contains(e.target)) clickInside = true
+				})
+				if (!clickInside) setMenuState(false)
+			}
+		}
+		document.addEventListener('mousedown', handleClick)
+		return () => document.removeEventListener('mousedown', handleClick)
+	})
 
 	return (
 		movies.isDataLoaded === true &&
 		<div className={styles.container} >
-			<div className={styles.customNavbar} >
-				<h1>Movies</h1>
-				<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
-				<h1>Log out</h1>
+			<div className={styles.customNavbarContainer} >
+				{fullScreenState
+					? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} />
+					: <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />
+				}
+				<div className={styles.customNavbarMiddleButtons} >
+					<h1>Movies</h1>
+					<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
+					<h1>Log out</h1>
+				</div>
+				{menuState
+					? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} />
+					: <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />
+				}
 			</div>
 			<div className={styles.header} >
 				<div className={styles.whiteFrame} />
-				{/* <GlitchClip glitchInterval={100} > */}
 				<ReactPlayer
 					url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
 					playing={true}
@@ -87,19 +153,23 @@ const Home = () => {
 					loop={true}
 					config={{ youtube: ytbVariables }}
 					className={styles.video}
+					onStart={() => { dispatch(hideLoading()) }}
 				/>
-				{/* </GlitchClip> */}
 				<div className={styles.headerBlackLayer} />
 				<div className={styles.headerContent} >
-					{/* <GlitchClip className='w-screen' glitchInterval={1} > */}
-						<GlitchText component='h1' className='w-screen' >
-							<h1 className={`${styles.movieTitle} ${styles.scaleOnHover}`}>{movies.headerMovie.title.toUpperCase()}</h1>
+					<GlitchClip className={`${styles.glitchClip} ${styles.scaleMovieTitleOnHover} `} duration={2000} >
+						<GlitchText
+							component='h1'
+							className={styles.movieTitle}
+						>
+							{movies.headerMovie.title.toUpperCase()}
 						</GlitchText>
-					{/* </GlitchClip> */}
-					{/* <h1 className={styles.movieTitle}>{movies.headerMovie.title.toUpperCase()}</h1> */}
+					</GlitchClip>
+					<div className='mt-[40px]' />
 					<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
 					<p className={styles.summary}>{movies.headerMovie?.summary}</p>
-					<div className={`flex row items-center ${styles.movieTitle} ${styles.scaleOnHover}`} >
+					<div className='mt-[15px]' />
+					<div className={`flex row items-center text-[105px] ${styles.playNow} ${styles.scaleOnHover} `} >
 						<h1>{'PLAY NOW'}</h1>
 						<BiPlay className='scale-125' />
 					</div>
@@ -108,6 +178,32 @@ const Home = () => {
 			<Category title='popular' movies={movies.popular} />
 			<Category title='top_rated' movies={movies.latest} />
 			<Category title='latest' movies={movies.topRated} />
+			{menuState &&
+				<div className={styles.menu} >
+					<h1 ref={elem => exitMenuRef.current[0] = elem} className={styles.menuTitle}>LANGUAGES</h1>
+					<div ref={elem => exitMenuRef.current[1] = elem} className={styles.flagsContainer} >
+						{languages.map((flag, i) => (
+
+							<div className={i18n.language === flag.code ? styles.selectedLang : ''} onClick={() => i18n.changeLanguage(flag.code)} key={i} >
+								{flag.component}
+							</div>
+
+						))}
+					</div>
+					<div className='mt-[60px]' />
+					<h1 ref={elem => exitMenuRef.current[2] = elem} className={styles.menuTitle}>{t('movies_search').toUpperCase()}</h1>
+					<div ref={elem => exitMenuRef.current[3] = elem} className='flex items-center justify-end'>
+						<input className={styles.searchInput} placeholder='Search for a movie...' />
+						<BsSearch className={styles.searchIcon} />
+					</div>
+					<div className='mt-[60px]' />
+					<h1 ref={elem => exitMenuRef.current[4] = elem} className={styles.menuTitle}>{t('search_for_users').toUpperCase()}</h1>
+					<div ref={elem => exitMenuRef.current[5] = elem} className='flex items-center justify-end'>
+						<input className={styles.searchInput} placeholder='Search for a user...' />
+						<BsSearch className={styles.searchIcon} />
+					</div>
+				</div>
+			}
 		</div>
 	)
 }
