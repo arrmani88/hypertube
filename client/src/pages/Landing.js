@@ -33,7 +33,7 @@ const Landing = () => {
 		}
 	}
 	
-	useEffect(() => { dispatch(hideLoading()) }, []) // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => { setTimeout(() => dispatch(hideLoading()), 0) }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (<>
 		<CardThemeBackground imgLink={IMGmovies} loginButtonShown={true}>

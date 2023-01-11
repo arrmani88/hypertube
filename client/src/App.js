@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import SideBar from "./components/Sidebar";
 import Register from "./pages/Register";
 import i18n from "i18next";
@@ -21,7 +21,7 @@ import Hypertube from "./pages/Hypertube";
 import SendResetPasswordEmail from "./pages/SendResetPasswordEmail";
 import { useDispatch, useSelector } from "react-redux";
 import ResetPassword from "./pages/ResetPassword";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import getUserIfLoggedIn from "./functions/getUserIfLoggedIn";
 import { setUserLoggedIn, selectUser, setUserLoggedOut, setProfileStatus } from "./redux/userSlice";
 import PrivateRoutes from "./components/redirection/PrivateRoutes";
@@ -31,8 +31,10 @@ import OnlyCompletedProfileRoutes from "./components/redirection/OnlyCompletedPr
 import SearchMovies from "./pages/SearchMovies";
 import Movie from "./pages/Movie";
 import SearchUsers from "./pages/SearchUsers";
+import { showLoading } from "./redux/loadingSlice";
 
-i18n.use(initReactI18next).use(LanguageDetector).init({ resources: {
+i18n.use(initReactI18next).use(LanguageDetector).init({
+	resources: {
 		en: { translation: EnTranslation },
 		de: { translation: DeTranslation },
 		dk: { translation: DkTranslation },
@@ -44,31 +46,31 @@ i18n.use(initReactI18next).use(LanguageDetector).init({ resources: {
 });
 
 function App() {
-	const isLoading = useSelector((state) => state.loading.value)
 	const user = useSelector(selectUser)
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const checkIfUserLoggedIn = async () => {
 			try {
 				const result = await getUserIfLoggedIn()
-				JSON.stringify(result) === JSON.stringify({})
-					? dispatch(setUserLoggedOut())
-					: dispatch(setUserLoggedIn(result))
+				JSON.stringify(result) === JSON.stringify({}) ? dispatch(setUserLoggedOut()) : dispatch(setUserLoggedIn(result))
 				dispatch(setProfileStatus({ isAccountComplete: true }))
 			} catch (error) {
 				if (error.response?.data?.exception === 'unconfirmed email address') {
 					dispatch(setUserLoggedOut())
-					dispatch(setProfileStatus({
-						isAccountComplete: false,
-						username: error.response?.data?.username
-					}))
+					dispatch(setProfileStatus({ isAccountComplete: false, username: error.response?.data?.username }))
 				}
+				else console.log(error)
 			}
 		}
 		checkIfUserLoggedIn()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
+	useEffect(() => {
+		dispatch(showLoading())
+	}, [navigate]);
 
 	return (
 		<Loading >

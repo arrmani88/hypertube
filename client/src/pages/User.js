@@ -60,7 +60,7 @@ const User = () => {
 				if (error.response.status === 404) navigate('/404')
 				console.log(error)
 			} finally {
-				dispatch(hideLoading())
+				setTimeout(() => dispatch(hideLoading()), 0)
 				console.log('finally bloc - end')
 			}
 		}

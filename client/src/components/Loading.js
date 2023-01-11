@@ -16,7 +16,9 @@ const Loading = (props) => {
 					</div>
 				</div>
 			}
-			{props.children}
+			<div className={isLoading === true ? 'hidden': ''} >
+				{props.children}
+			</div>
 		</div>
 	)
 

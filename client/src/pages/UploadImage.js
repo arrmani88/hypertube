@@ -68,7 +68,7 @@ const UploadImage = () => {
 	}
 
 	useEffect(() => {
-		dispatch(hideLoading())
+		setTimeout(() => dispatch(hideLoading()), 0)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 

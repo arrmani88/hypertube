@@ -58,7 +58,7 @@ const Login = () => {
 	useEffect(() => {
 		if (user.isLoggedIn !== null) { // if the state isn't currently loading (will be true or false after loading)
 			if (user.isLoggedIn === false) // no user is logged in
-				dispatch(hideLoading())
+				setTimeout(() => dispatch(hideLoading()), 0)
 			else if (user.isLoggedIn === true) // user is logged in
 				navigate('/')
 		}

@@ -89,6 +89,7 @@
 	z-index: 5;
 	transition-duration: 130ms;
     transition-timing-function: ease-in-out;
+	cursor: pointer;
 }
 .movieGenre{
 	color: white;
@@ -118,7 +119,7 @@
 	justify-content: center;
 	background: red;
 	color: white;
-	cursor: pointer;
+	// cursor: pointer;
 	font-size: 20px;
 	width: 80%;
 	height: 40px;

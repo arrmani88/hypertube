@@ -25,8 +25,8 @@ const NavbarUserLoggedIn = () => {
 			{/* <div className='balanceEmptyDivAvatar' /> */}
 			<div className='leftLanguagesDropdown' ><LanguagesDropdown /></div>
 			<div className='navbarSections'>
-				<h1 onClick={() => {navigate('/search')}} className='sectionNavbar'>{t('search')}</h1>
-				<h1 className='sectionNavbar'>{t('users')}</h1>
+				<h1 onClick={() => {navigate('/search-movies')}} className='sectionNavbar'>{t('search')}</h1>
+				<h1 onClick={() => {navigate('/search-users')}} className='sectionNavbar'>{t('users')}</h1>
 				<img onClick={() => {navigate('/')}} className='logo' src={hypertubeLogo} alt={'logo'} />
 				<h1 className='sectionNavbar'>Actors</h1>
 				<h1 className='sectionNavbar'>{t('log_out')}</h1>

@@ -41,12 +41,11 @@ III.2.2 Thumbnails
 ]
 
 
-http://localhost:3000/movie/tt9764362
 search ki clignoti
 ytb video responsv
 slider
 scale dial category f 'home' (overflow-x and -y)
-3lach padding bottom ->>> https://dev.to/bravemaster619/simplest-way-to-embed-a-youtube-video-in-your-react-app-3bk2
+fullscreen
 -----------------------------------------------------
 card themebackgrnd to be responsv
 remove button to delete the profile image from :3000/user

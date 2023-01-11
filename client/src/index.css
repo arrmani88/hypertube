@@ -20,3 +20,10 @@ body {
 	 url("./fonts/Microgramma/Microgramma-Bold.ttf") format("truetype");
 	font-weight: bold;
 }
+
+@font-face {
+	font-family: "Vcr-osd";
+	src: local("Vcr-osd"),
+	 url("./fonts/Vcr-osd/VCR_OSD_MONO_1.001.ttf") format("truetype");
+	font-weight: normal;
+}

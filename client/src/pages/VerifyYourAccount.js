@@ -27,7 +27,7 @@ const VerfifyYourAccount = () => {
 		console.log(user.isAccountComplete)
 		if (!(user.userData.username)) navigate('*')
 		else if (user.isAccountComplete === true) navigate('/')
-		dispatch(hideLoading())
+		setTimeout(() => dispatch(hideLoading()), 0)
 	}, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	const resendEmail = async () => {

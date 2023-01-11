@@ -16,10 +16,10 @@
 .customNavbarContainer {
 	display: flex;
 	width: calc(100vw - 40px);
-	z-index: 10;
 	padding-top: 50px;
 	margin: 20px;
 	position: absolute;
+	top: 0;
 	justify-content: space-around;
 	align-items: center;
 }
@@ -32,16 +32,16 @@
 .customNavbarMiddleButtons h1 {
 	font-family: 'Microgamma';
 	color: white;
-	font-size: min(calc(100vw / 60), 30px);
+	font-size: min(calc(100vw / 65), 30px);
 	text-align: center;
 	/* font-weight: 600; */
 	padding: 0 30px 0 30px;
 	cursor: pointer;
 }
 .hypertubeLogo {
-	width: 30vw;
+	width: 20vw;
 	height: auto;
-	max-width: 550px;
+	max-width: 400px;
 }
 .video iframe {
 	position: absolute;
@@ -55,14 +55,14 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	opacity: 0.7;
+	opacity: 0.8;
 }
 .headerContent {
 	display: flex;
 	flex-direction: column;
-	position: absolute;
 	align-items: center;
 	justify-content: center;
+	position: absolute;
 	height: 60%;
 	margin-left: 30px;
 	padding: 20px;
@@ -73,7 +73,6 @@
 	height: 100vh;
 	width: 100vw;
 	border: 20px solid white;
-	z-index: 15;
 	pointer-events: none;
 }
 .glitchClip {
@@ -109,6 +108,21 @@
 	border-width: 1px;
 	margin-right: 8px;
 	cursor: pointer;
+}
+.bottomTimeCounterContainer {
+	display: flex;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 50px;
+	width: 100%;
+	padding: 0 70px 0 70px;
+
+}
+.vhsFont {
+	/* position: absolute; */
+	font-family: "Vcr-osd";
+	color: white;
+	font-size: 40px;
 }
 .rating{
 	color: #92a3b8;

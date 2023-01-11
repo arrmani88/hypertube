@@ -45,7 +45,7 @@ const Movie = () => {
 	})
 
 	useEffect(() => {
-		if (status === 'success') dispatch(hideLoading())
+		if (status === 'success') setTimeout(() => dispatch(hideLoading()), 0)
 	}, [status])
 
 	const getDataSource = (dataName) => {
@@ -147,15 +147,14 @@ const Movie = () => {
 							}
 						</h1>
 					</div>
-
+					<div className='mt-[50px]' />
+					<h1 className={css.movieTitle}>Trailer:</h1>
 					<div className={css.ytbVideoContainer} >
 						<iframe
 							src={`https://www.youtube.com/embed/${movie.sourceYts.yt_trailer_code}`}
 							width="1280"
 							height="720"
 							className={css.ytbVideo}
-						// frameborder="0"
-						// allowfullscreen="allowfullscreen"
 						/>
 					</div>
 
@@ -185,7 +184,7 @@ export default Movie
 // 		} catch (error) {
 // 			console.log(error)
 // 		} finally {
-// 			dispatch(hideLoading())
+// 			setTimeout(() => dispatch(hideLoading()), 0)
 // 		}
 // 	}
 // 	fetchData()

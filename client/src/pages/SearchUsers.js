@@ -22,7 +22,7 @@ const SearchUsers = () => {
 	const user = useSelector(selectUser)
 
 	// eslint-disable-next-line
-	useEffect(() => { dispatch(hideLoading()) }, [])
+	useEffect(() => { setTimeout(() => dispatch(hideLoading()), 0) }, [])
 
 	const { data: users, error, status, mutateAsync } = useMutation({
 		mutationFn: async (e) => {

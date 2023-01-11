@@ -27,7 +27,7 @@ const AccountVerified = () => {
 				const result = await getUserIfLoggedIn()
 				dispatch(setUserLoggedIn(result))
 				dispatch(setProfileStatus({ isAccountComplete: true }))
-				dispatch(hideLoading())
+				setTimeout(() => dispatch(hideLoading()), 0)
 			} catch (err) {
 				console.log(err)
 				err.response.status === 400 && navigate('/not-found')

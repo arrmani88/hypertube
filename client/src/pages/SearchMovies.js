@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import emptyMovieImage from '../images/empty_movie_image.jpeg'
 import imdbLogo from '../images/imdb_logo.png'
 import { useMutation } from 'react-query'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 const genres = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western"]
 const qualities = ['720p', '1080p', '2160p', '3D']
@@ -22,6 +23,8 @@ const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', '
 const filmPerPage = 50
 
 const SearchMovies = () => {
+	const [searchParams, setSearchParams] = useSearchParams()
+	var searchKey = searchParams.get('search-key')
 	const dispatch = useDispatch()
 	const searchRef = useRef(null)
 	const { t } = useTranslation()
@@ -42,9 +45,10 @@ const SearchMovies = () => {
 		mutationFn: async (param) => {
 			let pageNumber = pageState?.pageNumber ? pageState.pageNumber +1 : 1
 			!param.doAppendResult && (pageNumber = 1)
+			console.log('searchParams=', searchParams.get('search-key'))
 			const resultFilms = await axios.get(
 				`https://yts.mx/api/v2/list_movies.json?limit=${filmPerPage}&page=${pageNumber}` +
-				(searchRef?.current?.value ? `&${new URLSearchParams({ query_term: searchRef.current.value }).toString()}` : ``) +
+				(searchRef?.current?.value ? `&${new URLSearchParams({ query_term: searchRef.current.value }).toString()}` : (searchKey ? `&${new URLSearchParams({ query_term: searchKey }).toString()}` : ``)) +
 				(queryParams['Genre'] ? `&genre=${queryParams['Genre']}` : ``) +
 				(queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) +
 				(queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``)
@@ -55,10 +59,15 @@ const SearchMovies = () => {
 	})
 
 	// eslint-disable-next-line
-	useEffect(() => { dispatch(hideLoading()) }, [])
+	useEffect(() => {
+		const initPage = async () => {
+			await mutateAsync({ doAppendResult: false })
+			setTimeout(() => dispatch(hideLoading()), 0)
+		}
+		initPage()
+	}, [])
 
-	if (error)
-		console.log(error)
+	if (error) console.log(error)
 	return (
 		<CardThemeBackground imgLink={IMGpeakyBlinders} >
 			<div className={styles.container} >
@@ -75,24 +84,23 @@ const SearchMovies = () => {
 					<DropDownMenu childs={sortBy} keyName='Sort by' controller={{ queryParams, setQueryParams }} className='ml-[10px] my-[5px]' />
 					{/* <DropDownMenu childs={limit} keyName='Film per page' controller={{queryParams, setQueryParams}} className='ml-[10px]' /> */}
 				</div>
-
 				{(status === 'success' || status === 'loading') &&
 					<div className={styles.movies}>
 						{pageState?.films?.data.data.movies?.map((movie, index) => (
 							<div className={styles.movie} key={index}>
 								<div className={styles.thumbnail} >
 									<img className={styles.movieImage} src={movie.medium_cover_image} onError={(err) => { err.target.src = emptyMovieImage }} alt={movie.title} />
-									<div className={styles.movieDetails}>
+									<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movie.imdb_code}`} className={styles.movieDetails}>
 										<h1 className={styles.movieYear} >{movie.year}</h1>
 										{movie.genres.map(genre => (
 											<h1 className={styles.movieGenre} key={genre}>{genre}</h1>
 										))}
 										<div className='mt-[10px]' />
-										<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movie.imdb_code}`} className={styles.playNow} >
+										<div className={styles.playNow} >
 											<h1>{t('play')}</h1>
-											<BsPlayFill className='mt-[3px] text-2xl' />
-										</a>
-									</div>
+											<BsPlayFill className='mt-[3px] text-2xl'/>
+										</div>
+									</a>
 								</div>
 								<h1 className={styles.movieTitle} key={`${movie.title}`}>{movie.title.substring(0, 40) + (movie.title.length > 40 ? '...' : '')}</h1>
 								{movie.rating > 0
@@ -112,47 +120,17 @@ const SearchMovies = () => {
 						}
 					</div>
 				}
-
 				{status === 'loading' ?
 					<div className='w-full h-full flex items-center justify-center my-[30px]'><ReactLoading type='spin' /></div> : <div />
 				}
-
 				{status === 'success' && ( pageState && pageState.pageNumber < pageState.lastPage) &&
 					<div className={styles.showMoreFilms} >
 						<RedButton onClick={showMoreFilms} text='show_more' icon={<RiAddFill />} tailwind='w-11/12' />
 					</div>
 				}
-
 			</div>
 		</CardThemeBackground>
 	)
 }
 
 export default SearchMovies
-
-
-//  console.log( `https://yts.mx/api/v2/list_movies.json?limit=${filmPerPage}&page=${pageNumber}` + (searchRef?.current?.value ? `&${new URLSearchParams({ query_term: searchRef.current.value }).toString()}` : ``) + (queryParams['Genre'] ? `&genre=${queryParams['Genre']}` : ``) + (queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) + (queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``) )
-
-	// const fetchFilms = async ({ doAppendResult }) => {
-	// 	try {
-	// 		// setPageState(prevState => ({ ...prevState, isPageLoading: true }))
-	// 		setQueryParams(prevState => ({ ...prevState, page: prevState.page + 1 }))
-	// 		const resultFilms = await axios.get(
-	// 			`https://yts.mx/api/v2/list_movies.json` +
-	// 			`?limit=40&page=${queryParams.page + 1}` +
-	// 			(searchRef.current.value ? `&${new URLSearchParams({ query_term: searchRef.current.value }).toString()}` : ``) +
-	// 			(queryParams['Genre'] ? `&genre=${queryParams['Genre']}` : ``) +
-	// 			(queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) +
-	// 			(queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``)
-	// 		)
-	// 		console.log(resultFilms)
-	// 		doAppendResult === true && (resultFilms.data.data.movies = [].concat(pageState.films.data.data.movies, resultFilms.data.data.movies))
-	// 		setPageState(prevState => ({ ...prevState, films: resultFilms, lastPage: (resultFilms.data.data.movie_count / 40).toFixed() }))
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	} finally {
-	// 		setPageState(prevState => ({ ...prevState, isPageLoading: false }))
-	// 	}
-	// }
-	// ----------------------------------------------------------------------------------------------------------------------------------------------------------	
-	
