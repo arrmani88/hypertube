@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './styles/Home.module.css'
-import { NavbarUserLoggedIn } from '../components/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
 import axios from 'axios'
 import Category from '../components/Category'
 import { useTranslation } from 'react-i18next'
-import RedButton from '../components/RedButton'
 import { BsPlayFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import ReactPlayer from 'react-player'
@@ -14,14 +12,12 @@ import IMGhypertube from '../images/hypertube_logo.png'
 import { BiPlay } from 'react-icons/bi'
 import { BsFullscreen, BsFullscreenExit } from 'react-icons/bs'
 import { AiOutlineMenu } from 'react-icons/ai'
-import { GrClose } from 'react-icons/gr'
 import { US, DE, DK, ES, IT, NO, SE } from 'country-flag-icons/react/3x2'
 import i18n from 'i18next'
 import { BsSearch } from 'react-icons/bs'
 import { IoCloseSharp } from 'react-icons/io5'
 import GlitchClip from 'react-glitch-effect/core/GlitchClip';
 import GlitchText from 'react-glitch-effect/core/GlitchText';
-
 
 const ytbVariables = {
 	playerVars: {
@@ -140,24 +136,36 @@ const Home = () => {
 		}
 	}, [isLoading])
 
-	const searchUsers = async () => {
-
-	}
+	// useEffect(() => {
+	// 	console.log('widow.scrollY', window.scrollY)
+	// })
 
 	return (
 		movies.isDataLoaded === true &&
 		<div className={styles.container} >
-			<div className={styles.header} >
-				<ReactPlayer
-					url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
-					playing={true}
-					muted={true}
-					loop={true}
-					config={{ youtube: ytbVariables }}
-					className={styles.video}
-					onStart={() => { setTimeout(() => dispatch(hideLoading()), 0) }}
-				/>
-				<div className={styles.headerBlackLayer} />
+			<div>
+
+				<div className='absolute w-full' >
+					<Category title='popular' movies={movies.popular} />
+					<Category title='top_rated' movies={movies.latest} />
+					<Category title='latest' movies={movies.topRated} />
+					<Category title='latest' movies={movies.topRated} />
+					<Category title='latest' movies={movies.topRated} />
+					<div className='mt-[50px]' />
+				</div>
+
+
+				<div className={styles.header} >
+					<ReactPlayer
+						url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
+						playing={true}
+						muted={true}
+						loop={true}
+						config={{ youtube: ytbVariables }}
+						className={styles.video}
+						onStart={() => { setTimeout(() => dispatch(hideLoading()), 0) }}
+					/>
+					<div className={styles.headerBlackLayer} />
 					<div className={styles.headerContent} >
 						<GlitchClip className={`${styles.glitchClip} ${styles.scaleMovieTitleOnHover} `} duration={2000} >
 							<GlitchText component='h1' className={styles.movieTitle}>
@@ -175,8 +183,6 @@ const Home = () => {
 							</div>
 						</a>
 					</div>
-	
-	
 					<div className={styles.bottomTimeCounterContainer}>
 						<GlitchText component='h1' className={styles.vhsFont}>
 							{(Math.floor(timeCounter / 1000 / 60 / 60 % 24)).toString().padStart(2, '0')}
@@ -189,12 +195,14 @@ const Home = () => {
 							PLAY_VHS_MODE_RUNNING
 						</GlitchText>
 					</div>
+					<div className={styles.whiteFrame} />
+				</div>
 
-				<div className={styles.whiteFrame} />
+
+
 			</div>
-			<Category title='popular' movies={movies.popular} />
-			<Category title='top_rated' movies={movies.latest} />
-			<Category title='latest' movies={movies.topRated} />
+
+			{/* ------------------------ MENU ------------------------ */}
 			{menuState &&
 				<div className={styles.menu} >
 					<h1 ref={elem => exitMenuRef.current[0] = elem} className={styles.menuTitle}>LANGUAGES</h1>
@@ -210,16 +218,16 @@ const Home = () => {
 
 
 
-					<form  ref={elem => exitMenuRef.current[3] = elem} onSubmit={() => {navigate(`/search-movies?search-key=${searchRef.current[0].value}`)}} className='flex items-center justify-end'>
+					<form ref={elem => exitMenuRef.current[3] = elem} onSubmit={() => { navigate(`/search-movies?search-key=${searchRef.current[0].value}`) }} className='flex items-center justify-end'>
 						<input ref={elem => searchRef.current[0] = elem} className={styles.searchInput} placeholder='Search for a movie...' />
 						<BsSearch type='submit' className={styles.searchIcon} />
 					</form>
 
 					<div className='mt-[60px]' />
-					
 					<h1 ref={elem => exitMenuRef.current[4] = elem} className={styles.menuTitle}>{t('search_for_users').toUpperCase()}</h1>
-					<form onSubmit={() => {}} ref={elem => exitMenuRef.current[5] = elem} className='flex items-center justify-end'>
-						<input ref={elem => searchRef.current[1]} className={styles.searchInput} placeholder='Search for a user...' />
+
+					<form onSubmit={() => { navigate(`/search-users?search-key=${searchRef.current[1].value}`) }} ref={elem => exitMenuRef.current[5] = elem} className='flex items-center justify-end'>
+						<input ref={elem => searchRef.current[1] = elem} className={styles.searchInput} placeholder='Search for a user...' />
 						<BsSearch type='submit' className={styles.searchIcon} />
 					</form>
 
@@ -231,6 +239,7 @@ const Home = () => {
 					<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('log_out').toUpperCase()}</h1>
 				</div>
 			}
+			{/* ------------------------ NAVBAR ------------------------ */}
 			<div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
 				<div className={styles.customNavbarMiddleButtons} >
 					<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/search-movies`}>
@@ -241,7 +250,7 @@ const Home = () => {
 				</div>
 				{menuState ? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} /> : <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />}
 			</div>
-			<div className='mt-[50px]' />
+
 		</div>
 	)
 }
@@ -249,3 +258,54 @@ const Home = () => {
 export default Home
 
 // vhs effect
+
+
+			// {/* ------------------------ MENU ------------------------ */}
+			// {menuState &&
+			// 	<div className={styles.menu} >
+			// 		<h1 ref={elem => exitMenuRef.current[0] = elem} className={styles.menuTitle}>LANGUAGES</h1>
+			// 		<div ref={elem => exitMenuRef.current[1] = elem} className={styles.flagsContainer} >
+			// 			{languages.map((flag, i) => (
+			// 				<div className={i18n.language === flag.code ? styles.selectedLang : ''} onClick={() => i18n.changeLanguage(flag.code)} key={i} >
+			// 					{flag.component}
+			// 				</div>
+			// 			))}
+			// 		</div>
+			// 		<div className='mt-[60px]' />
+			// 		<h1 ref={elem => exitMenuRef.current[2] = elem} className={styles.menuTitle}>{t('movies_search').toUpperCase()}</h1>
+
+
+
+			// 		<form ref={elem => exitMenuRef.current[3] = elem} onSubmit={() => { navigate(`/search-movies?search-key=${searchRef.current[0].value}`) }} className='flex items-center justify-end'>
+			// 			<input ref={elem => searchRef.current[0] = elem} className={styles.searchInput} placeholder='Search for a movie...' />
+			// 			<BsSearch type='submit' className={styles.searchIcon} />
+			// 		</form>
+
+			// 		<div className='mt-[60px]' />
+			// 		<h1 ref={elem => exitMenuRef.current[4] = elem} className={styles.menuTitle}>{t('search_for_users').toUpperCase()}</h1>
+
+			// 		<form onSubmit={() => { navigate(`/search-users?search-key=${searchRef.current[1].value}`) }} ref={elem => exitMenuRef.current[5] = elem} className='flex items-center justify-end'>
+			// 			<input ref={elem => searchRef.current[1] = elem} className={styles.searchInput} placeholder='Search for a user...' />
+			// 			<BsSearch type='submit' className={styles.searchIcon} />
+			// 		</form>
+
+
+
+			// 		<div className='mt-[60px]' />
+			// 		<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('My profile').toUpperCase()}</h1>
+			// 		<div className='mt-[60px]' />
+			// 		<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('log_out').toUpperCase()}</h1>
+			// 	</div>
+			// }
+			// {/* ------------------------ NAVBAR ------------------------ */}
+			// <div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
+			// 	<div className={styles.customNavbarMiddleButtons} >
+			// 		<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/search-movies`}>
+			// 			<h1>Movies</h1>
+			// 		</a>
+			// 		<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
+			// 		<h1>Log out</h1>
+			// 	</div>
+			// 	{menuState ? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} /> : <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />}
+			// </div>
+			// <div className='mt-[50px]' />

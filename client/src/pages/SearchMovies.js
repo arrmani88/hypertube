@@ -15,16 +15,17 @@ import { useTranslation } from 'react-i18next'
 import emptyMovieImage from '../images/empty_movie_image.jpeg'
 import imdbLogo from '../images/imdb_logo.png'
 import { useMutation } from 'react-query'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 const genres = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western"]
 const qualities = ['720p', '1080p', '2160p', '3D']
 const sortBy = ['Title', 'Year', 'Rating', 'Peers', 'Seeds', 'Download count', 'Like count', 'Date added']
 const filmPerPage = 50
+var searchKey
 
 const SearchMovies = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	var searchKey = searchParams.get('search-key')
+	if (searchKey === undefined) searchKey = searchParams.get('search-key') // y getti lquery param gha lmerra lowla (lmerrat lakhrin fach der search khawya yjib aflam 3adiyine -machi dial query param-)
 	const dispatch = useDispatch()
 	const searchRef = useRef(null)
 	const { t } = useTranslation()
@@ -39,13 +40,15 @@ const SearchMovies = () => {
 	const searchForFilms = async (e) => {
 		e.preventDefault()
 		await mutateAsync({ doAppendResult: false })
+		searchRef?.current?.value && setSearchParams({ 'search-key': searchRef.current.value })
 	}
 
 	const { data: pageState, error, status, mutateAsync } = useMutation({
 		mutationFn: async (param) => {
 			let pageNumber = pageState?.pageNumber ? pageState.pageNumber +1 : 1
 			!param.doAppendResult && (pageNumber = 1)
-			console.log('searchParams=', searchParams.get('search-key'))
+			console.log('?=', searchKey)
+			console.log('---------')
 			const resultFilms = await axios.get(
 				`https://yts.mx/api/v2/list_movies.json?limit=${filmPerPage}&page=${pageNumber}` +
 				(searchRef?.current?.value ? `&${new URLSearchParams({ query_term: searchRef.current.value }).toString()}` : (searchKey ? `&${new URLSearchParams({ query_term: searchKey }).toString()}` : ``)) +
@@ -53,6 +56,7 @@ const SearchMovies = () => {
 				(queryParams['Quality'] ? `&quality=${queryParams['Quality']}` : ``) +
 				(queryParams['Sort by'] ? `&sort_by=${queryParams['Sort by'].toLowerCase().replace(' ', '_')}` : ``)
 			)
+			searchKey = null
 			param.doAppendResult === true && (resultFilms.data.data.movies = [].concat(pageState.films.data.data.movies, resultFilms.data.data.movies))
 			return { ...pageState, pageNumber, films: resultFilms, lastPage: (resultFilms.data.data.movie_count / filmPerPage).toFixed() }
 		}

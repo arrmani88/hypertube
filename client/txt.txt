@@ -49,4 +49,4 @@ fullscreen
 -----------------------------------------------------
 card themebackgrnd to be responsv
 remove button to delete the profile image from :3000/user
-when navigating with useNavigate makibanch loading (wark 3la search f navbar w mn be3d wark 3la HPRTB) (https://stackoverflow.com/a/71781553/15368012)
+scroll fel home

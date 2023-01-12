@@ -13,25 +13,40 @@ import ReactLoading from 'react-loading'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { selectUser } from '../redux/userSlice'
+import { useSearchParams } from 'react-router-dom'
 
+var searchKey
 
 const SearchUsers = () => {
 	const searchRef = useRef(null)
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
+	const [searchParams, setSearchParams] = useSearchParams()
+	if (searchKey === undefined) searchKey = searchParams.get('search-key')
 
 	// eslint-disable-next-line
-	useEffect(() => { setTimeout(() => dispatch(hideLoading()), 0) }, [])
+	useEffect(() => {
+		const getUser = async () => {
+			if (searchParams)
+				await mutateAsync()
+			setTimeout(() => dispatch(hideLoading()), 0)
+		}
+		getUser()
+	}, [])
 
 	const { data: users, error, status, mutateAsync } = useMutation({
 		mutationFn: async (e) => {
 			try {
-				e.preventDefault()
-				return (await axios.get(
-					`${process.env.REACT_APP_SERVER_HOSTNAME}/search-users/${searchRef.current.value}`,
+				e?.preventDefault()
+				searchRef?.current?.value && setSearchParams({ 'search-key': searchRef.current.value })
+				console.log(`${process.env.REACT_APP_SERVER_HOSTNAME}/search-users/${searchRef?.current?.value !== '' ? searchRef?.current?.value : searchKey}`)
+				const result = await axios.get(
+					`${process.env.REACT_APP_SERVER_HOSTNAME}/search-users/${searchRef?.current?.value !== '' ? searchRef?.current?.value : searchKey}`,
 					{ headers: { 'Content-Type': 'application/json', Authorization: user.accessToken } },
-				)).data
+				)
+				searchKey = null
+				return result.data
 			} catch (error) {
 				console.log(error)
 				if (error.response?.status === 404) return error
@@ -50,7 +65,7 @@ const SearchUsers = () => {
 					</button>
 				</form>
 
-				{(status === 'success' || status === 'loading') && users?.response?.status !== 404 && 
+				{(status === 'success' || status === 'loading') && users?.response?.status !== 404 &&
 					<div className={styles.users} >
 						{users?.map((user, index) => (
 							<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/user/${user.username}`} className={styles.user} key={index} >
@@ -75,7 +90,7 @@ const SearchUsers = () => {
 				{status === 'loading' ?
 					<div className='w-full h-full flex items-center justify-center my-[30px]'><ReactLoading type='spin' /></div> : <div />
 				}
-				
+
 			</div>
 		</CardThemeBackground>
 
