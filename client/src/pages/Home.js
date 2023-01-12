@@ -53,6 +53,8 @@ const Home = () => {
 	const searchRef = useRef([])
 	const [timeCounter, setTimeCounter] = useState()
 	const isLoading = useSelector(state => state.loading.value)
+	const [headerVisibility, setHeaderVisibility] = useState(true)
+	const [noiseVisibility, setNoiseVisibility] = useState(false)
 
 	useEffect(() => {
 		const getData = async () => {
@@ -136,9 +138,21 @@ const Home = () => {
 		}
 	}, [isLoading])
 
-	// useEffect(() => {
-	// 	console.log('widow.scrollY', window.scrollY)
-	// })
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY === 0) {
+				setNoiseVisibility(true)
+				setHeaderVisibility(true)
+				setTimeout(() => { setNoiseVisibility(false) }, 1500)
+			} else if (headerVisibility === true && window.scrollY > 0){
+				setNoiseVisibility(true)
+				setHeaderVisibility(false)
+				setTimeout(() => { setNoiseVisibility(false) }, 1500)
+			}
+		}
+		window.addEventListener('scroll', handleScroll)
+		return () => { window.removeEventListener('scroll', handleScroll) }
+	}, [window.scrollY])
 
 	return (
 		movies.isDataLoaded === true &&
@@ -155,7 +169,7 @@ const Home = () => {
 				</div>
 
 
-				<div className={styles.header} >
+				<div className={`${headerVisibility ? 'visible' : 'invisible'} ${styles.header}`} >
 					<ReactPlayer
 						url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
 						playing={true}
@@ -196,6 +210,24 @@ const Home = () => {
 						</GlitchText>
 					</div>
 					<div className={styles.whiteFrame} />
+					{noiseVisibility &&
+						<div >
+							<section></section>
+							<svg>
+								<filter id="noise">
+									<feTurbulence id="turbulence">
+										<animate
+											attributeName="baseFrequency"
+											dur="50s"
+											values="0.9 0.9;0.8 0.8; 0.9 0.9"
+											repeatCount="indefinite"
+										></animate>
+									</feTurbulence>
+									<feDisplacementMap in="SourceGraphic" scale="60"></feDisplacementMap>
+								</filter>
+							</svg>
+						</div>
+					}
 				</div>
 
 
