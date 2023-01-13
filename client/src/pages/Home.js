@@ -41,6 +41,8 @@ const languages = [
 	{ code: 'no', component: <NO className={styles.flag} /> },
 	{ code: 'se', component: <SE className={styles.flag} /> },
 ]
+const ScrollDirection = { up: "up", down: "down" }
+
 const Home = () => {
 	const dispatch = useDispatch()
 	const { t } = useTranslation()
@@ -55,6 +57,10 @@ const Home = () => {
 	const isLoading = useSelector(state => state.loading.value)
 	const [headerVisibility, setHeaderVisibility] = useState(true)
 	const [noiseVisibility, setNoiseVisibility] = useState(false)
+	// const [elementsVisibility, setElementsVisibility] = useState({
+	// 	header: true,
+	// 	noise: false
+	// })
 
 	useEffect(() => {
 		const getData = async () => {
@@ -63,7 +69,7 @@ const Home = () => {
 					axios.get(requests.requestPopular).then(async rsp => {
 						headerMovie = rsp.data.data.movies[Math.floor(Math.random() * rsp.data.data.movies.length)]
 						await axios.get(`https://api.themoviedb.org/3/movie/${headerMovie.imdb_code}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`).then(resp => {
-							console.log(headerMovie)
+							// console.log(headerMovie)
 							headerMovie.backdropImage = `https://image.tmdb.org/t/p/original/${resp.data.backdrop_path}`
 							setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
 						})
@@ -102,17 +108,6 @@ const Home = () => {
 	// 		throw new Error("fullscreenElement is not supported by this browser");
 	// 	}
 	// }
-
-	const fullScreenMode = (modeState) => {
-		if (modeState === true) {
-			document.body.requestFullscreen()
-			setFullScreenState(true)
-		} else {
-			document.exitFullscreen();
-			setFullScreenState(false)
-		}
-	}
-
 	useEffect(() => {
 		var clickInside
 		const handleClick = (e) => {
@@ -127,7 +122,6 @@ const Home = () => {
 		document.addEventListener('mousedown', handleClick)
 		return () => document.removeEventListener('mousedown', handleClick)
 	})
-
 	useEffect(() => {
 		if (!isLoading) {
 			const startDate = Date.now()
@@ -138,101 +132,146 @@ const Home = () => {
 		}
 	}, [isLoading])
 
+	const fullScreenMode = (modeState) => {
+		if (modeState === true) {
+			document.body.requestFullscreen()
+			setFullScreenState(true)
+		} else {
+			document.exitFullscreen();
+			setFullScreenState(false)
+		}
+	}
+
+	// -------------------------------------------------------------
+	const threshold = 10;
+	const [scrollDir, setScrollDir] = useState(ScrollDirection.up)
+
 	useEffect(() => {
-		const handleScroll = () => {
-			if (window.scrollY === 0) {
-				setNoiseVisibility(true)
-				setHeaderVisibility(true)
-				setTimeout(() => { setNoiseVisibility(false) }, 1500)
-			} else if (headerVisibility === true && window.scrollY > 0){
-				setNoiseVisibility(true)
-				setHeaderVisibility(false)
-				setTimeout(() => { setNoiseVisibility(false) }, 1500)
+		let previousScrollYPosition = window.scrollY
+		const scrolledMoreThanThreshold = (currentScrollYPosition) => Math.abs(currentScrollYPosition - previousScrollYPosition) > threshold
+		const isScrollingUp = (currentScrollYPosition) => currentScrollYPosition > previousScrollYPosition && !(previousScrollYPosition > 0 && currentScrollYPosition === 0) && !(currentScrollYPosition > 0 && previousScrollYPosition === 0)
+
+		const updateScrollDirection = () => {
+			console.log('updatescrolldirection()')
+			const currentScrollYPosition = window.scrollY
+			if (scrolledMoreThanThreshold(currentScrollYPosition)) {
+				const newScrollDirection = isScrollingUp(currentScrollYPosition) ? ScrollDirection.down : ScrollDirection.up
+				setScrollDir(newScrollDirection);
+				if (newScrollDirection === 'down' && headerVisibility) {
+					setNoiseVisibility(true)
+					setHeaderVisibility(false)
+					setTimeout(() => { setNoiseVisibility(false) }, 1000)
+				} else if (newScrollDirection === 'up' && currentScrollYPosition < 10) {
+					setNoiseVisibility(true)
+					setHeaderVisibility(true)
+					setTimeout(() => { setNoiseVisibility(false) }, 1000)
+				}
+				previousScrollYPosition = currentScrollYPosition > 0 ? currentScrollYPosition : 0
 			}
 		}
-		window.addEventListener('scroll', handleScroll)
-		return () => { window.removeEventListener('scroll', handleScroll) }
-	}, [window.scrollY])
+		const onScroll = () => window.requestAnimationFrame(updateScrollDirection);
+		window.addEventListener("scroll", onScroll);
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
+	// -------------------------------------------------------------
+
+	// useEffect(() => {
+	// 	const handleScroll = () => {
+	// 		if (headerVisibility === true && window.scrollY > 0) {
+	// setNoiseVisibility(true)
+	// setHeaderVisibility(false)
+	// setTimeout(() => { setNoiseVisibility(false) }, 1500)
+
+	// 		} else if (window.scrollY === 0 && headerVisibility === false) {
+	// 			setNoiseVisibility(true)
+	// 			console.log('showing noise ..')
+	// 			setHeaderVisibility(true)
+	// 			console.log('header -> visible')
+	// 			setTimeout(() => { console.log('hiding noise ....'); setNoiseVisibility(false) }, 1500)
+
+	// 		}
+	// 	}
+	// 	window.addEventListener('scroll', handleScroll)
+	// 	return () => { window.removeEventListener('scroll', handleScroll) }
+	// }, [window.scrollY])
 
 	return (
 		movies.isDataLoaded === true &&
 		<div className={styles.container} >
-			<div>
 
-				<div className='absolute w-full' >
-					<Category title='popular' movies={movies.popular} />
-					<Category title='top_rated' movies={movies.latest} />
-					<Category title='latest' movies={movies.topRated} />
-					<Category title='latest' movies={movies.topRated} />
-					<Category title='latest' movies={movies.topRated} />
-					<div className='mt-[50px]' />
-				</div>
+			<div className={`${headerVisibility ? 'invisible max-h-0' : 'absolute w-full'}`} >
+				<Category title='popular' movies={movies.popular} />
+				<Category title='top_rated' movies={movies.latest} />
+				<Category title='latest' movies={movies.topRated} />
+				<Category title='latest' movies={movies.topRated} />
+				<Category title='latest' movies={movies.topRated} />
+				<div className='mt-[50px]' />
+			</div>
 
 
-				<div className={`${headerVisibility ? 'visible' : 'invisible'} ${styles.header}`} >
-					<ReactPlayer
-						url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
-						playing={true}
-						muted={true}
-						loop={true}
-						config={{ youtube: ytbVariables }}
-						className={styles.video}
-						onStart={() => { setTimeout(() => dispatch(hideLoading()), 0) }}
-					/>
-					<div className={styles.headerBlackLayer} />
-					<div className={styles.headerContent} >
-						<GlitchClip className={`${styles.glitchClip} ${styles.scaleMovieTitleOnHover} `} duration={2000} >
-							<GlitchText component='h1' className={styles.movieTitle}>
-								{movies.headerMovie.title.toUpperCase()}
-							</GlitchText>
-						</GlitchClip>
-						<div className='mt-[40px]' />
-						<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
-						<p className={styles.summary}>{movies.headerMovie?.summary}</p>
-						<div className='mt-[15px]' />
-						<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movies.headerMovie.imdb_code}`}>
-							<div className={`flex row items-center text-[105px] ${styles.playNow} ${styles.scaleOnHover} `} >
-								<h1>{'PLAY NOW'}</h1>
-								<BiPlay className='scale-125' />
-							</div>
-						</a>
-					</div>
-					<div className={styles.bottomTimeCounterContainer}>
-						<GlitchText component='h1' className={styles.vhsFont}>
-							{(Math.floor(timeCounter / 1000 / 60 / 60 % 24)).toString().padStart(2, '0')}
-							:{(Math.floor(timeCounter / 1000 / 60 % 60)).toString().padStart(2, '0')}
-							:{(Math.floor(timeCounter / 1000 % 60)).toString().padStart(2, '0')}
-							:{(timeCounter % 600).toString().padStart(3, '0')}
-							{' '}{movies.headerMovie?.title?.replace(/-|:| |'/g, '_')}
+			<div className={`${headerVisibility ? 'visible' : 'invisible max-h-0'} ${styles.header}`} >
+				<ReactPlayer
+					url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
+					playing={true}
+					muted={true}
+					loop={true}
+					config={{ youtube: ytbVariables }}
+					className={styles.video}
+					onStart={() => { setTimeout(() => dispatch(hideLoading()), 0) }}
+				/>
+				<div className={styles.headerBlackLayer} />
+				<div className={styles.headerContent} >
+					<GlitchClip className={`${styles.glitchClip} ${styles.scaleMovieTitleOnHover} `} duration={2000} >
+						<GlitchText component='h1' className={styles.movieTitle}>
+							{movies.headerMovie.title.toUpperCase()}
 						</GlitchText>
-						<GlitchText component='h1' className={styles.vhsFont}>
-							PLAY_VHS_MODE_RUNNING
-						</GlitchText>
-					</div>
-					<div className={styles.whiteFrame} />
-					{noiseVisibility &&
-						<div >
-							<section></section>
-							<svg>
-								<filter id="noise">
-									<feTurbulence id="turbulence">
-										<animate
-											attributeName="baseFrequency"
-											dur="50s"
-											values="0.9 0.9;0.8 0.8; 0.9 0.9"
-											repeatCount="indefinite"
-										></animate>
-									</feTurbulence>
-									<feDisplacementMap in="SourceGraphic" scale="60"></feDisplacementMap>
-								</filter>
-							</svg>
+					</GlitchClip>
+					<div className='mt-[40px]' />
+					<h1 className={styles.rating}>{t('imdb_rating')}: {movies.headerMovie.rating}/10</h1>
+					<p className={styles.summary}>{movies.headerMovie?.summary}</p>
+					<div className='mt-[15px]' />
+					<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/movie/${movies.headerMovie.imdb_code}`}>
+						<div className={`flex row items-center text-[105px] ${styles.playNow} ${styles.scaleOnHover} `} >
+							<h1>{'PLAY NOW'}</h1>
+							<BiPlay className='scale-125' />
 						</div>
-					}
+					</a>
 				</div>
+				<div className={styles.bottomTimeCounterContainer}>
+					<GlitchText component='h1' className={styles.vhsFont}>
+						{(Math.floor(timeCounter / 1000 / 60 / 60 % 24)).toString().padStart(2, '0')}
+						:{(Math.floor(timeCounter / 1000 / 60 % 60)).toString().padStart(2, '0')}
+						:{(Math.floor(timeCounter / 1000 % 60)).toString().padStart(2, '0')}
+						:{(timeCounter % 600).toString().padStart(3, '0')}
+						{' '}{movies.headerMovie?.title?.replace(/-|:| |'/g, '_')}
+					</GlitchText>
+					<GlitchText component='h1' className={styles.vhsFont}>
+						PLAY_VHS_MODE_RUNNING
+					</GlitchText>
+				</div>
+				<div className={styles.whiteFrame} />
 
-
+				<div className={`${noiseVisibility ? 'visible' : 'invisible'}`} >
+					<section></section>
+					<svg>
+						<filter id="noise">
+							<feTurbulence id="turbulence">
+								<animate
+									attributeName="baseFrequency"
+									dur="50s"
+									values="0.9 0.9;0.8 0.8; 0.9 0.9"
+									repeatCount="indefinite"
+								></animate>
+							</feTurbulence>
+							<feDisplacementMap in="SourceGraphic" scale="60"></feDisplacementMap>
+						</filter>
+					</svg>
+				</div>
 
 			</div>
+
+
+
 
 			{/* ------------------------ MENU ------------------------ */}
 			{menuState &&
@@ -271,6 +310,7 @@ const Home = () => {
 					<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('log_out').toUpperCase()}</h1>
 				</div>
 			}
+
 			{/* ------------------------ NAVBAR ------------------------ */}
 			<div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
 				<div className={styles.customNavbarMiddleButtons} >
