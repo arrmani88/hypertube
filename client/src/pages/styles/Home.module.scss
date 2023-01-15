@@ -17,12 +17,6 @@
 	width: 40px;
 	cursor: pointer;
 }
-// **********************************************************
-// **********************************************************
-// **********************************************************
-// **********************************************************
-// **********************************************************
-// **********************************************************
 .customNavbarContainer {
 	display: flex;
 	width: calc(100vw - 40px);
@@ -65,7 +59,7 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	opacity: 0.8;
+	opacity: 0.7;
 }
 .headerContent {
 	display: flex;
@@ -85,59 +79,75 @@
 	border: 20px solid white;
 	pointer-events: none;
 }
-
-
 .noise {
 	position: fixed;
 	left: -50px;
 	width: calc(100% + 100px);
-	height: calc(50% + 100px);
+	height: calc(60vh + 100px);
 	background: repeating-linear-gradient(#111, #111 50%, white 50%, white);
-	background-size: 1px 1px;
+	background-size: 3px 3px;
 	filter: url(#noise);
 }
-
-
-
+// ------------------------------------------------------------------------------
 .showTopNoise {
-	top: -60vw;
-	animation: noise-top-animation 500ms forwards ;
+	top: -100vh;
+	animation: noise-top-animation 400ms forwards ;
 }
 .showBtmNoise {
-	bottom: -60vw;
-	animation: noise-btm-animation 500ms forwards ;
+	bottom: -100vh;
+	animation: noise-btm-animation 400ms forwards ;
 }
-// ------------------------------------------------------------------------------
 @keyframes noise-top-animation {
 	0% { transform: translateY(0%); }
-	100% { transform: translateY(110%); }
+	100% { transform: translateY(125%); }
 }
 @keyframes noise-btm-animation {
 	0% { transform: translateY(0%); }
-	100% { transform: translateY(-110%); }
+	100% { transform: translateY(-125%); }
 }
 // ------------------------------------------------------------------------------
 .hideTopNoise {
-	top: -60vw;
-	animation: noise-top-animation-r 500ms ;
+	top: -100vh;
+	animation: noise-top-animation-r 600ms ;
 }
 .hideBtmNoise {
-	bottom: -60vw;
-	animation: noise-btm-animation-r 500ms ;
+	bottom: -100vh;
+	animation: noise-btm-animation-r 600ms ;
 }
-// -------------------------------------------------------------------------------
 @keyframes noise-top-animation-r {
-	0% { transform: translateY(110%); }
+	0% { transform: translateY(125%); }
 	100% { transform: translateY(0%); }
 }
 @keyframes noise-btm-animation-r {
-	0% { transform: translateY(-110%); }
+	0% { transform: translateY(-125%); }
 	100% { transform: translateY(0%); }
 }
-
-
-
-
+// -------------------------------------------------------------------------------
+.showAnimationBlackFilter {
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	animation: animation-black-filter 300ms ease;
+}
+@keyframes animation-black-filter {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
+}
+.hideAnimationBlackFilter {
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	background-color: black;
+	animation: animation-black-filter-rv 1000ms forwards ease;
+}
+@keyframes animation-black-filter-rv {
+	0% { opacity: 1; }
+	100% {
+		opacity: 0; 
+		visibility: hidden
+	}
+}
 
 .glitchClip {
 	width: fit-content;
@@ -175,7 +185,7 @@
 	bottom: 50px;
 	width: 100%;
 	padding: 0 70px 0 70px;
-
+	align-items: flex-end;
 }
 .vhsFont {
 	font-family: "Vcr-osd";
@@ -268,8 +278,22 @@
 	margin-right: 20px;
 	cursor: pointer;
 }
-
-
+.headerSearchBar {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+}
+.bottomArrowContainer {
+	display: flex;
+	justify-content: center;
+	animation: up-down-animation 1000ms infinite ease-in-out;
+}
+@keyframes up-down-animation {
+	0% { transform: translateY(0%); }
+	50% { transform: translateY(-20%); }
+	100% { transform: translateY(0%); }
+}
 
 @media only screen and (max-width: 675px) {
 	.movieTitle {

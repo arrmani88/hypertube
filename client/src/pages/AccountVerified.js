@@ -44,16 +44,19 @@ const AccountVerified = () => {
 
 	return (
 		<CardThemeBackground imgLink={IMGaladdin} >
-			<h1 className={styles.cardTitle}>{t('account_verified')}</h1>
-			<h1 className={styles.cardDescription}>{t('your_account_has_been_verified')}</h1>
-			<div className='mt-[20px]' />
-			<button onClick={onClick} className={styles.continueButton} >
-				<h1 className={styles.textButton} >{t('login')}</h1>
-				<BsPlayFill className={`text-[40px]`} />
-			</button>
+			<div className={styles.container} >
+				<h1 className={styles.cardTitle}>{t('account_verified')}</h1>
+				<h1 className={styles.cardDescription}>{t('your_account_has_been_verified')}</h1>
+				<div className='mt-[20px]' />
+				<button onClick={onClick} className={styles.continueButton} >
+					<h1 className={styles.textButton} >{t('login')}</h1>
+					<BsPlayFill className={`text-[40px]`} />
+				</button>
+			</div>
 		</CardThemeBackground>
 	)
 }
 
 export default AccountVerified
+
 

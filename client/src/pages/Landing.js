@@ -32,32 +32,34 @@ const Landing = () => {
 			})
 		}
 	}
-	
+
 	useEffect(() => { setTimeout(() => dispatch(hideLoading()), 0) }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (<>
 		<CardThemeBackground imgLink={IMGmovies} loginButtonShown={true}>
-			<h1 className={styles.cardTitle}>{t("see_whats_next")}</h1>
-			<h1 className={styles.cardText1}>{t("watch_limitless")}</h1>
-			<h1 className={`${styles.cardText2} hideOnMobileVersion`}>{t("ready_to_watch")}</h1>
-			<div>
-				<input className={`${styles.emailField} ${(isEmailValid === false && 'emailFieldError')}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder={t("enter_your_email")} />
-				<div className={styles.containerInvalidEmail}>
-					{isEmailValid === false
-						? <h1 className={styles.invalidEmail}>{t("invalid_email")}</h1>
-						: <h1 className={styles.invalidEmail}> </h1>
-					}
-				</div>
-				<button className={styles.cardButton} onClick={redirect}>
-					<h1 className={styles.buttonText}>{t('start_watching_free')}</h1>
-					<BsPlayFill className={styles.cardPlayIcon} />
-				</button>
-				<Divider><h1>{t('or')}</h1></Divider>
-				<h1 className={styles.cardText2}>{t('continue_with')}</h1>
-				<div className={styles.socialsContainer} >
-					<BsFacebook className={styles.socialMediaIcon} />
-					<ImGoogle3 className={styles.socialMediaIcon} />
-					<img src={IMG42icon} className={styles.icon42} alt='42_icon' />
+			<div className={styles.container} >
+				<h1 className={styles.cardTitle}>{t("see_whats_next")}</h1>
+				<h1 className={styles.cardText1}>{t("watch_limitless")}</h1>
+				<h1 className={`${styles.cardText2} hideOnMobileVersion`}>{t("ready_to_watch")}</h1>
+				<div>
+					<input className={`${styles.emailField} ${(isEmailValid === false && 'emailFieldError')}`} ref={emailRef} onChange={() => setIsEmailValid(true)} placeholder={t("enter_your_email")} />
+					<div className={styles.containerInvalidEmail}>
+						{isEmailValid === false
+							? <h1 className={styles.invalidEmail}>{t("invalid_email")}</h1>
+							: <h1 className={styles.invalidEmail}> </h1>
+						}
+					</div>
+					<button className={styles.cardButton} onClick={redirect}>
+						<h1 className={styles.buttonText}>{t('start_watching_free')}</h1>
+						<BsPlayFill className={styles.cardPlayIcon} />
+					</button>
+					<Divider><h1>{t('or')}</h1></Divider>
+					<h1 className={styles.cardText2}>{t('continue_with')}</h1>
+					<div className={styles.socialsContainer} >
+						<BsFacebook className={styles.socialMediaIcon} />
+						<ImGoogle3 className={styles.socialMediaIcon} />
+						<img src={IMG42icon} className={styles.icon42} alt='42_icon' />
+					</div>
 				</div>
 			</div>
 		</CardThemeBackground>

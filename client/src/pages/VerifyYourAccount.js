@@ -25,7 +25,7 @@ const VerfifyYourAccount = () => {
 
 	useEffect(() => {
 		console.log(user.isAccountComplete)
-		if (!(user.userData.username)) navigate('*')
+		if (!(user.userData.username)) navigate('/404')
 		else if (user.isAccountComplete === true) navigate('/')
 		setTimeout(() => dispatch(hideLoading()), 0)
 	}, []) // eslint-disable-line react-hooks/exhaustive-deps

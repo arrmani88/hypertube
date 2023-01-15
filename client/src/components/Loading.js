@@ -25,22 +25,3 @@ const Loading = (props) => {
 }
 
 export default Loading
-
-
-	// return (
-	// 	<>
-	// 		{isLoading === true
-	// 			? <div className='flex' >
-	// 				{props.children}
-	// 				<div className={styles.loading} >
-	// 					<div className={styles.content}>
-	// 						<img className={styles.logo} src={blackHypertubeLogo} alt='logo' />
-	// 						<div className={styles.blurLayer1} />
-	// 					</div>
-	// 				</div>
-
-	// 			</div>
-	// 			: props.children
-	// 		}
-	// 	</>
-	// )

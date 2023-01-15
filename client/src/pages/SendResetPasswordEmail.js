@@ -42,27 +42,33 @@ const SendResetPasswordEmail = () => {
 	}, [])
 
 	return (
-		pageState === 'showForm'
+		pageState === 'sshowForm'
 			? <CardThemeBackground imgLink={IMGgot}>
-				<h1 className={styles.cardTitle} >{t('reset_your_password')}</h1>
-				<div className='mt-[30px]' />
-				<h1 className={styles.fieldTitle} >{t('enter_email_or_username')}</h1>
-				<input className={styles.field} onChange={(e) => {setInput(e.target.value); setErrorMessage(' ')}} />
-				<div className='mt-[25px]' />
-				<button onClick={sendResetPasswordEmail} className={styles.button} >
-					{t('reset_password')}
-					{isButtonLoading === true
-						? <ReactLoading type='spin' className='p-3' />
-						: <BsPlayFill className='text-[40px]' />
-					}
-				</button>
-				<h1 className={styles.errorMessage} >{errorMessage}</h1>
+				<div className={styles.container} >
+					<h1 className={styles.cardTitle} >{t('reset_your_password')}</h1>
+					<div className='mt-[30px]' />
+					<h1 className={styles.fieldTitle} >{t('enter_email_or_username')}</h1>
+					<input className={styles.field} onChange={(e) => {setInput(e.target.value); setErrorMessage(' ')}} />
+					<div className='mt-[25px]' />
+					<button onClick={sendResetPasswordEmail} className={styles.button} >
+						{t('reset_password')}
+						{isButtonLoading === true
+							? <ReactLoading type='spin' className='p-3' />
+							: <BsPlayFill className='text-[40px]' />
+						}
+					</button>
+					<h1 className={styles.errorMessage} >{errorMessage}</h1>
+					<div className={styles.balanceDiv} />
+				</div>
 			</CardThemeBackground>
 			: <CardThemeBackground imgLink={IMGgot} >
-				<h1 className={styles.cardTitle} >{t('an_email_sent_to_reset_password')}</h1>
-				<h1 className={styles.cardText1} >{t('check_inbox_to_reset_password')}</h1>
-				<div className='mt-[30px]' />
-				<h1 onClick={sendResetPasswordEmail} className={styles.resendEmail} >Resend Email</h1>
+				<div className={styles.container} >
+					<h1 className={styles.cardTitle} >{t('an_email_sent_to_reset_password')}</h1>
+					<h1 className={styles.cardText1} >{t('check_inbox_to_reset_password')}</h1>
+					<div className='mt-[30px]' />
+					<h1 onClick={sendResetPasswordEmail} className={styles.resendEmail} >Resend Email</h1>
+					<div className={styles.balanceDiv} />
+				</div>
 			</CardThemeBackground>
 	)
 }

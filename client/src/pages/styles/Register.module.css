@@ -1,8 +1,9 @@
 .register {
     display: flex;
 	flex-direction: column;
-    min-width: 100vw;
+    /* min-width: 100vw; */
     min-height: 100vh;
+	width: min(90%, 500px);
 }
 .background_img {
     position: absolute;
@@ -38,7 +39,8 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+	/* width: 100%; */
+	width: min(90%, 500px);
 }
 .cardChildren {
 	width: min(90%, 450px);
@@ -98,7 +100,10 @@
 	flex-direction: row;
 	align-items: center;
 }
-
+.balanceDiv { 
+	width: 700px;
+    max-width: 90vw;
+}
 @media only screen and (max-width: 390px) {
 	.gender {
 		display: flex;

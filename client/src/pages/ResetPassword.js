@@ -52,27 +52,30 @@ const ResetPassword = () => {
 	return (
 		pageState === 'showForm'
 			? <CardThemeBackground imgLink={IMGjohnSnow} >
-			<h1 className={styles.cardTitle} >{t('reset_your_password')}</h1>
-			<div className='mt-[30px]' />
-			<form onSubmit={handleSubmit(resetPassword)} >
-
-				<h1 className={styles.fieldTitle} >{t('Choose a new password')}</h1>
-				<input {...register('password')} className={styles.field}  />
-				<h1 className={styles.errorMessage}>{errors.password?.message || ' '}</h1>
-
-				<h1 className={styles.fieldTitle} >{t('Re-type your password')}</h1>
-				<input {...register('confirmPassword')} className={styles.field}  />
-				<h1 className={styles.errorMessage}>{errors.confirmPassword?.message || ' '}</h1>
-
-				<div className='mt-[10px]' />
-				<button className={styles.button} type='submit' >
-					{t('reset_password')}
-					{isButtonLoading === true
-						? <ReactLoading type='spin' className='p-3' />
-						: <BsPlayFill className='text-[40px]' />
-					}
-				</button>
-			</form>
+			<div className={styles.container} >
+				<h1 className={styles.cardTitle} >{t('reset_your_password')}</h1>
+				<div className='mt-[30px]' />
+				<form onSubmit={handleSubmit(resetPassword)} >
+	
+					<h1 className={styles.fieldTitle} >{t('Choose a new password')}</h1>
+					<input {...register('password')} className={styles.field}  />
+					<h1 className={styles.errorMessage}>{errors.password?.message || ' '}</h1>
+	
+					<h1 className={styles.fieldTitle} >{t('Re-type your password')}</h1>
+					<input {...register('confirmPassword')} className={styles.field}  />
+					<h1 className={styles.errorMessage}>{errors.confirmPassword?.message || ' '}</h1>
+	
+					<div className='mt-[10px]' />
+					<button className={styles.button} type='submit' >
+						{t('reset_password')}
+						{isButtonLoading === true
+							? <ReactLoading type='spin' className='p-3' />
+							: <BsPlayFill className='text-[40px]' />
+						}
+					</button>
+				</form>
+				<div className={styles.balanceDiv} />
+			</div>
 		</CardThemeBackground>
 		: <CardThemeBackground imgLink={IMGjohnSnow} >
 			<h1 className={styles.cardTitle} >{t('password_reset_successfully')}</h1>

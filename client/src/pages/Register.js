@@ -122,6 +122,7 @@ const Register = () => {
 						: <BsPlayFill className={`text-[40px]`} />
 					}
 				</button>
+				<div className={styles.balanceDiv} />
 			</form>
 		</CardThemeBackground>
 	)

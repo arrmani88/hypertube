@@ -49,4 +49,4 @@ fullscreen
 -----------------------------------------------------
 card themebackgrnd to be responsv
 remove button to delete the profile image from :3000/user
-scroll fel home
+

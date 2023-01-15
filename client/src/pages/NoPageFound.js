@@ -22,13 +22,16 @@ const NoPageFound = () => {
 
 	return (<>
 		<CardThemeBackground imgLink={IMGinterstellar} >
-			<h1 className={styles.cardTitle} >Oops!</h1>
-			<h1 className={styles.cardText1}>{t('no_page_exists')}</h1>
-			<div className='py-5' />
-			<button className={styles.cardButton} onClick={redirect}>
-				<h1 className={styles.buttonText}>{t('go_back_home')}</h1>
-				<BsPlayFill className={styles.cardPlayIcon} />
-			</button>
+			<div className={styles.container} >
+				<h1 className={styles.cardTitle} >Oops!</h1>
+				<h1 className={styles.cardText1}>{t('no_page_exists')}</h1>
+				<div className='py-5' />
+				<button className={styles.cardButton} onClick={redirect}>
+					<h1 className={styles.buttonText}>{t('go_back_home')}</h1>
+					<BsPlayFill className={styles.cardPlayIcon} />
+				</button>
+				<div className={styles.balanceDiv} />
+			</div>
 		</CardThemeBackground>
 	</>)
 }

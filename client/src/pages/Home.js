@@ -19,6 +19,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 import GlitchClip from 'react-glitch-effect/core/GlitchClip';
 import GlitchText from 'react-glitch-effect/core/GlitchText';
 import VideoTimer from '../components/VideoTimer'
+import IMGarrowVhs from '../images/arrow_vhs.png'
 
 const ytbVariables = {
 	playerVars: {
@@ -45,6 +46,7 @@ const languages = [
 let scrollTimeout = undefined
 let noiseTimeout
 let headervisibilityTimeout
+let isHeaderVisible = true
 
 const Home = () => {
 	const dispatch = useDispatch()
@@ -60,6 +62,7 @@ const Home = () => {
 	const [headerVisibility, setHeaderVisibility] = useState(true)
 	const [noiseVisibility, setNoiseVisibility] = useState(false)
 
+	// ----------------------------------- SET FULL SCREEN MODE -----------------------------------
 	const fullScreenMode = (modeState) => {
 		if (modeState === true) {
 			document.body.requestFullscreen()
@@ -69,7 +72,8 @@ const Home = () => {
 			setFullScreenState(false)
 		}
 	}
-	// -------------------------- RE WRITE --------------------------
+
+	// ----------------------------------- GET MOVIES DATA -----------------------------------
 	useEffect(() => {
 		const getData = async () => {
 			try {
@@ -94,6 +98,8 @@ const Home = () => {
 		}
 		getData()
 	}, []) // eslint-disable-line
+
+	// ----------------------------------- EXIT MENU USEEFFECT -----------------------------------
 	useEffect(() => {
 		var clickInside
 		const handleClick = (e) => {
@@ -109,32 +115,34 @@ const Home = () => {
 		return () => document.removeEventListener('mousedown', handleClick)
 	})
 
+	// ----------------------------------- HANDLE SCROLL USEEFFECT -----------------------------------
 	useEffect(() => {
 		const displayNoiseAnimation = () => {
 			setNoiseVisibility(true)
 			noiseTimeout = setTimeout(() => { setNoiseVisibility(false) }, (1000))
 			return () => { clearTimeout(noiseTimeout) }
 		}
-
 		const onScroll = (e) => {
 			if (scrollTimeout)
 				clearTimeout(scrollTimeout)
 			scrollTimeout = setTimeout(async () => {
-				console.log('headerVisibility->>>>', headerVisibility)
-
-				if (e.deltaY > 50 && window.scrollY <= 1) {
-					console.log('------------------ setting header to false --------------------')
+				if (e.deltaY > 100 && window.scrollY <= 1) {
 					displayNoiseAnimation()
-					headervisibilityTimeout = setTimeout(() => { setHeaderVisibility(false) }, 600)
-					return () => { clearTimeout(headervisibilityTimeout) }
-				} 
-				else if (e.deltaY < -50 && window.scrollY <= 1 && headerVisibility === false) {
-					console.log('------------------ setting header to true --------------------')
-					displayNoiseAnimation()
-					headervisibilityTimeout = setTimeout(() => { setHeaderVisibility(true) }, 600)
+					headervisibilityTimeout = setTimeout(() => {
+						isHeaderVisible = false
+						setHeaderVisibility(false)
+					}, 650)
 					return () => { clearTimeout(headervisibilityTimeout) }
 				}
-			}, 50)
+				else if (e.deltaY < -100 && window.scrollY <= 1 && isHeaderVisible === false) {
+					displayNoiseAnimation()
+					headervisibilityTimeout = setTimeout(() => {
+						isHeaderVisible = true
+						setHeaderVisibility(true)
+					}, 650)
+					return () => { clearTimeout(headervisibilityTimeout) }
+				}
+			}, 70)
 		}
 		window.addEventListener('wheel', onScroll);
 		return () => window.removeEventListener("wheel", onScroll);
@@ -147,10 +155,6 @@ const Home = () => {
 			{/* ------------------------ CATEGORIES ------------------------ */}
 			<div className={`${headerVisibility ? 'hidden' : 'absolute w-full'}`} >
 				<div className='mt-[150px]' />
-				<Category title='popular' movies={movies.popular} />
-				<Category title='top_rated' movies={movies.latest} />
-				<Category title='latest' movies={movies.topRated} />
-				{/* ------ */}
 				<Category title='popular' movies={movies.popular} />
 				<Category title='top_rated' movies={movies.latest} />
 				<Category title='latest' movies={movies.topRated} />
@@ -170,6 +174,14 @@ const Home = () => {
 				/>
 				<div className={styles.headerBlackLayer} />
 				<div className={styles.headerContent} >
+					{/* ----------------------search bar----------------------- */}
+					{/* <div className='flex h-full absolute items-start top-[-9vh]' >
+						<form onSubmit={() => { navigate(`/search-movies?search-key=${searchRef.current[6].value}`)}} className='flex items-center justify-end'>
+							<input ref={elem => searchRef.current[6] = elem} className={styles.searchInput} placeholder='Search for a movie...' />
+							<BsSearch type='submit' className={styles.searchIcon} />
+						</form>
+					</div> */}
+
 					<GlitchClip className={`${styles.glitchClip} ${styles.scaleMovieTitleOnHover} `} duration={2000} >
 						<GlitchText component='h1' className={styles.movieTitle}>
 							{movies.headerMovie.title.toUpperCase()}
@@ -187,14 +199,20 @@ const Home = () => {
 					</a>
 				</div>
 				<div className={styles.bottomTimeCounterContainer}>
-					<div className='flex' >
-						<VideoTimer />
-						<GlitchText component='h1' className={styles.vhsFont} >
+					{/* <div className='flex' > */}
+					<VideoTimer />
+					{/* <GlitchText component='h1' className={styles.vhsFont} >
 							{' '}{movies.headerMovie?.title?.replace(/-|:| |'/g, '_')}
-						</GlitchText>
+						</GlitchText> */}
+					{/* </div> */}
+					<div className={styles.bottomArrowContainer} >
+						<GlitchClip duration={1500} className='flex justify-center items-center' >
+							<GlitchText component='h1' className={styles.vhsFont}>SCROLL</GlitchText>
+							<img src={IMGarrowVhs} className='h-[70px] pl-[25px]' />
+						</GlitchClip>
 					</div>
 					<GlitchText component='h1' className={styles.vhsFont}>
-						PLAY_VHS_MODE_RUNNING
+						PLAY_VHS_MODE
 					</GlitchText>
 				</div>
 				<div className={styles.whiteFrame} />
@@ -213,12 +231,10 @@ const Home = () => {
 			</div>
 
 			{/* ------------------------ NOISE ------------------------ */}
-			{/* <div className={`${noiseVisibility ? '' : 'hidden'}`} > */}
-			<div className={``} >
+			<div >
+				<div className={noiseVisibility ? styles.showAnimationBlackFilter : styles.hideAnimationBlackFilter} />
 				<section className={`${styles.noise} ${noiseVisibility ? styles.showTopNoise : styles.hideTopNoise}`} ></section>
 				<section className={`${styles.noise} ${noiseVisibility ? styles.showBtmNoise : styles.hideBtmNoise}`} ></section>
-				{/* <section className={`${styles.noise} ${styles.showBtmNoise}`} ></section> */}
-				{/* <section className={`${styles.noise} ${styles.showTopNoise}`} ></section> */}
 				<svg>
 					<filter id="noise">
 						<feTurbulence id="turbulence">
@@ -279,53 +295,3 @@ export default Home
 
 // vhs effect
 
-
-			// {/* ------------------------ MENU ------------------------ */}
-			// {menuState &&
-			// 	<div className={styles.menu} >
-			// 		<h1 ref={elem => exitMenuRef.current[0] = elem} className={styles.menuTitle}>LANGUAGES</h1>
-			// 		<div ref={elem => exitMenuRef.current[1] = elem} className={styles.flagsContainer} >
-			// 			{languages.map((flag, i) => (
-			// 				<div className={i18n.language === flag.code ? styles.selectedLang : ''} onClick={() => i18n.changeLanguage(flag.code)} key={i} >
-			// 					{flag.component}
-			// 				</div>
-			// 			))}
-			// 		</div>
-			// 		<div className='mt-[60px]' />
-			// 		<h1 ref={elem => exitMenuRef.current[2] = elem} className={styles.menuTitle}>{t('movies_search').toUpperCase()}</h1>
-
-
-
-			// 		<form ref={elem => exitMenuRef.current[3] = elem} onSubmit={() => { navigate(`/search-movies?search-key=${searchRef.current[0].value}`) }} className='flex items-center justify-end'>
-			// 			<input ref={elem => searchRef.current[0] = elem} className={styles.searchInput} placeholder='Search for a movie...' />
-			// 			<BsSearch type='submit' className={styles.searchIcon} />
-			// 		</form>
-
-			// 		<div className='mt-[60px]' />
-			// 		<h1 ref={elem => exitMenuRef.current[4] = elem} className={styles.menuTitle}>{t('search_for_users').toUpperCase()}</h1>
-
-			// 		<form onSubmit={() => { navigate(`/search-users?search-key=${searchRef.current[1].value}`) }} ref={elem => exitMenuRef.current[5] = elem} className='flex items-center justify-end'>
-			// 			<input ref={elem => searchRef.current[1] = elem} className={styles.searchInput} placeholder='Search for a user...' />
-			// 			<BsSearch type='submit' className={styles.searchIcon} />
-			// 		</form>
-
-
-
-			// 		<div className='mt-[60px]' />
-			// 		<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('My profile').toUpperCase()}</h1>
-			// 		<div className='mt-[60px]' />
-			// 		<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('log_out').toUpperCase()}</h1>
-			// 	</div>
-			// }
-			// {/* ------------------------ NAVBAR ------------------------ */}
-			// <div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
-			// 	<div className={styles.customNavbarMiddleButtons} >
-			// 		<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/search-movies`}>
-			// 			<h1>Movies</h1>
-			// 		</a>
-			// 		<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
-			// 		<h1>Log out</h1>
-			// 	</div>
-			// 	{menuState ? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} /> : <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />}
-			// </div>
-			// <div className='mt-[50px]' />

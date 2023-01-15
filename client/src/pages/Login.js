@@ -67,33 +67,35 @@ const Login = () => {
 
 	return (
 		<CardThemeBackground imgLink={IMGnationalTreasure} registerButtonShown={true} >
-			<p className={styles.cardTitle} >{t('login_and_start_watching')}</p>
-			<form onSubmit={handleSubmit(submitForm)} className={styles.loginForm} >
-				<label >
-					<p>Login</p>
-					<input {...register('login')} className={styles.field} onChange={() => setErrorMessage(' ')} />
-					<h1 className={styles.errorMessage} >{errors.login?.message || ' '} </h1>
-				</label>
-				<label >
-					<p>{t('password')}</p>
-					<input {...register('password')} className={styles.field} onChange={() => setErrorMessage(' ')} type='password' />
-					<h1 className={styles.errorMessage} >{errors.password?.message || ' '} </h1>
-				</label>
-				<button type='submit' onClick={() => setErrorMessage(' ')} className={styles.loginButton} >
-					<h1 className={styles.loginText}>{t('login')}</h1>
-					<BsPlayFill className={`text-[40px]`} />
-				</button>
-				<h1 className={styles.errorMessage}>{errorMessage}</h1>
-			</form>
-			<div className={styles.textCenter} >
-				<h1 onClick={redirectToResetPassword} className={styles.passwordforgotten} >I forgot my password</h1>
-			</div>
-			<Divider><h1>{t('or')}</h1></Divider>
-			<h1 className={styles.continueWith}>{t('continue_with')}</h1>
-			<div className={styles.socialsContainer} >
-				<BsFacebook className={styles.socialMediaIcon} />
-				<ImGoogle3 className={styles.socialMediaIcon} />
-				<img src={IMG42icon} className={styles.icon42} alt='42_icon' />
+			<div className={styles.container} >
+				<p className={styles.cardTitle} >{t('login_and_start_watching')}</p>
+				<form onSubmit={handleSubmit(submitForm)} className={styles.loginForm} >
+					<label >
+						<p>Login</p>
+						<input {...register('login')} className={styles.field} onChange={() => setErrorMessage(' ')} />
+						<h1 className={styles.errorMessage} >{errors.login?.message || ' '} </h1>
+					</label>
+					<label >
+						<p>{t('password')}</p>
+						<input {...register('password')} className={styles.field} onChange={() => setErrorMessage(' ')} type='password' />
+						<h1 className={styles.errorMessage} >{errors.password?.message || ' '} </h1>
+					</label>
+					<button type='submit' onClick={() => setErrorMessage(' ')} className={styles.loginButton} >
+						<h1 className={styles.loginText}>{t('login')}</h1>
+						<BsPlayFill className={`text-[40px]`} />
+					</button>
+					<h1 className={styles.errorMessage}>{errorMessage}</h1>
+				</form>
+				<div className={styles.textCenter} >
+					<h1 onClick={redirectToResetPassword} className={styles.passwordforgotten} >I forgot my password</h1>
+				</div>
+				<Divider><h1>{t('or')}</h1></Divider>
+				<h1 className={styles.continueWith}>{t('continue_with')}</h1>
+				<div className={styles.socialsContainer} >
+					<BsFacebook className={styles.socialMediaIcon} />
+					<ImGoogle3 className={styles.socialMediaIcon} />
+					<img src={IMG42icon} className={styles.icon42} alt='42_icon' />
+				</div>
 			</div>
 		</CardThemeBackground>
 	)

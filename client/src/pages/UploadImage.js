@@ -74,25 +74,28 @@ const UploadImage = () => {
 
 	return (
 		<CardThemeBackground imgLink={IMGvikings}  >
-			<h1 className={styles.title}>{t('one_last_step')}</h1>
-			<h1 className={styles.label} >{t('add_profile_image')}</h1>
-			<div className={styles.changeImageContainer}>
-				<div className={styles.uploadIconContainer} >
-					<label className={styles.uploadIconBackground} onChange={chooseImage} htmlFor='imgUpload' >
-						{isLoading === true
-							? <ReactLoading className={styles.uploadIcon} type='spin' />
-							: <AiOutlineFileImage className={styles.uploadIcon} />
-						}
-						<input hidden id='imgUpload' type='file' />
-					</label>
+			<div className={styles.container} >
+				<h1 className={styles.title}>{t('one_last_step')}</h1>
+				<h1 className={styles.label} >{t('add_profile_image')}</h1>
+				<div className={styles.changeImageContainer}>
+					<div className={styles.uploadIconContainer} >
+						<label className={styles.uploadIconBackground} onChange={chooseImage} htmlFor='imgUpload' >
+							{isLoading === true
+								? <ReactLoading className={styles.uploadIcon} type='spin' />
+								: <AiOutlineFileImage className={styles.uploadIcon} />
+							}
+							<input hidden id='imgUpload' type='file' />
+						</label>
+					</div>
+					<img className={styles.userAvatarImg} src={avatarImage} alt='userImg' onError={displayEmptyAvatar} />
 				</div>
-				<img className={styles.userAvatarImg} src={avatarImage} alt='userImg' onError={displayEmptyAvatar} />
+				<h1 className={styles.errorMessage} >{errorMessage}</h1>
+				<button className={styles.submitButton} onClick={navigateToHome} >
+					<p>{t('start_watching')}</p>
+					<BsPlayFill className={`text-[40px]`} />
+				</button>
+				<div className={styles.balanceDiv} />
 			</div>
-			<h1 className={styles.errorMessage} >{errorMessage}</h1>
-			<button className={styles.submitButton} onClick={navigateToHome} >
-				<p>{t('start_watching')}</p>
-				<BsPlayFill className={`text-[40px]`} />
-			</button>
 		</CardThemeBackground>
 	)
 }
