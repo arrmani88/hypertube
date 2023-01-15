@@ -34,7 +34,7 @@ const DropDownMenu = ({ childs, controller, keyName, className }) => {
 				</h1>
 			</div>
 
-			<div className={styles.dropdownMenu +' '+ (menuState ? styles.shown : styles.hidden)} >
+			<div className={styles.dropdownMenu +' '+ (menuState ? styles.shown : styles.hide)} >
 
 				<div className='flex row items-center font-bold mb-[8px] cursor-pointer' >
 					<div className={styles.item} onClick={() => { changeGenre(null) }} >

@@ -49,7 +49,7 @@ const LanguagesDropdown = () => {
 	return (
 		<div className='languagesDropdown' onClick={() => setMenuState(!menuState)} ref={dropdownRef} >
 			{renderSwitch(i18n.language)}
-			<div className={`dropdownMenu ${menuState ? 'shown' : 'hidden'}`} >
+			<div className={`dropdownMenu ${menuState ? 'shown' : 'hide'}`} >
 				{languages.map((item, idx) => (
 					i18n.language !== item.code &&
 						<div onClick={() => i18n.changeLanguage(item.code)} key={idx}>

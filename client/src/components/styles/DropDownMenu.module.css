@@ -36,7 +36,7 @@
     transition: 500ms ease;
     transform: translateY(0);
 }
-.hidden {
+.hide {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from './styles/Home.module.css'
+import styles from './styles/Home.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideLoading } from '../redux/loadingSlice'
 import axios from 'axios'
@@ -18,6 +18,7 @@ import { BsSearch } from 'react-icons/bs'
 import { IoCloseSharp } from 'react-icons/io5'
 import GlitchClip from 'react-glitch-effect/core/GlitchClip';
 import GlitchText from 'react-glitch-effect/core/GlitchText';
+import VideoTimer from '../components/VideoTimer'
 
 const ytbVariables = {
 	playerVars: {
@@ -41,7 +42,9 @@ const languages = [
 	{ code: 'no', component: <NO className={styles.flag} /> },
 	{ code: 'se', component: <SE className={styles.flag} /> },
 ]
-const ScrollDirection = { up: "up", down: "down" }
+let scrollTimeout = undefined
+let noiseTimeout
+let headervisibilityTimeout
 
 const Home = () => {
 	const dispatch = useDispatch()
@@ -53,15 +56,20 @@ const Home = () => {
 	const [fullScreenState, setFullScreenState] = useState(false)
 	const exitMenuRef = useRef([])
 	const searchRef = useRef([])
-	const [timeCounter, setTimeCounter] = useState()
 	const isLoading = useSelector(state => state.loading.value)
 	const [headerVisibility, setHeaderVisibility] = useState(true)
 	const [noiseVisibility, setNoiseVisibility] = useState(false)
-	// const [elementsVisibility, setElementsVisibility] = useState({
-	// 	header: true,
-	// 	noise: false
-	// })
 
+	const fullScreenMode = (modeState) => {
+		if (modeState === true) {
+			document.body.requestFullscreen()
+			setFullScreenState(true)
+		} else {
+			document.exitFullscreen();
+			setFullScreenState(false)
+		}
+	}
+	// -------------------------- RE WRITE --------------------------
 	useEffect(() => {
 		const getData = async () => {
 			try {
@@ -86,28 +94,6 @@ const Home = () => {
 		}
 		getData()
 	}, []) // eslint-disable-line
-	// useEffect(() => {
-	// 	const onFullScreenChange = () => {
-	// 		console.log('state set to= ', Boolean(document.fullscreenElement))
-	// 		setFullScreenState(document[getFullScreenProp()] != null)
-	// 	}
-	// 	document.addEventListener('fullscreenchange', onFullScreenChange)
-	// 	return () => document.removeEventListener('fullscreenchange', onFullScreenChange)
-	// }, [])
-	// .
-	// function getFullScreenProp() { // gives the prop name for each browser
-	// 	if (typeof document.fullscreenElement !== "undefined") {
-	// 		return "fullscreenElement";
-	// 	} else if (typeof document.mozFullScreenElement !== "undefined") {
-	// 		return "mozFullScreenElement";
-	// 	} else if (typeof document.msFullscreenElement !== "undefined") {
-	// 		return "msFullscreenElement";
-	// 	} else if (typeof document.webkitFullscreenElement !== "undefined") {
-	// 		return "webkitFullscreenElement";
-	// 	} else {
-	// 		throw new Error("fullscreenElement is not supported by this browser");
-	// 	}
-	// }
 	useEffect(() => {
 		var clickInside
 		const handleClick = (e) => {
@@ -122,94 +108,57 @@ const Home = () => {
 		document.addEventListener('mousedown', handleClick)
 		return () => document.removeEventListener('mousedown', handleClick)
 	})
-	useEffect(() => {
-		if (!isLoading) {
-			const startDate = Date.now()
-			const interval = setInterval(() => {
-				setTimeCounter(Date.now() - startDate)
-			}, 120)
-			return () => clearInterval(interval)
-		}
-	}, [isLoading])
-
-	const fullScreenMode = (modeState) => {
-		if (modeState === true) {
-			document.body.requestFullscreen()
-			setFullScreenState(true)
-		} else {
-			document.exitFullscreen();
-			setFullScreenState(false)
-		}
-	}
-
-	// -------------------------------------------------------------
-	const threshold = 10;
-	const [scrollDir, setScrollDir] = useState(ScrollDirection.up)
 
 	useEffect(() => {
-		let previousScrollYPosition = window.scrollY
-		const scrolledMoreThanThreshold = (currentScrollYPosition) => Math.abs(currentScrollYPosition - previousScrollYPosition) > threshold
-		const isScrollingUp = (currentScrollYPosition) => currentScrollYPosition > previousScrollYPosition && !(previousScrollYPosition > 0 && currentScrollYPosition === 0) && !(currentScrollYPosition > 0 && previousScrollYPosition === 0)
+		const displayNoiseAnimation = () => {
+			setNoiseVisibility(true)
+			noiseTimeout = setTimeout(() => { setNoiseVisibility(false) }, (1000))
+			return () => { clearTimeout(noiseTimeout) }
+		}
 
-		const updateScrollDirection = () => {
-			console.log('updatescrolldirection()')
-			const currentScrollYPosition = window.scrollY
-			if (scrolledMoreThanThreshold(currentScrollYPosition)) {
-				const newScrollDirection = isScrollingUp(currentScrollYPosition) ? ScrollDirection.down : ScrollDirection.up
-				setScrollDir(newScrollDirection);
-				if (newScrollDirection === 'down' && headerVisibility) {
-					setNoiseVisibility(true)
-					setHeaderVisibility(false)
-					setTimeout(() => { setNoiseVisibility(false) }, 1000)
-				} else if (newScrollDirection === 'up' && currentScrollYPosition < 10) {
-					setNoiseVisibility(true)
-					setHeaderVisibility(true)
-					setTimeout(() => { setNoiseVisibility(false) }, 1000)
+		const onScroll = (e) => {
+			if (scrollTimeout)
+				clearTimeout(scrollTimeout)
+			scrollTimeout = setTimeout(async () => {
+				console.log('headerVisibility->>>>', headerVisibility)
+
+				if (e.deltaY > 50 && window.scrollY <= 1) {
+					console.log('------------------ setting header to false --------------------')
+					displayNoiseAnimation()
+					headervisibilityTimeout = setTimeout(() => { setHeaderVisibility(false) }, 600)
+					return () => { clearTimeout(headervisibilityTimeout) }
+				} 
+				else if (e.deltaY < -50 && window.scrollY <= 1 && headerVisibility === false) {
+					console.log('------------------ setting header to true --------------------')
+					displayNoiseAnimation()
+					headervisibilityTimeout = setTimeout(() => { setHeaderVisibility(true) }, 600)
+					return () => { clearTimeout(headervisibilityTimeout) }
 				}
-				previousScrollYPosition = currentScrollYPosition > 0 ? currentScrollYPosition : 0
-			}
+			}, 50)
 		}
-		const onScroll = () => window.requestAnimationFrame(updateScrollDirection);
-		window.addEventListener("scroll", onScroll);
-		return () => window.removeEventListener("scroll", onScroll);
-	}, []);
-	// -------------------------------------------------------------
-
-	// useEffect(() => {
-	// 	const handleScroll = () => {
-	// 		if (headerVisibility === true && window.scrollY > 0) {
-	// setNoiseVisibility(true)
-	// setHeaderVisibility(false)
-	// setTimeout(() => { setNoiseVisibility(false) }, 1500)
-
-	// 		} else if (window.scrollY === 0 && headerVisibility === false) {
-	// 			setNoiseVisibility(true)
-	// 			console.log('showing noise ..')
-	// 			setHeaderVisibility(true)
-	// 			console.log('header -> visible')
-	// 			setTimeout(() => { console.log('hiding noise ....'); setNoiseVisibility(false) }, 1500)
-
-	// 		}
-	// 	}
-	// 	window.addEventListener('scroll', handleScroll)
-	// 	return () => { window.removeEventListener('scroll', handleScroll) }
-	// }, [window.scrollY])
+		window.addEventListener('wheel', onScroll);
+		return () => window.removeEventListener("wheel", onScroll);
+	}, [])
 
 	return (
 		movies.isDataLoaded === true &&
-		<div className={styles.container} >
+		<div className={styles.container}>
 
-			<div className={`${headerVisibility ? 'invisible max-h-0' : 'absolute w-full'}`} >
+			{/* ------------------------ CATEGORIES ------------------------ */}
+			<div className={`${headerVisibility ? 'hidden' : 'absolute w-full'}`} >
+				<div className='mt-[150px]' />
 				<Category title='popular' movies={movies.popular} />
 				<Category title='top_rated' movies={movies.latest} />
 				<Category title='latest' movies={movies.topRated} />
-				<Category title='latest' movies={movies.topRated} />
+				{/* ------ */}
+				<Category title='popular' movies={movies.popular} />
+				<Category title='top_rated' movies={movies.latest} />
 				<Category title='latest' movies={movies.topRated} />
 				<div className='mt-[50px]' />
 			</div>
 
-
-			<div className={`${headerVisibility ? 'visible' : 'invisible max-h-0'} ${styles.header}`} >
+			{/* ------------------------ HEADER ------------------------ */}
+			<div className={`${styles.header} ${headerVisibility ? '' : 'invisible'}`} >
 				<ReactPlayer
 					url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
 					playing={true}
@@ -238,41 +187,52 @@ const Home = () => {
 					</a>
 				</div>
 				<div className={styles.bottomTimeCounterContainer}>
-					<GlitchText component='h1' className={styles.vhsFont}>
-						{(Math.floor(timeCounter / 1000 / 60 / 60 % 24)).toString().padStart(2, '0')}
-						:{(Math.floor(timeCounter / 1000 / 60 % 60)).toString().padStart(2, '0')}
-						:{(Math.floor(timeCounter / 1000 % 60)).toString().padStart(2, '0')}
-						:{(timeCounter % 600).toString().padStart(3, '0')}
-						{' '}{movies.headerMovie?.title?.replace(/-|:| |'/g, '_')}
-					</GlitchText>
+					<div className='flex' >
+						<VideoTimer />
+						<GlitchText component='h1' className={styles.vhsFont} >
+							{' '}{movies.headerMovie?.title?.replace(/-|:| |'/g, '_')}
+						</GlitchText>
+					</div>
 					<GlitchText component='h1' className={styles.vhsFont}>
 						PLAY_VHS_MODE_RUNNING
 					</GlitchText>
 				</div>
 				<div className={styles.whiteFrame} />
-
-				<div className={`${noiseVisibility ? 'visible' : 'invisible'}`} >
-					<section></section>
-					<svg>
-						<filter id="noise">
-							<feTurbulence id="turbulence">
-								<animate
-									attributeName="baseFrequency"
-									dur="50s"
-									values="0.9 0.9;0.8 0.8; 0.9 0.9"
-									repeatCount="indefinite"
-								></animate>
-							</feTurbulence>
-							<feDisplacementMap in="SourceGraphic" scale="60"></feDisplacementMap>
-						</filter>
-					</svg>
-				</div>
-
 			</div>
 
+			{/* ------------------------ NAVBAR ------------------------ */}
+			<div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
+				<div className={styles.customNavbarMiddleButtons} >
+					<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/search-movies`}>
+						<h1>Movies</h1>
+					</a>
+					<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
+					<h1>Log out</h1>
+				</div>
+				{menuState ? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} /> : <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />}
+			</div>
 
-
-
+			{/* ------------------------ NOISE ------------------------ */}
+			{/* <div className={`${noiseVisibility ? '' : 'hidden'}`} > */}
+			<div className={``} >
+				<section className={`${styles.noise} ${noiseVisibility ? styles.showTopNoise : styles.hideTopNoise}`} ></section>
+				<section className={`${styles.noise} ${noiseVisibility ? styles.showBtmNoise : styles.hideBtmNoise}`} ></section>
+				{/* <section className={`${styles.noise} ${styles.showBtmNoise}`} ></section> */}
+				{/* <section className={`${styles.noise} ${styles.showTopNoise}`} ></section> */}
+				<svg>
+					<filter id="noise">
+						<feTurbulence id="turbulence">
+							<animate
+								attributeName="baseFrequency"
+								dur="50s"
+								values="0.9 0.9;0.8 0.8; 0.9 0.9"
+								repeatCount="indefinite"
+							></animate>
+						</feTurbulence>
+						<feDisplacementMap in="SourceGraphic" scale="60"></feDisplacementMap>
+					</filter>
+				</svg>
+			</div>
 			{/* ------------------------ MENU ------------------------ */}
 			{menuState &&
 				<div className={styles.menu} >
@@ -310,18 +270,6 @@ const Home = () => {
 					<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('log_out').toUpperCase()}</h1>
 				</div>
 			}
-
-			{/* ------------------------ NAVBAR ------------------------ */}
-			<div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
-				<div className={styles.customNavbarMiddleButtons} >
-					<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/search-movies`}>
-						<h1>Movies</h1>
-					</a>
-					<img className={styles.hypertubeLogo} src={IMGhypertube} alt='hytbLogo' />
-					<h1>Log out</h1>
-				</div>
-				{menuState ? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} /> : <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />}
-			</div>
 
 		</div>
 	)

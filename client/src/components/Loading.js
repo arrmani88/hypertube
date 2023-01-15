@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 const Loading = (props) => {
 	const isLoading = useSelector((state) => state.loading.value)
-	console.log('props.isLoading', isLoading)
+
 	return (
 		<div>
 			{isLoading === true &&

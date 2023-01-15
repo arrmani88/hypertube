@@ -9,6 +9,7 @@
 	align-items: center;
 	overflow: hidden;
 	margin-bottom: 60px;
+	background-color: red;
 }
 .customNavbarButton {
 	color: white;
@@ -16,6 +17,12 @@
 	width: 40px;
 	cursor: pointer;
 }
+// **********************************************************
+// **********************************************************
+// **********************************************************
+// **********************************************************
+// **********************************************************
+// **********************************************************
 .customNavbarContainer {
 	display: flex;
 	width: calc(100vw - 40px);
@@ -35,7 +42,7 @@
 .customNavbarMiddleButtons h1 {
 	font-family: 'Microgamma';
 	color: white;
-	font-size: min(calc(100vw / 65), 30px);
+	font-size: MIN(calc(100vw / 65), 30px);
 	text-align: center;
 	/* font-weight: 600; */
 	padding: 0 30px 0 30px;
@@ -78,20 +85,60 @@
 	border: 20px solid white;
 	pointer-events: none;
 }
-section {
-	position: fixed;
-	height: 100vh;
-	width: 100vw;
 
-	top: -50px;
+
+.noise {
+	position: fixed;
 	left: -50px;
-	width: calc(100% + 50px);
-	height: calc(100% + 50px);
+	width: calc(100% + 100px);
+	height: calc(50% + 100px);
 	background: repeating-linear-gradient(#111, #111 50%, white 50%, white);
 	background-size: 1px 1px;
 	filter: url(#noise);
-	z-index: 50;
 }
+
+
+
+.showTopNoise {
+	top: -60vw;
+	animation: noise-top-animation 500ms forwards ;
+}
+.showBtmNoise {
+	bottom: -60vw;
+	animation: noise-btm-animation 500ms forwards ;
+}
+// ------------------------------------------------------------------------------
+@keyframes noise-top-animation {
+	0% { transform: translateY(0%); }
+	100% { transform: translateY(110%); }
+}
+@keyframes noise-btm-animation {
+	0% { transform: translateY(0%); }
+	100% { transform: translateY(-110%); }
+}
+// ------------------------------------------------------------------------------
+.hideTopNoise {
+	top: -60vw;
+	animation: noise-top-animation-r 500ms ;
+}
+.hideBtmNoise {
+	bottom: -60vw;
+	animation: noise-btm-animation-r 500ms ;
+}
+// -------------------------------------------------------------------------------
+@keyframes noise-top-animation-r {
+	0% { transform: translateY(110%); }
+	100% { transform: translateY(0%); }
+}
+@keyframes noise-btm-animation-r {
+	0% { transform: translateY(-110%); }
+	100% { transform: translateY(0%); }
+}
+
+
+
+
+
 .glitchClip {
 	width: fit-content;
 	scale: 6;
@@ -100,10 +147,6 @@ section {
 	font-family: 'Microgamma';
 	color: white;
 	font-size: calc(100vw / 25 / 8);
-	/* font-size: calc(100vw / 25); */
-	/* scale: 6; */
-	/* scale to increase glitch effect */
-	/* width: 100%; */
 	text-align: center;
 	font-weight: 600;
 	width: fit-content;
@@ -135,10 +178,10 @@ section {
 
 }
 .vhsFont {
-	/* position: absolute; */
 	font-family: "Vcr-osd";
 	color: white;
 	font-size: 40px;
+	white-space: pre-wrap;
 }
 .rating{
 	color: #92a3b8;
@@ -181,12 +224,12 @@ section {
 	top: 0;
 	width: 100vw;
 	height: 100vh;
-	background-color: rgb(0, 0, 0, 0.90);
+	background-color: rgba(0, 0, 0, 0.90);
 }
 .menuTitle {
 	font-family: 'Microgamma';
 	color: white;
-	font-size: min(calc(100vw / 40), 30px);
+	font-size: MIN(calc(100vw / 40), 30px);
 	text-align: center;
 }
 .flagsContainer {
@@ -195,7 +238,6 @@ section {
 	
 }
 .flag {
-	/* padding: 10px; */
 	height: 40px;
 	margin: 10px;
 	cursor: pointer;
@@ -205,7 +247,7 @@ section {
 }
 .searchInput {
 	background-color: #00000000;
-	width: min(80vw, 600px);
+	width: MIN(80vw, 600px);
 	height: 60px;
 	border: 1px white solid;
 	padding: 0 60px 0 25px;
@@ -215,7 +257,7 @@ section {
 .searchIconContainer {
 	pointer-events: none;
 	display: flex;
-	width: min(80vw, 600px);
+	width: MIN(80vw, 600px);
 	justify-content: flex-end;
 }
 .searchIcon {
