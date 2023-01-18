@@ -91,6 +91,7 @@ const Movie = () => {
 							</div>
 							<RedButton text='watch_now' icon={<BsPlayFill />} tailwind={css.redButton} />
 							<img src={movie.sourceYts.large_cover_image} className={css.moviePosterBottom} alt='largeCoverImg' />
+							{/* ---------------------------- DESRIPTION ---------------------------- */}
 							<div className={css.descriptionTop} >
 								<h1 className={css.movieDescription} >
 									{movie.sourceYts.description_intro.length > 350
@@ -104,6 +105,7 @@ const Movie = () => {
 									}
 								</h1>
 							</div>
+							{/* ---------------------------- GENRES ---------------------------- */}
 							<div className={css.movieDetail} >
 								<h1 className={css.detailTitle} >{t('genres')}</h1>
 								<div className={css.movieGenresContainer} >
@@ -113,25 +115,30 @@ const Movie = () => {
 										</div>
 									))}
 								</div>
-							</div> {/* -------------------------------------------------------------------------------------- */}
+							</div> 
+							{/* -------------------------------------------------------------------------------------- */}
 							<div className={css.movieDetail} >
 								<h1 className={css.detailTitle} >{t('language')}</h1>
 								<h1 className={css.flag} >{localeEmoji('en')}</h1>
-							</div> {/* -------------------------------------------------------------------------------------- */}
+							</div>
+							{/* -------------------------------------------------------------------------------------- */}
 							{movie.sourceTmdb &&
 								<div className={css.movieDetail} >
 									<h1 className={css.detailTitle} >{t('adult')}</h1>
 									<h1 className={css.detailContent + ' scale-150'}>{movie.sourceTmdb.adult ? '✅' : '❌'}</h1>
 								</div>
-							} {/* -------------------------------------------------------------------------------------- */}
+							}
+							{/* -------------------------------------------------------------------------------------- */}
 							<div className={css.movieDetail} >
 								<h1 className={css.detailTitle} >{t('duration')}</h1>
 								<h1 className={css.detailContent}>{(movie.sourceYts.runtime === 0 || !(movie.sourceYts.runtime)) ? (movie.sourceTmdb && movie.sourceTmdb.runtime !== 0 ? movie.sourceTmdb.runtime + ' min' : t('unknown')) : movie.sourceYts.runtime + ' min'}</h1>
-							</div> {/* -------------------------------------------------------------------------------------- */}
+							</div>
+							{/* -------------------------------------------------------------------------------------- */}
 							<div className={css.movieDetail} >
 								<h1 className={css.detailTitle} >{t('released')}</h1>
 								<h1 className={css.detailContent}>{movie.sourceTmdb ? new Date(movie.sourceTmdb.release_date).toLocaleString(i18n.language, dateFormat) : t('unknown')}</h1>
-							</div> {/* -------------------------------------------------------------------------------------- */}
+							</div>
+							{/* -------------------------------------------------------------------------------------- */}
 						</div>
 					</div>
 					<div className={css.descriptionBottom} >

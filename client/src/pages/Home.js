@@ -57,7 +57,9 @@ const Home = () => {
 	const navigate = useNavigate()
 	const [movies, setMovies] = useState({})
 	const [menuState, setMenuState] = useState(false)
-	var headerMovie
+	let headerMovie
+	let card3dMovie
+	let randomIndex
 	const [fullScreenState, setFullScreenState] = useState(false)
 	const exitMenuRef = useRef([])
 	const searchRef = useRef([])
@@ -80,12 +82,21 @@ const Home = () => {
 			try {
 				await Promise.all([
 					axios.get(requests.requestPopular).then(async rsp => {
-						headerMovie = rsp.data.data.movies[Math.floor(Math.random() * rsp.data.data.movies.length)]
-						await axios.get(`https://api.themoviedb.org/3/movie/${headerMovie.imdb_code}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`).then(resp => {
-							// console.log(headerMovie)
-							headerMovie.backdropImage = `https://image.tmdb.org/t/p/original/${resp.data.backdrop_path}`
-							setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
-						})
+						randomIndex = Math.floor(Math.random() * rsp.data.data.movies.length)
+						headerMovie = rsp.data.data.movies[randomIndex]
+						card3dMovie = rsp.data.data.movies[(randomIndex === 0 ? 1 : randomIndex - 1)]
+						await Promise.all([
+							axios.get(`https://api.themoviedb.org/3/movie/${headerMovie.imdb_code}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`).then(resp => {
+								headerMovie.backdropImage = `https://image.tmdb.org/t/p/original/${resp.data.backdrop_path}`
+								setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
+							}),
+							axios.get(`https://yts.mx/api/v2/movie_details.json?imdb_id=${card3dMovie.imdb_code}&with_images=true`).then( async (respo) => {
+								setMovies(prvState => ({ ...prvState, card3dMovie: { sourceYts: respo.data.data.movie } }))
+								await axios.get(`https://api.themoviedb.org/3/movie/${card3dMovie.imdb_code}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`).then(r => {
+									setMovies(prevState => ({ ... prevState, card3dMovie: { sourceYts: prevState.card3dMovie.sourceYts, sourceTmdb: r.data } }))
+								}).catch(error => error)
+							})
+						])
 					}),
 					axios.get(requests.requestLatest).then(rsp => { setMovies(prevState => ({ ...prevState, latest: rsp.data.data.movies })) }),
 					axios.get(requests.requestTopRated).then(rsp => { setMovies(prevState => ({ ...prevState, topRated: rsp.data.data.movies })) }),
@@ -152,8 +163,8 @@ const Home = () => {
 		<div className={styles.container}>
 			{/* ------------------- FILM PREVIEW --------------------- */}
 			<div className={styles.moviePreviewContainer} >
-				<img src={IMGmoviesWall} className={styles.moviesWall} />
-				<FilmPreview />
+				{/* <img src={IMGmoviesWall} className={styles.moviesWall} /> */}
+				<FilmPreview movie={movies.card3dMovie} />
 			</div>
 			{/* ------------------------ CATEGORIES ------------------------ */}
 			<div className={`${headerVisibility ? 'hidden' : 'w-full'}`} >
