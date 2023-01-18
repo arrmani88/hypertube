@@ -235,7 +235,8 @@ const FilmPreview = ({ movie }) => {
 						{movie.sourceTmdb &&
 							<MovieDetailContainer>
 								<MovieDetailTitle>{t('adult')}</MovieDetailTitle>
-								<h1 className={css.detailContent + ' scale-150'}>{movie.sourceTmdb.adult ? '✅' : '❌'}</h1>
+								{/* <h1 className={css.detailContent + ' scale-150'}>{movie.sourceTmdb.adult ? '✅' : '❌'}</h1> */}
+								<MovieDetailContent>{movie.sourceTmdb.adult ? '✅' : '❌'}</MovieDetailContent>
 							</MovieDetailContainer>
 						}
 						{/* -------------------------------------------------------------------------------------- */}
