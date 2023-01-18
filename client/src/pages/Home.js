@@ -20,6 +20,9 @@ import GlitchClip from 'react-glitch-effect/core/GlitchClip';
 import GlitchText from 'react-glitch-effect/core/GlitchText';
 import VideoTimer from '../components/VideoTimer'
 import IMGarrowVhs from '../images/arrow_vhs.png'
+import IMGmoviesWall from '../images/curved_movies_wall.png'
+import FilmPreview from '../components/FilmPreview'
+
 
 const ytbVariables = {
 	playerVars: {
@@ -58,8 +61,7 @@ const Home = () => {
 	const [fullScreenState, setFullScreenState] = useState(false)
 	const exitMenuRef = useRef([])
 	const searchRef = useRef([])
-	const isLoading = useSelector(state => state.loading.value)
-	const [headerVisibility, setHeaderVisibility] = useState(true)
+	const [headerVisibility, setHeaderVisibility] = useState(false)  /*change header to true */
 	const [noiseVisibility, setNoiseVisibility] = useState(false)
 
 	// ----------------------------------- SET FULL SCREEN MODE -----------------------------------
@@ -72,7 +74,6 @@ const Home = () => {
 			setFullScreenState(false)
 		}
 	}
-
 	// ----------------------------------- GET MOVIES DATA -----------------------------------
 	useEffect(() => {
 		const getData = async () => {
@@ -98,7 +99,6 @@ const Home = () => {
 		}
 		getData()
 	}, []) // eslint-disable-line
-
 	// ----------------------------------- EXIT MENU USEEFFECT -----------------------------------
 	useEffect(() => {
 		var clickInside
@@ -114,8 +114,7 @@ const Home = () => {
 		document.addEventListener('mousedown', handleClick)
 		return () => document.removeEventListener('mousedown', handleClick)
 	})
-
-	// ----------------------------------- HANDLE SCROLL USEEFFECT -----------------------------------
+	// ------------------------------- HANDLE SHOW/HEADER SCROLL -------------------------------
 	useEffect(() => {
 		const displayNoiseAnimation = () => {
 			setNoiseVisibility(true)
@@ -129,16 +128,16 @@ const Home = () => {
 				if (e.deltaY > 100 && window.scrollY <= 1) {
 					displayNoiseAnimation()
 					headervisibilityTimeout = setTimeout(() => {
-						isHeaderVisible = false
-						setHeaderVisibility(false)
+						// isHeaderVisible = false /*change header to true */
+						// setHeaderVisibility(false) /*change header to true */
 					}, 650)
 					return () => { clearTimeout(headervisibilityTimeout) }
 				}
 				else if (e.deltaY < -100 && window.scrollY <= 1 && isHeaderVisible === false) {
 					displayNoiseAnimation()
 					headervisibilityTimeout = setTimeout(() => {
-						isHeaderVisible = true
-						setHeaderVisibility(true)
+						// isHeaderVisible = true /*change header to true */
+						// setHeaderVisibility(true) /*change header to true */
 					}, 650)
 					return () => { clearTimeout(headervisibilityTimeout) }
 				}
@@ -151,16 +150,19 @@ const Home = () => {
 	return (
 		movies.isDataLoaded === true &&
 		<div className={styles.container}>
-
+			{/* ------------------- FILM PREVIEW --------------------- */}
+			<div className={styles.moviePreviewContainer} >
+				<img src={IMGmoviesWall} className={styles.moviesWall} />
+				<FilmPreview />
+			</div>
 			{/* ------------------------ CATEGORIES ------------------------ */}
-			<div className={`${headerVisibility ? 'hidden' : 'absolute w-full'}`} >
+			<div className={`${headerVisibility ? 'hidden' : 'w-full'}`} >
 				<div className='mt-[150px]' />
 				<Category title='popular' movies={movies.popular} />
 				<Category title='top_rated' movies={movies.latest} />
 				<Category title='latest' movies={movies.topRated} />
 				<div className='mt-[50px]' />
 			</div>
-
 			{/* ------------------------ HEADER ------------------------ */}
 			<div className={`${styles.header} ${headerVisibility ? '' : 'invisible'}`} >
 				<ReactPlayer
@@ -181,7 +183,6 @@ const Home = () => {
 							<BsSearch type='submit' className={styles.searchIcon} />
 						</form>
 					</div> */}
-
 					<GlitchClip className={`${styles.glitchClip} ${styles.scaleMovieTitleOnHover} `} duration={2000} >
 						<GlitchText component='h1' className={styles.movieTitle}>
 							{movies.headerMovie.title.toUpperCase()}
@@ -199,12 +200,7 @@ const Home = () => {
 					</a>
 				</div>
 				<div className={styles.bottomTimeCounterContainer}>
-					{/* <div className='flex' > */}
 					<VideoTimer />
-					{/* <GlitchText component='h1' className={styles.vhsFont} >
-							{' '}{movies.headerMovie?.title?.replace(/-|:| |'/g, '_')}
-						</GlitchText> */}
-					{/* </div> */}
 					<div className={styles.bottomArrowContainer} >
 						<GlitchClip duration={1500} className='flex justify-center items-center' >
 							<GlitchText component='h1' className={styles.vhsFont}>SCROLL</GlitchText>
@@ -217,9 +213,9 @@ const Home = () => {
 				</div>
 				<div className={styles.whiteFrame} />
 			</div>
-
 			{/* ------------------------ NAVBAR ------------------------ */}
-			<div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />}
+			<div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit className={styles.customNavbarButton} /> : <BsFullscreen className={styles.customNavbarButton} />}
+				{/* <div className={styles.customNavbarContainer} >{fullScreenState ? <BsFullscreenExit onClick={() => { fullScreenMode(false) }} className={styles.customNavbarButton} /> : <BsFullscreen onClick={() => { fullScreenMode(true) }} className={styles.customNavbarButton} />} */}
 				<div className={styles.customNavbarMiddleButtons} >
 					<a href={`${process.env.REACT_APP_CLIENT_HOSTNAME}/search-movies`}>
 						<h1>Movies</h1>
@@ -229,9 +225,8 @@ const Home = () => {
 				</div>
 				{menuState ? <IoCloseSharp onClick={() => { setMenuState(false) }} className={styles.customNavbarButton} /> : <AiOutlineMenu onClick={() => { setMenuState(true) }} className={styles.customNavbarButton} />}
 			</div>
-
 			{/* ------------------------ NOISE ------------------------ */}
-			<div >
+			<div className='absolute' >
 				<div className={noiseVisibility ? styles.showAnimationBlackFilter : styles.hideAnimationBlackFilter} />
 				<section className={`${styles.noise} ${noiseVisibility ? styles.showTopNoise : styles.hideTopNoise}`} ></section>
 				<section className={`${styles.noise} ${noiseVisibility ? styles.showBtmNoise : styles.hideBtmNoise}`} ></section>
@@ -286,7 +281,6 @@ const Home = () => {
 					<h1 ref={elem => exitMenuRef.current[4] = elem} className={`cursor-pointer ${styles.menuTitle}`}>{t('log_out').toUpperCase()}</h1>
 				</div>
 			}
-
 		</div>
 	)
 }
@@ -294,4 +288,4 @@ const Home = () => {
 export default Home
 
 // vhs effect
-
+/*change header to true */
