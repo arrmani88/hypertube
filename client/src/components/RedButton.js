@@ -7,7 +7,7 @@ const RedButton = ({onClick, icon, text, tailwind}) => {
 
 	return (
 		// <button onClick={onClick} className={'button ' + tailwind??''} >
-		<button onClick={onClick} className={'button ' + tailwind??''} >
+		<button onClick={onClick} className={(tailwind??'') + ' tw-button'} >
 			<h1>{t(text)}</h1>
 			{icon}
 		</button>
