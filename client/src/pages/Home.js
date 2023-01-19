@@ -23,7 +23,6 @@ import IMGarrowVhs from '../images/arrow_vhs.png'
 import IMGmoviesWall from '../images/curved_movies_wall.png'
 import FilmPreview from '../components/FilmPreview'
 
-
 const ytbVariables = {
 	playerVars: {
 		// modestbranding: 1, // hide ytb logo// autoplay: 1,
@@ -161,7 +160,7 @@ const Home = () => {
 	return (
 		movies.isDataLoaded === true &&
 		<div className={styles.container}>
-			{/* ------------------- FILM PREVIEW --------------------- */}
+			{/* ------------------- FILM 3D CARD --------------------- */}
 			<div className={styles.moviePreviewContainer} >
 				{/* <img src={IMGmoviesWall} className={styles.moviesWall} /> */}
 				<FilmPreview movie={movies.card3dMovie} />

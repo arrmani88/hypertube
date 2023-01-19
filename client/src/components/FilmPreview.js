@@ -5,6 +5,8 @@ import { ImDownload3 } from 'react-icons/im'
 import { AiFillHeart } from 'react-icons/ai'
 import localeEmoji from 'locale-emoji'
 import i18n from "i18next"
+import RedButton from './RedButton'
+import { BsPlayFill } from 'react-icons/bs'
 
 import styled from '@emotion/styled';
 import { animate, motion, useMotionValue, useTransform } from 'framer-motion';
@@ -17,6 +19,7 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  max-width: 2000px;
   overflow: hidden;
   perspective: 1000px;
 `;
@@ -47,29 +50,31 @@ const GlassWall = styled.div`
 	align-items: center;
 	position: relative;
 	width: 55%;
-	height: 25%;
+	height: 27%;
 	border: 1px solid rgba(200 200 200 / 0.2);
 	transform: translateZ(275px);
 	border-radius: 20px;
 	backdrop-filter: blur(10px) brightness(55%);
 	bottom: -7%;
 	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+	padding-left: 4%;
 `
 const PosterImageContainer = styled.div`
-	position: absolute;
 	width: 100%;
 	height: 100%;
 	padding-left: 10%;
+	margin-bottom: 30px;
 `
 const PosterImage = styled.img`
-	width: 150px;
+	width: 220px;
 	top: -23%;
 	position: relative;
 	border-radius: 20px;
 	box-shadow: rgb(0,0,0) -15px 20px 30px -4px;
 `
 const DetailsContainer = styled.div`
-	padding-left: calc(10% + 150px + 30px);
+	/* padding-left: calc(10% + 150px + 30px); */
+	padding-left: 40px;
 	padding-top: 20px;
 	display: flex;
 	flex-direction: column;
@@ -77,9 +82,10 @@ const DetailsContainer = styled.div`
 	height: 100%;
 	width: 100%;
 	color: white;
+	/* display: none; */
 `
 const Title = styled.h1`
-	font-size: 25px;
+	font-size: 30px;
 	font-family: 'Microgamma';
 	font-weight: 600;
 	text-shadow: 0 1px 0 #999;
@@ -99,6 +105,7 @@ const MovieDetailTitle = styled.h1`
 	height: 100%;
 	text-shadow: -2px 9px 6px rgb(0 0 0);
 	padding-right: 20px;
+	min-width: 125px;
 `
 const Genres = styled.div`
 	display: flex;
@@ -118,19 +125,17 @@ const Genre = styled.div`
 	height: 15px;
 	color: white;
 	padding: 15px 25px 15px 25px;
-	/* margin: 0 15px 5px 0; */
-	margin: 0 15px 0 0;
+	margin: 0 5px 5px 0;
 	box-shadow: 2px 8px 14px -1px rgb(0 0 0);
 `
 const MovieStatisticsContainer = styled.div`
 	display: flex;
 	align-items: flex-start;
 	width: fit-content;
-	/* padding-bottom: 8px; */
 	text-shadow: 3px 9px 6px rgb(0 0 0);
 `
 const MovieStat = styled.h1`
-	font-size: 20px;
+	font-size: 17px;
 	color: white;
 `
 const Separator = styled.h1`
@@ -138,7 +143,7 @@ const Separator = styled.h1`
 	font-size: 25px;
 `
 const ImdbLogo = styled.img`
-	width: 60px;
+	width: 40px;
 	margin-right: 10px;
 	box-shadow: 2px 8px 14px -1px rgb(0 0 0);
 `
@@ -153,6 +158,15 @@ const MovieDetailContainer = styled.div`
 const MovieDetailContent = styled.h1`
 	font-size: 15px;
 	color: white;
+	text-shadow: 3px 9px 6px rgb(0 0 0);
+	${props => props.scale && `scale: ${props.scale};`}
+`
+const ImageAndButtonsContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	top: -105px;
+    position: relative;
+	/* width: 100%; */
 `
 
 
@@ -195,9 +209,12 @@ const FilmPreview = ({ movie }) => {
 				<BackdropImage src={getDataSource('backdrop_path')} />
 				<Card ref={cardRef} />
 				<GlassWall>
-					<PosterImageContainer>
-						<PosterImage src={movie.sourceYts.large_cover_image} />
-					</PosterImageContainer>
+					<ImageAndButtonsContainer>
+						<PosterImageContainer>
+							<PosterImage src={movie.sourceYts.large_cover_image} />
+						</PosterImageContainer>
+						<RedButton text={t('play')} tailwind={'text-[15px] h-[10px]'} icon={<BsPlayFill />}/>
+					</ImageAndButtonsContainer>
 					<DetailsContainer>
 						<Title>{movie.sourceYts.title.toUpperCase()}</Title>
 						<MovieStatisticsContainer>
@@ -216,26 +233,16 @@ const FilmPreview = ({ movie }) => {
 								<MovieStat>{getDataSource('popularity')}</MovieStat>
 							</div>
 						</MovieStatisticsContainer>
-						<GenresContainer>
-							<div className='flex'>
-								<MovieDetailTitle>{t('genres')}</MovieDetailTitle>
-								<Genres>
-									{movie.sourceYts.genres.map(genre => (
-										<Genre key={genre}>{genre}</Genre>
-									))}
-								</Genres>
-							</div>
-						</GenresContainer>
 						{/* -------------------------------------------------------------------------------------- */}
 						<MovieDetailContainer>
 							<MovieDetailTitle>{t('language')}</MovieDetailTitle>
-							<h1 className={css.flag} >{localeEmoji('en')}</h1>
+							<div className='ml-[8px]' />
+							<MovieDetailContent scale={2.3} >{localeEmoji('en')}</MovieDetailContent>
 						</MovieDetailContainer>
 						{/* -------------------------------------------------------------------------------------- */}
 						{movie.sourceTmdb &&
 							<MovieDetailContainer>
 								<MovieDetailTitle>{t('adult')}</MovieDetailTitle>
-								{/* <h1 className={css.detailContent + ' scale-150'}>{movie.sourceTmdb.adult ? '✅' : '❌'}</h1> */}
 								<MovieDetailContent>{movie.sourceTmdb.adult ? '✅' : '❌'}</MovieDetailContent>
 							</MovieDetailContainer>
 						}
@@ -250,6 +257,16 @@ const FilmPreview = ({ movie }) => {
 							<MovieDetailContent>{movie.sourceTmdb ? new Date(movie.sourceTmdb.release_date).toLocaleString(i18n.language, dateFormat) : t('unknown')}</MovieDetailContent>
 						</MovieDetailContainer>
 						{/* -------------------------------------------------------------------------------------- */}
+						<GenresContainer>
+							<div className='flex'>
+								<MovieDetailTitle>{t('genres')}</MovieDetailTitle>
+								<Genres>
+									{movie.sourceYts.genres.map(genre => (
+										<Genre key={genre}>{genre}</Genre>
+									))}
+								</Genres>
+							</div>
+						</GenresContainer>
 					</DetailsContainer>
 				</GlassWall>
 			</RotationWrapper>

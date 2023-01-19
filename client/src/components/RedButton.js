@@ -6,6 +6,7 @@ const RedButton = ({onClick, icon, text, tailwind}) => {
 	const { t } = useTranslation()
 
 	return (
+		// <button onClick={onClick} className={'button ' + tailwind??''} >
 		<button onClick={onClick} className={'button ' + tailwind??''} >
 			<h1>{t(text)}</h1>
 			{icon}
