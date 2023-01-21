@@ -48,7 +48,8 @@ const languages = [
 let scrollTimeout = undefined
 let noiseTimeout
 let headervisibilityTimeout
-let isHeaderVisible = true
+let currentIndexVariable = 0
+let pauseScrollWhileAnimation = 0
 
 const Home = () => {
 	const dispatch = useDispatch()
@@ -62,7 +63,7 @@ const Home = () => {
 	const [fullScreenState, setFullScreenState] = useState(false)
 	const exitMenuRef = useRef([])
 	const searchRef = useRef([])
-	const [headerVisibility, setHeaderVisibility] = useState(false)  /*change header to true */
+	const [currentPageIndex, setCurrentPageIndex] = useState(0)
 	const [noiseVisibility, setNoiseVisibility] = useState(false)
 
 	// ----------------------------------- SET FULL SCREEN MODE -----------------------------------
@@ -135,23 +136,30 @@ const Home = () => {
 			if (scrollTimeout)
 				clearTimeout(scrollTimeout)
 			scrollTimeout = setTimeout(async () => {
-				if (e.deltaY > 100 && window.scrollY <= 1) {
+				if (e.deltaY > 100 && currentIndexVariable < 2 && !pauseScrollWhileAnimation) {  // scrolla lte7t
+					pauseScrollWhileAnimation = 1
 					displayNoiseAnimation()
+					currentIndexVariable += 1
 					headervisibilityTimeout = setTimeout(() => {
-						// isHeaderVisible = false /*change header to true */
-						// setHeaderVisibility(false) /*change header to true */
+						setCurrentPageIndex(currentIndexVariable)
+						pauseScrollWhileAnimation = 0
+						console.log(currentIndexVariable)
 					}, 650)
 					return () => { clearTimeout(headervisibilityTimeout) }
 				}
-				else if (e.deltaY < -100 && window.scrollY <= 1 && isHeaderVisible === false) {
+				else if (e.deltaY < -100 && currentIndexVariable > 0 && !pauseScrollWhileAnimation) {  // scrolla lfo9
+					pauseScrollWhileAnimation = 1
 					displayNoiseAnimation()
+					currentIndexVariable -= 1 
 					headervisibilityTimeout = setTimeout(() => {
-						// isHeaderVisible = true /*change header to true */
-						// setHeaderVisibility(true) /*change header to true */
+						setCurrentPageIndex(currentIndexVariable)
+						pauseScrollWhileAnimation = 0
+						console.log(currentIndexVariable)
 					}, 650)
 					return () => { clearTimeout(headervisibilityTimeout) }
 				}
-			}, 70)
+			}, 0)
+			// }, 70)
 		}
 		window.addEventListener('wheel', onScroll);
 		return () => window.removeEventListener("wheel", onScroll);
@@ -161,12 +169,15 @@ const Home = () => {
 		movies.isDataLoaded === true &&
 		<div className={styles.container}>
 			{/* ------------------- FILM 3D CARD --------------------- */}
-			<div className={styles.moviePreviewContainer} >
-				{/* <img src={IMGmoviesWall} className={styles.moviesWall} /> */}
+			<div className={currentPageIndex === 1 ? styles.moviePreviewContainer : 'hidden'} >
+				<img src={IMGmoviesWall} className={styles.moviesWall} />
 				<FilmPreview movie={movies.card3dMovie} />
+				{/* <div className={styles.wrp} >
+					<div className={styles.dotted} />
+				</div> */}
 			</div>
 			{/* ------------------------ CATEGORIES ------------------------ */}
-			<div className={`${headerVisibility ? 'hidden' : 'w-full'}`} >
+			<div className={`${currentPageIndex === 2 ? 'w-full' : 'hidden'}`} >
 				<div className='mt-[150px]' />
 				<Category title='popular' movies={movies.popular} />
 				<Category title='top_rated' movies={movies.latest} />
@@ -174,7 +185,7 @@ const Home = () => {
 				<div className='mt-[50px]' />
 			</div>
 			{/* ------------------------ HEADER ------------------------ */}
-			<div className={`${styles.header} ${headerVisibility ? '' : 'invisible'}`} >
+			<div className={`${styles.header} ${currentPageIndex === 0 ? '' : 'invisible'}`} >
 				<ReactPlayer
 					url={`https://www.youtube.com/embed/${movies.headerMovie.yt_trailer_code}`}
 					playing={true}

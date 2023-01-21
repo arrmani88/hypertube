@@ -197,7 +197,7 @@ const FilmPreview = ({ movie }) => {
 		window.addEventListener('mousemove', handleMouseMove);
 		return () => { window.removeEventListener('mousemove', handleMouseMove) }
 	}, []);
-	console.log(movie)
+
 	const getDataSource = (dataName) => {
 		if (dataName === 'backdrop_path') return movie.sourceTmdb ? `https://image.tmdb.org/t/p/original${movie.sourceTmdb.backdrop_path}` : movie.sourceYts.large_screenshot_image1
 		if (dataName === 'popularity') return movie.sourceTmdb ? movie.sourceTmdb.popularity.toFixed() : movie.sourceYts.like_count
