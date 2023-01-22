@@ -172,9 +172,6 @@ const Home = () => {
 			<div className={currentPageIndex === 1 ? styles.moviePreviewContainer : 'hidden'} >
 				<img src={IMGmoviesWall} className={styles.moviesWall} />
 				<FilmPreview movie={movies.card3dMovie} />
-				{/* <div className={styles.wrp} >
-					<div className={styles.dotted} />
-				</div> */}
 			</div>
 			{/* ------------------------ CATEGORIES ------------------------ */}
 			<div className={`${currentPageIndex === 2 ? 'w-full' : 'hidden'}`} >
