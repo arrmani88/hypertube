@@ -1,28 +1,42 @@
-import React from 'react'
-import './styles/Category.css'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import './styles/Category.scss'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import { useTranslation } from 'react-i18next'
 import styles from '../pages/styles/SearchMovies.module.scss'
 import emptyMovieImage from '../images/empty_movie_image.jpeg'
 import imdbLogo from '../images/imdb_logo.png'
 import { BsPlayFill } from 'react-icons/bs'
+import styled, { keyframes } from 'styled-components'
 
-const Category = ({ title, movies }) => {
+const scrollAnimation = (reverse) => keyframes`
+	0% { transform: translateX(${reverse ? '-50%' : '0%'}); }
+	100% { transform: translateX(${reverse ? '0%' : '-50%'}); }
+`
+const Scroll = styled.div`
+	display: flex;
+	flex-direction: row;
+	animation: ${props => scrollAnimation(props.reverse)} 250s linear infinite;
+	&:hover {
+		animation-play-state: paused;
+	}
+`
+
+const Category = ({ title, movies, reverse }) => {
 	const { t } = useTranslation()
-
 	const scroll = (size) => {
 		var slider = document.getElementById(`slider${title}`)
 		slider.scrollLeft = slider.scrollLeft + size
 	}
+	const arrayOfDuplicatedMovies = [...movies, ...movies] // 3la 9bel infinite scroll animation
 
 	return (
 		movies === [] ? <div /> :
-			<div>
+			<>
 				<h2 className='title'>{t(title)}</h2>
 				<div className='container' id={`slider${title}`}>
-
-					<div className='flex row'>
-						{movies.map((movie, index) => (
+					<Scroll reverse={reverse} >
+						{arrayOfDuplicatedMovies.map((movie, index) => (
 							<div className={styles.movie} key={index}>
 								<div className={styles.thumbnail} >
 									<img className={styles.movieImage} src={movie.medium_cover_image} onError={(err) => { err.target.src = emptyMovieImage }} alt={movie.title} />
@@ -40,7 +54,7 @@ const Category = ({ title, movies }) => {
 								</div>
 								<h1 className={styles.movieTitle} key={`${movie.title}`}>{movie.title.substring(0, 40) + (movie.title.length > 40 ? '...' : '')}</h1>
 								{movie.rating > 0
-									? <div className='flex row' >
+									? <div className='flex row'>
 										<img src={imdbLogo} className='h-[22px] mr-[5px]' />
 										<h1 className={styles.rating}>{movie.rating}</h1>
 									</div>
@@ -48,21 +62,18 @@ const Category = ({ title, movies }) => {
 								}
 							</div>
 						))}
-					</div>
-
-					<button className='arrowScrollBkgr left-0' onClick={() => scroll(-window.innerWidth * 0.65)}>
+					</Scroll>
+					<div className='bordersGradient flipEffect left-0' />
+					<div className='bordersGradient right-0' />
+					{/* <button className='arrowScrollBkgr left-0' onClick={() => scroll(-window.innerWidth * 0.65)}>
 						<MdChevronLeft className='arrowScroll' />
 					</button>
 					<button className='arrowScrollBkgr right-0' onClick={() => scroll(window.innerWidth * 0.65)}>
 						<MdChevronRight className='arrowScroll' />
-					</button>
+					</button> */}
 				</div>
-			</div>
+			</>
 	)
 }
 
 export default Category
-
-// {movies.map((movie) => (
-// 	<img key={`${movie?.id}`} className='thumbnail' src={movie?.medium_cover_image} alt={movie?.title} />
-// ))}

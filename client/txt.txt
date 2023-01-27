@@ -50,3 +50,19 @@ fullscreen
 card themebackgrnd to be responsv
 remove button to delete the profile image from :3000/user
 
+
+// import styled from 'styled-components';
+// 
+// const withAs = (WrappedComponent, defaultAs = 'div') => {
+//     return (props) => {
+//         return <WrappedComponent {...props} as={props.as || defaultAs} />
+//     }
+// }
+// 
+// const StyledButton = styled.button`
+//   /* styles for the button */
+// `;
+// 
+// const DefaultButton = withAs(StyledButton);
+// 
+// const LinkButton = withAs(StyledButton, 'a');

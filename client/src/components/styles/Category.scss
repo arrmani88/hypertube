@@ -21,21 +21,21 @@
 .container::-webkit-scrollbar {
 	display: none;
 }
-/* .thumbnail {
-    display: inline-block;
-    min-width: 289px;
-    margin: 50px 10px 50px 10px;
-    transition-duration: 300ms;
-    transition-timing-function: ease-in-out;
-    border-radius: 30px;
+.thumbnail {
+	display: flex;
+	position: relative;
+	height: 331px;
+	border-radius: 30px;
+	overflow: hidden;
+	transition-duration: 130ms;
+	transition-timing-function: ease-in-out;
 }
 .thumbnail:hover {
 	scale: 1.23;
-	transition-duration: 300ms;
+	z-index: 5;
+	transition-duration: 130ms;
 	transition-timing-function: ease-in-out;
-	z-index: 3;
-} */
-
+}
 .arrowScroll {
 	height: 60px;
 	width: 60px;
@@ -58,6 +58,16 @@
 }
 .arrowScrollBkgr:hover {
 	opacity: 1;
+}
+.bordersGradient {
+	position: absolute;
+	background: linear-gradient(91deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 2%, rgba(0,0,0,0.4374343487394958) 20%, rgba(0,0,0,1) 81%, rgba(0,0,0,1) 100%);
+	width: 15vw;
+	height: 32%;
+}
+.flipEffect {
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
 }
 
 @media only screen and (max-width: 600px) {

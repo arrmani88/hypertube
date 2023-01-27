@@ -48,7 +48,7 @@ const languages = [
 let scrollTimeout = undefined
 let noiseTimeout
 let headervisibilityTimeout
-let currentIndexVariable = 0
+let currentIndexVariable = 1
 let pauseScrollWhileAnimation = 0
 
 const Home = () => {
@@ -63,7 +63,7 @@ const Home = () => {
 	const [fullScreenState, setFullScreenState] = useState(false)
 	const exitMenuRef = useRef([])
 	const searchRef = useRef([])
-	const [currentPageIndex, setCurrentPageIndex] = useState(0)
+	const [currentPageIndex, setCurrentPageIndex] = useState(1)
 	const [noiseVisibility, setNoiseVisibility] = useState(false)
 
 	// ----------------------------------- SET FULL SCREEN MODE -----------------------------------
@@ -90,10 +90,10 @@ const Home = () => {
 								headerMovie.backdropImage = `https://image.tmdb.org/t/p/original/${resp.data.backdrop_path}`
 								setMovies(prevState => ({ ...prevState, popular: rsp.data.data.movies, headerMovie }))
 							}),
-							axios.get(`https://yts.mx/api/v2/movie_details.json?imdb_id=${card3dMovie.imdb_code}&with_images=true`).then( async (respo) => {
+							axios.get(`https://yts.mx/api/v2/movie_details.json?imdb_id=${card3dMovie.imdb_code}&with_images=true`).then(async (respo) => {
 								setMovies(prvState => ({ ...prvState, card3dMovie: { sourceYts: respo.data.data.movie } }))
 								await axios.get(`https://api.themoviedb.org/3/movie/${card3dMovie.imdb_code}?api_key=${process.env.REACT_APP_TMDB_TOKEN}`).then(r => {
-									setMovies(prevState => ({ ... prevState, card3dMovie: { sourceYts: prevState.card3dMovie.sourceYts, sourceTmdb: r.data } }))
+									setMovies(prevState => ({ ...prevState, card3dMovie: { sourceYts: prevState.card3dMovie.sourceYts, sourceTmdb: r.data } }))
 								}).catch(error => error)
 							})
 						])
@@ -150,7 +150,7 @@ const Home = () => {
 				else if (e.deltaY < -100 && currentIndexVariable > 0 && !pauseScrollWhileAnimation) {  // scrolla lfo9
 					pauseScrollWhileAnimation = 1
 					displayNoiseAnimation()
-					currentIndexVariable -= 1 
+					currentIndexVariable -= 1
 					headervisibilityTimeout = setTimeout(() => {
 						setCurrentPageIndex(currentIndexVariable)
 						pauseScrollWhileAnimation = 0
@@ -172,12 +172,20 @@ const Home = () => {
 			<div className={currentPageIndex === 1 ? styles.moviePreviewContainer : 'hidden'} >
 				<img src={IMGmoviesWall} className={styles.moviesWall} />
 				<FilmPreview movie={movies.card3dMovie} />
+				<div className='flex absolute bottom-[20px]' >
+					<div className={styles.bottomArrowContainer} >
+						<GlitchClip duration={1500} className='flex justify-center items-center' >
+							<GlitchText component='h1' className={styles.vhsFont}>SCROLL</GlitchText>
+							<img src={IMGarrowVhs} className='h-[70px] pl-[25px]' />
+						</GlitchClip>
+					</div>
+				</div>
 			</div>
 			{/* ------------------------ CATEGORIES ------------------------ */}
 			<div className={`${currentPageIndex === 2 ? 'w-full' : 'hidden'}`} >
 				<div className='mt-[150px]' />
 				<Category title='popular' movies={movies.popular} />
-				<Category title='top_rated' movies={movies.latest} />
+				<Category title='top_rated' movies={movies.latest} reverse={true} />
 				<Category title='latest' movies={movies.topRated} />
 				<div className='mt-[50px]' />
 			</div>
